@@ -1,3 +1,4 @@
+from interpreter import evaluate
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -10,10 +11,7 @@ parser = gradscript_parse.parser
 
 while True:
     data = input(">>> ")
-    print_ast(parser.parse(data))
+    ast = parser.parse(data)
+    print(evaluate(ast))
     # lex.input(data)
     # while True:      
-        
-
-    
-
