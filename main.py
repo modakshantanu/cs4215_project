@@ -1,29 +1,19 @@
-from operator import truediv
-import sys
-from antlr4 import *
-from dist.MyGrammerLexer import MyGrammerLexer
-from dist.MyGrammerParser import MyGrammerParser
-from dist.MyGrammerListener import MyGrammerListener
+import ply.lex as lex
+import ply.yacc as yacc
 
+import gradscript_lex
+import gradscript_parse
+from utils import print_ast
 
-if __name__ == "__main__":
-    while 1:
-        data =  InputStream(input(">>> "))
+lex = gradscript_lex.lexer
+parser = gradscript_parse.parser
 
-        lexer = MyGrammerLexer(data)
-        stream = CommonTokenStream(lexer)
-        parser = MyGrammerParser(stream)
-        parser.buildParseTrees = True
-
+while True:
+    data = input(">>> ")
+    print_ast(parser.parse(data))
+    # lex.input(data)
+    # while True:      
         
-        tree = parser.expr()
-        printer = MyGrammerListener()
-
-        walker = ParseTreeWalker()
-        walker.walk(printer, tree)
-        
-
-
 
     
 

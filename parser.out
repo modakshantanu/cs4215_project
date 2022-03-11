@@ -1,0 +1,421 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> binary_operation
+Rule 2     expression -> unary_operation
+Rule 3     expression -> L_PAR expression R_PAR
+Rule 4     expression -> NUMBER
+Rule 5     binary_operation -> expression PLUS expression
+Rule 6     binary_operation -> expression MINUS expression
+Rule 7     binary_operation -> expression MULTIPLY expression
+Rule 8     binary_operation -> expression DIVIDE expression
+Rule 9     unary_operation -> PLUS expression
+Rule 10    unary_operation -> MINUS expression
+
+Terminals, with rules where they appear
+
+DIVIDE               : 8
+L_PAR                : 3
+MINUS                : 6 10
+MULTIPLY             : 7
+NUMBER               : 4
+PLUS                 : 5 9
+R_PAR                : 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+binary_operation     : 1
+expression           : 3 5 5 6 6 7 7 8 8 9 10 0
+unary_operation      : 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . binary_operation
+    (2) expression -> . unary_operation
+    (3) expression -> . L_PAR expression R_PAR
+    (4) expression -> . NUMBER
+    (5) binary_operation -> . expression PLUS expression
+    (6) binary_operation -> . expression MINUS expression
+    (7) binary_operation -> . expression MULTIPLY expression
+    (8) binary_operation -> . expression DIVIDE expression
+    (9) unary_operation -> . PLUS expression
+    (10) unary_operation -> . MINUS expression
+
+    L_PAR           shift and go to state 4
+    NUMBER          shift and go to state 5
+    PLUS            shift and go to state 6
+    MINUS           shift and go to state 7
+
+    expression                     shift and go to state 1
+    binary_operation               shift and go to state 2
+    unary_operation                shift and go to state 3
+
+state 1
+
+    (0) S' -> expression .
+    (5) binary_operation -> expression . PLUS expression
+    (6) binary_operation -> expression . MINUS expression
+    (7) binary_operation -> expression . MULTIPLY expression
+    (8) binary_operation -> expression . DIVIDE expression
+
+    PLUS            shift and go to state 8
+    MINUS           shift and go to state 9
+    MULTIPLY        shift and go to state 10
+    DIVIDE          shift and go to state 11
+
+
+state 2
+
+    (1) expression -> binary_operation .
+
+    PLUS            reduce using rule 1 (expression -> binary_operation .)
+    MINUS           reduce using rule 1 (expression -> binary_operation .)
+    MULTIPLY        reduce using rule 1 (expression -> binary_operation .)
+    DIVIDE          reduce using rule 1 (expression -> binary_operation .)
+    $end            reduce using rule 1 (expression -> binary_operation .)
+    R_PAR           reduce using rule 1 (expression -> binary_operation .)
+
+
+state 3
+
+    (2) expression -> unary_operation .
+
+    PLUS            reduce using rule 2 (expression -> unary_operation .)
+    MINUS           reduce using rule 2 (expression -> unary_operation .)
+    MULTIPLY        reduce using rule 2 (expression -> unary_operation .)
+    DIVIDE          reduce using rule 2 (expression -> unary_operation .)
+    $end            reduce using rule 2 (expression -> unary_operation .)
+    R_PAR           reduce using rule 2 (expression -> unary_operation .)
+
+
+state 4
+
+    (3) expression -> L_PAR . expression R_PAR
+    (1) expression -> . binary_operation
+    (2) expression -> . unary_operation
+    (3) expression -> . L_PAR expression R_PAR
+    (4) expression -> . NUMBER
+    (5) binary_operation -> . expression PLUS expression
+    (6) binary_operation -> . expression MINUS expression
+    (7) binary_operation -> . expression MULTIPLY expression
+    (8) binary_operation -> . expression DIVIDE expression
+    (9) unary_operation -> . PLUS expression
+    (10) unary_operation -> . MINUS expression
+
+    L_PAR           shift and go to state 4
+    NUMBER          shift and go to state 5
+    PLUS            shift and go to state 6
+    MINUS           shift and go to state 7
+
+    expression                     shift and go to state 12
+    binary_operation               shift and go to state 2
+    unary_operation                shift and go to state 3
+
+state 5
+
+    (4) expression -> NUMBER .
+
+    PLUS            reduce using rule 4 (expression -> NUMBER .)
+    MINUS           reduce using rule 4 (expression -> NUMBER .)
+    MULTIPLY        reduce using rule 4 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 4 (expression -> NUMBER .)
+    $end            reduce using rule 4 (expression -> NUMBER .)
+    R_PAR           reduce using rule 4 (expression -> NUMBER .)
+
+
+state 6
+
+    (9) unary_operation -> PLUS . expression
+    (1) expression -> . binary_operation
+    (2) expression -> . unary_operation
+    (3) expression -> . L_PAR expression R_PAR
+    (4) expression -> . NUMBER
+    (5) binary_operation -> . expression PLUS expression
+    (6) binary_operation -> . expression MINUS expression
+    (7) binary_operation -> . expression MULTIPLY expression
+    (8) binary_operation -> . expression DIVIDE expression
+    (9) unary_operation -> . PLUS expression
+    (10) unary_operation -> . MINUS expression
+
+    L_PAR           shift and go to state 4
+    NUMBER          shift and go to state 5
+    PLUS            shift and go to state 6
+    MINUS           shift and go to state 7
+
+    expression                     shift and go to state 13
+    binary_operation               shift and go to state 2
+    unary_operation                shift and go to state 3
+
+state 7
+
+    (10) unary_operation -> MINUS . expression
+    (1) expression -> . binary_operation
+    (2) expression -> . unary_operation
+    (3) expression -> . L_PAR expression R_PAR
+    (4) expression -> . NUMBER
+    (5) binary_operation -> . expression PLUS expression
+    (6) binary_operation -> . expression MINUS expression
+    (7) binary_operation -> . expression MULTIPLY expression
+    (8) binary_operation -> . expression DIVIDE expression
+    (9) unary_operation -> . PLUS expression
+    (10) unary_operation -> . MINUS expression
+
+    L_PAR           shift and go to state 4
+    NUMBER          shift and go to state 5
+    PLUS            shift and go to state 6
+    MINUS           shift and go to state 7
+
+    expression                     shift and go to state 14
+    binary_operation               shift and go to state 2
+    unary_operation                shift and go to state 3
+
+state 8
+
+    (5) binary_operation -> expression PLUS . expression
+    (1) expression -> . binary_operation
+    (2) expression -> . unary_operation
+    (3) expression -> . L_PAR expression R_PAR
+    (4) expression -> . NUMBER
+    (5) binary_operation -> . expression PLUS expression
+    (6) binary_operation -> . expression MINUS expression
+    (7) binary_operation -> . expression MULTIPLY expression
+    (8) binary_operation -> . expression DIVIDE expression
+    (9) unary_operation -> . PLUS expression
+    (10) unary_operation -> . MINUS expression
+
+    L_PAR           shift and go to state 4
+    NUMBER          shift and go to state 5
+    PLUS            shift and go to state 6
+    MINUS           shift and go to state 7
+
+    expression                     shift and go to state 15
+    binary_operation               shift and go to state 2
+    unary_operation                shift and go to state 3
+
+state 9
+
+    (6) binary_operation -> expression MINUS . expression
+    (1) expression -> . binary_operation
+    (2) expression -> . unary_operation
+    (3) expression -> . L_PAR expression R_PAR
+    (4) expression -> . NUMBER
+    (5) binary_operation -> . expression PLUS expression
+    (6) binary_operation -> . expression MINUS expression
+    (7) binary_operation -> . expression MULTIPLY expression
+    (8) binary_operation -> . expression DIVIDE expression
+    (9) unary_operation -> . PLUS expression
+    (10) unary_operation -> . MINUS expression
+
+    L_PAR           shift and go to state 4
+    NUMBER          shift and go to state 5
+    PLUS            shift and go to state 6
+    MINUS           shift and go to state 7
+
+    expression                     shift and go to state 16
+    binary_operation               shift and go to state 2
+    unary_operation                shift and go to state 3
+
+state 10
+
+    (7) binary_operation -> expression MULTIPLY . expression
+    (1) expression -> . binary_operation
+    (2) expression -> . unary_operation
+    (3) expression -> . L_PAR expression R_PAR
+    (4) expression -> . NUMBER
+    (5) binary_operation -> . expression PLUS expression
+    (6) binary_operation -> . expression MINUS expression
+    (7) binary_operation -> . expression MULTIPLY expression
+    (8) binary_operation -> . expression DIVIDE expression
+    (9) unary_operation -> . PLUS expression
+    (10) unary_operation -> . MINUS expression
+
+    L_PAR           shift and go to state 4
+    NUMBER          shift and go to state 5
+    PLUS            shift and go to state 6
+    MINUS           shift and go to state 7
+
+    expression                     shift and go to state 17
+    binary_operation               shift and go to state 2
+    unary_operation                shift and go to state 3
+
+state 11
+
+    (8) binary_operation -> expression DIVIDE . expression
+    (1) expression -> . binary_operation
+    (2) expression -> . unary_operation
+    (3) expression -> . L_PAR expression R_PAR
+    (4) expression -> . NUMBER
+    (5) binary_operation -> . expression PLUS expression
+    (6) binary_operation -> . expression MINUS expression
+    (7) binary_operation -> . expression MULTIPLY expression
+    (8) binary_operation -> . expression DIVIDE expression
+    (9) unary_operation -> . PLUS expression
+    (10) unary_operation -> . MINUS expression
+
+    L_PAR           shift and go to state 4
+    NUMBER          shift and go to state 5
+    PLUS            shift and go to state 6
+    MINUS           shift and go to state 7
+
+    expression                     shift and go to state 18
+    binary_operation               shift and go to state 2
+    unary_operation                shift and go to state 3
+
+state 12
+
+    (3) expression -> L_PAR expression . R_PAR
+    (5) binary_operation -> expression . PLUS expression
+    (6) binary_operation -> expression . MINUS expression
+    (7) binary_operation -> expression . MULTIPLY expression
+    (8) binary_operation -> expression . DIVIDE expression
+
+    R_PAR           shift and go to state 19
+    PLUS            shift and go to state 8
+    MINUS           shift and go to state 9
+    MULTIPLY        shift and go to state 10
+    DIVIDE          shift and go to state 11
+
+
+state 13
+
+    (9) unary_operation -> PLUS expression .
+    (5) binary_operation -> expression . PLUS expression
+    (6) binary_operation -> expression . MINUS expression
+    (7) binary_operation -> expression . MULTIPLY expression
+    (8) binary_operation -> expression . DIVIDE expression
+
+    PLUS            reduce using rule 9 (unary_operation -> PLUS expression .)
+    MINUS           reduce using rule 9 (unary_operation -> PLUS expression .)
+    MULTIPLY        reduce using rule 9 (unary_operation -> PLUS expression .)
+    DIVIDE          reduce using rule 9 (unary_operation -> PLUS expression .)
+    $end            reduce using rule 9 (unary_operation -> PLUS expression .)
+    R_PAR           reduce using rule 9 (unary_operation -> PLUS expression .)
+
+  ! PLUS            [ shift and go to state 8 ]
+  ! MINUS           [ shift and go to state 9 ]
+  ! MULTIPLY        [ shift and go to state 10 ]
+  ! DIVIDE          [ shift and go to state 11 ]
+
+
+state 14
+
+    (10) unary_operation -> MINUS expression .
+    (5) binary_operation -> expression . PLUS expression
+    (6) binary_operation -> expression . MINUS expression
+    (7) binary_operation -> expression . MULTIPLY expression
+    (8) binary_operation -> expression . DIVIDE expression
+
+    PLUS            reduce using rule 10 (unary_operation -> MINUS expression .)
+    MINUS           reduce using rule 10 (unary_operation -> MINUS expression .)
+    MULTIPLY        reduce using rule 10 (unary_operation -> MINUS expression .)
+    DIVIDE          reduce using rule 10 (unary_operation -> MINUS expression .)
+    $end            reduce using rule 10 (unary_operation -> MINUS expression .)
+    R_PAR           reduce using rule 10 (unary_operation -> MINUS expression .)
+
+  ! PLUS            [ shift and go to state 8 ]
+  ! MINUS           [ shift and go to state 9 ]
+  ! MULTIPLY        [ shift and go to state 10 ]
+  ! DIVIDE          [ shift and go to state 11 ]
+
+
+state 15
+
+    (5) binary_operation -> expression PLUS expression .
+    (5) binary_operation -> expression . PLUS expression
+    (6) binary_operation -> expression . MINUS expression
+    (7) binary_operation -> expression . MULTIPLY expression
+    (8) binary_operation -> expression . DIVIDE expression
+
+    PLUS            reduce using rule 5 (binary_operation -> expression PLUS expression .)
+    MINUS           reduce using rule 5 (binary_operation -> expression PLUS expression .)
+    $end            reduce using rule 5 (binary_operation -> expression PLUS expression .)
+    R_PAR           reduce using rule 5 (binary_operation -> expression PLUS expression .)
+    MULTIPLY        shift and go to state 10
+    DIVIDE          shift and go to state 11
+
+  ! MULTIPLY        [ reduce using rule 5 (binary_operation -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 5 (binary_operation -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 8 ]
+  ! MINUS           [ shift and go to state 9 ]
+
+
+state 16
+
+    (6) binary_operation -> expression MINUS expression .
+    (5) binary_operation -> expression . PLUS expression
+    (6) binary_operation -> expression . MINUS expression
+    (7) binary_operation -> expression . MULTIPLY expression
+    (8) binary_operation -> expression . DIVIDE expression
+
+    PLUS            reduce using rule 6 (binary_operation -> expression MINUS expression .)
+    MINUS           reduce using rule 6 (binary_operation -> expression MINUS expression .)
+    $end            reduce using rule 6 (binary_operation -> expression MINUS expression .)
+    R_PAR           reduce using rule 6 (binary_operation -> expression MINUS expression .)
+    MULTIPLY        shift and go to state 10
+    DIVIDE          shift and go to state 11
+
+  ! MULTIPLY        [ reduce using rule 6 (binary_operation -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 6 (binary_operation -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 8 ]
+  ! MINUS           [ shift and go to state 9 ]
+
+
+state 17
+
+    (7) binary_operation -> expression MULTIPLY expression .
+    (5) binary_operation -> expression . PLUS expression
+    (6) binary_operation -> expression . MINUS expression
+    (7) binary_operation -> expression . MULTIPLY expression
+    (8) binary_operation -> expression . DIVIDE expression
+
+    PLUS            reduce using rule 7 (binary_operation -> expression MULTIPLY expression .)
+    MINUS           reduce using rule 7 (binary_operation -> expression MULTIPLY expression .)
+    MULTIPLY        reduce using rule 7 (binary_operation -> expression MULTIPLY expression .)
+    DIVIDE          reduce using rule 7 (binary_operation -> expression MULTIPLY expression .)
+    $end            reduce using rule 7 (binary_operation -> expression MULTIPLY expression .)
+    R_PAR           reduce using rule 7 (binary_operation -> expression MULTIPLY expression .)
+
+  ! PLUS            [ shift and go to state 8 ]
+  ! MINUS           [ shift and go to state 9 ]
+  ! MULTIPLY        [ shift and go to state 10 ]
+  ! DIVIDE          [ shift and go to state 11 ]
+
+
+state 18
+
+    (8) binary_operation -> expression DIVIDE expression .
+    (5) binary_operation -> expression . PLUS expression
+    (6) binary_operation -> expression . MINUS expression
+    (7) binary_operation -> expression . MULTIPLY expression
+    (8) binary_operation -> expression . DIVIDE expression
+
+    PLUS            reduce using rule 8 (binary_operation -> expression DIVIDE expression .)
+    MINUS           reduce using rule 8 (binary_operation -> expression DIVIDE expression .)
+    MULTIPLY        reduce using rule 8 (binary_operation -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 8 (binary_operation -> expression DIVIDE expression .)
+    $end            reduce using rule 8 (binary_operation -> expression DIVIDE expression .)
+    R_PAR           reduce using rule 8 (binary_operation -> expression DIVIDE expression .)
+
+  ! PLUS            [ shift and go to state 8 ]
+  ! MINUS           [ shift and go to state 9 ]
+  ! MULTIPLY        [ shift and go to state 10 ]
+  ! DIVIDE          [ shift and go to state 11 ]
+
+
+state 19
+
+    (3) expression -> L_PAR expression R_PAR .
+
+    PLUS            reduce using rule 3 (expression -> L_PAR expression R_PAR .)
+    MINUS           reduce using rule 3 (expression -> L_PAR expression R_PAR .)
+    MULTIPLY        reduce using rule 3 (expression -> L_PAR expression R_PAR .)
+    DIVIDE          reduce using rule 3 (expression -> L_PAR expression R_PAR .)
+    $end            reduce using rule 3 (expression -> L_PAR expression R_PAR .)
+    R_PAR           reduce using rule 3 (expression -> L_PAR expression R_PAR .)
+
