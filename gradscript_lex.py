@@ -13,7 +13,14 @@ tokens = (
     'MULTIPLY',
     'DIVIDE',
     'L_PAR',
-    'R_PAR'
+    'R_PAR',
+    'IDEN',
+    'ASSIGN',
+    'SEMI',
+    'COMMA',
+    'ARROW',
+    'L_BRC',
+    'R_BRC'
 )
 
 
@@ -24,6 +31,13 @@ t_MULTIPLY = r'\*'
 t_DIVIDE = r'\/'
 t_L_PAR = r'\('
 t_R_PAR = r'\)'
+t_L_BRC = '{'
+t_R_BRC = '}'
+t_SEMI = ';'
+t_COMMA = ','
+t_IDEN = r'[_a-zA-Z][_a-zA-Z0-9]*'
+t_ASSIGN = r'\='
+t_ARROW = r'=>' # For lambdas
 
 def t_NUMBER(t):
     # r'\^(0|[1-9][0-9]*)$'
@@ -43,3 +57,4 @@ def t_error(t):
     t.lexer.skip(1)
 
 lexer = lex.lex()
+

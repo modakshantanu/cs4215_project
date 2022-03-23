@@ -1,8 +1,8 @@
-class AstNode: pass
+class AstNode: 
+    children = []
 
 class Expr(AstNode): 
-    type = ""
-    children = []
+    pass
 
 class BinOp(Expr):
     def __init__(self, left, op, right):
@@ -40,3 +40,48 @@ class Number(Expr):
     def __str__(self):
         return str(self.value)
 
+class Identifier(Expr):
+    def __init__(self, value):
+        self.type = "identifier"
+        self.value = value
+        self.children = [value]
+    
+    def __str__(self):
+        return self.value
+
+class FunctionCall(Expr):
+    def __init__(self, iden, args):
+        self.type = "function call"
+        self.identifer = iden
+        self.argList = args
+        self.children = [iden] + args
+
+class Lambda(Expr):
+    def __init__(self, args, block):
+        self.type = "lambda"
+        self.argList = args
+        self.block = block
+        self.children = [args, block]
+
+# Base class for all statements
+class Statement(AstNode):
+    pass
+
+class Assignment(Statement):
+    def __init__(self, identifier, expression):
+        self.type = "assignment"
+        self.identifier = identifier
+        self.expression = expression
+        self.children = [identifier, expression]
+    
+    def __str__(self):
+        
+        return "{0} = {1}".format(self.identifier, self.expression)
+
+class Block(Statement):
+    def __init__(self, statement):
+        self.type = "block"
+        self.children = [statement]
+
+    def prepend(self, statement):
+        self.children = [statement] + self.children

@@ -1,6 +1,6 @@
 import ast_tokens as Ast
 
-# Currently, just an evaluator of expressions
+# Evaulate an expression
 def evaluate(expr):
     
     if type(expr) == Ast.Number:
@@ -14,7 +14,6 @@ def evaluate(expr):
         left = evaluate(expr.left)
         right = evaluate(expr.right)
         return apply_binary(expr.op, left, right)
-
     pass
 
 

@@ -1,3 +1,4 @@
+import sys
 from interpreter import evaluate
 import ply.lex as lex
 import ply.yacc as yacc
@@ -9,9 +10,29 @@ from utils import print_ast
 lex = gradscript_lex.lexer
 parser = gradscript_parse.parser
 
-while True:
-    data = input(">>> ")
+filename = None
+data = None
+
+if len(sys.argv) > 1:
+    filename = sys.argv[1]
+    f = open(filename, "r")
+    data = f.read()
+
     ast = parser.parse(data)
-    print(evaluate(ast))
+    print_ast(ast)
+    # print(evaluate(ast))
+else:
+    while True:
+        data = input(">>> ")
+        ast = parser.parse(data)
+        print_ast(ast)
+    # print(evaluate(ast))
     # lex.input(data)
-    # while True:      
+
+    # while True:
+    #     tok = lex.token()
+    #     if not tok:
+    #        break
+    #     print(tok)   
+
+
