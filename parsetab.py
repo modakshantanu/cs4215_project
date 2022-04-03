@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDErightUNARYARROW ASSIGN COMMA DIVIDE IDEN L_BRC L_PAR MINUS MULTIPLY NUMBER PLUS R_BRC R_PAR SEMI\n    program : statement \n            | statement program\n            \n    \n    statement : expression SEMI\n              | IDEN ASSIGN expression SEMI\n    \n    expression : binary_operation\n               | unary_operation\n               | L_PAR expression R_PAR\n               | NUMBER\n               | IDEN\n               | function_call\n               | lambda\n\n    \n     binary_operation : expression PLUS expression \n                     | expression MINUS expression\n                     | expression MULTIPLY expression\n                     | expression DIVIDE expression\n    \n     unary_operation : PLUS expression %prec UNARY\n              | MINUS expression %prec UNARY\n    \n    arg_list : expression \n             | expression COMMA arg_list\n    \n    function_call : IDEN L_PAR R_PAR\n                 | IDEN L_PAR arg_list R_PAR\n    \n    lambda : L_PAR R_PAR ARROW L_BRC program R_BRC\n           | L_PAR arg_list R_PAR ARROW L_BRC program R_BRC\n    '
+_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDErightUNARYANY ARROW ASSIGN BOOL_LIT COLON COMMA DIVIDE ELSE IDEN IF LET L_BRC L_PAR MINUS MULTIPLY NUMBER NUM_LIT PLUS RETURN R_BRC R_PAR SEMI STR_LIT WHILE\n    program : block\n    \n    type : NUMBER \n         | ANY\n    \n    block : statement \n          | statement block    \n    \n    statement : expression SEMI \n              | IDEN ASSIGN expression SEMI\n              | LET IDEN SEMI\n              | LET IDEN COLON type SEMI\n              | LET IDEN ASSIGN expression SEMI\n              | LET IDEN COLON type ASSIGN expression SEMI\n              | RETURN expression SEMI\n              | IF L_PAR expression R_PAR statement ELSE statement\n              | IF L_PAR expression R_PAR statement\n              | WHILE L_PAR expression R_PAR statement\n              | L_BRC block R_BRC\n    \n    expression : binary_operation\n               | unary_operation\n               | L_PAR expression R_PAR\n               | NUM_LIT\n               | BOOL_LIT\n               | STR_LIT\n               | function_call\n               | lambda\n               | IDEN\n\n    \n     binary_operation : expression PLUS expression \n                     | expression MINUS expression\n                     | expression MULTIPLY expression\n                     | expression DIVIDE expression\n    \n     unary_operation : PLUS expression %prec UNARY\n              | MINUS expression %prec UNARY\n    \n    arg_list : expression \n             | expression COMMA arg_list\n    \n    param_list : IDEN COMMA param_list\n               | IDEN\n    \n    function_call : IDEN L_PAR R_PAR\n                  | IDEN L_PAR arg_list R_PAR\n    \n    lambda : L_PAR R_PAR ARROW L_BRC program R_BRC\n           | L_PAR param_list R_PAR ARROW L_BRC program R_BRC\n           | L_PAR IDEN R_PAR ARROW L_BRC program R_BRC\n    '
     
-_lr_action_items = {'IDEN':([0,2,7,11,12,14,15,16,17,18,19,20,36,39,42,45,],[4,4,24,24,24,-3,24,24,24,24,24,24,24,-4,4,4,]),'L_PAR':([0,2,4,7,11,12,14,15,16,17,18,19,20,24,36,39,42,45,],[7,7,20,7,7,7,-3,7,7,7,7,7,7,20,7,-4,7,7,]),'NUMBER':([0,2,7,11,12,14,15,16,17,18,19,20,36,39,42,45,],[8,8,8,8,8,-3,8,8,8,8,8,8,8,-4,8,8,]),'PLUS':([0,2,3,4,5,6,7,8,9,10,11,12,14,15,16,17,18,19,20,21,24,25,26,27,28,29,30,31,32,34,35,36,39,40,42,45,46,48,],[11,11,15,-9,-5,-6,11,-8,-10,-11,11,11,-3,11,11,11,11,11,11,15,-9,-16,-17,-12,-13,-14,-15,15,-20,15,-7,11,-4,-21,11,11,-22,-23,]),'MINUS':([0,2,3,4,5,6,7,8,9,10,11,12,14,15,16,17,18,19,20,21,24,25,26,27,28,29,30,31,32,34,35,36,39,40,42,45,46,48,],[12,12,16,-9,-5,-6,12,-8,-10,-11,12,12,-3,12,12,12,12,12,12,16,-9,-16,-17,-12,-13,-14,-15,16,-20,16,-7,12,-4,-21,12,12,-22,-23,]),'$end':([1,2,13,14,39,],[0,-1,-2,-3,-4,]),'R_BRC':([2,13,14,39,44,47,],[-1,-2,-3,-4,46,48,]),'SEMI':([3,4,5,6,8,9,10,24,25,26,27,28,29,30,31,32,35,40,46,48,],[14,-9,-5,-6,-8,-10,-11,-9,-16,-17,-12,-13,-14,-15,39,-20,-7,-21,-22,-23,]),'MULTIPLY':([3,4,5,6,8,9,10,21,24,25,26,27,28,29,30,31,32,34,35,40,46,48,],[17,-9,-5,-6,-8,-10,-11,17,-9,-16,-17,17,17,-14,-15,17,-20,17,-7,-21,-22,-23,]),'DIVIDE':([3,4,5,6,8,9,10,21,24,25,26,27,28,29,30,31,32,34,35,40,46,48,],[18,-9,-5,-6,-8,-10,-11,18,-9,-16,-17,18,18,-14,-15,18,-20,18,-7,-21,-22,-23,]),'ASSIGN':([4,],[19,]),'R_PAR':([5,6,7,8,9,10,20,21,23,24,25,26,27,28,29,30,32,33,34,35,40,41,46,48,],[-5,-6,22,-8,-10,-11,32,35,38,-9,-16,-17,-12,-13,-14,-15,-20,40,-18,-7,-21,-19,-22,-23,]),'COMMA':([5,6,8,9,10,21,24,25,26,27,28,29,30,32,34,35,40,46,48,],[-5,-6,-8,-10,-11,36,-9,-16,-17,-12,-13,-14,-15,-20,36,-7,-21,-22,-23,]),'ARROW':([22,38,],[37,43,]),'L_BRC':([37,43,],[42,45,]),}
+_lr_action_items = {'IDEN':([0,3,6,7,9,11,19,20,22,23,24,25,26,27,28,32,37,49,51,52,58,60,61,63,68,69,74,76,77,78,79,81,82,83,85,89,90,],[5,5,29,31,36,5,31,31,-6,31,31,31,31,31,31,31,31,-8,31,-12,72,-16,-7,31,5,5,5,-9,31,-10,-14,5,5,-15,5,-11,-13,]),'LET':([0,3,11,22,49,52,60,61,68,69,74,76,78,79,81,82,83,85,89,90,],[6,6,6,-6,-8,-12,-16,-7,6,6,6,-9,-10,-14,6,6,-15,6,-11,-13,]),'RETURN':([0,3,11,22,49,52,60,61,68,69,74,76,78,79,81,82,83,85,89,90,],[7,7,7,-6,-8,-12,-16,-7,7,7,7,-9,-10,-14,7,7,-15,7,-11,-13,]),'IF':([0,3,11,22,49,52,60,61,68,69,74,76,78,79,81,82,83,85,89,90,],[8,8,8,-6,-8,-12,-16,-7,8,8,8,-9,-10,-14,8,8,-15,8,-11,-13,]),'WHILE':([0,3,11,22,49,52,60,61,68,69,74,76,78,79,81,82,83,85,89,90,],[10,10,10,-6,-8,-12,-16,-7,10,10,10,-9,-10,-14,10,10,-15,10,-11,-13,]),'L_BRC':([0,3,11,22,49,52,55,60,61,68,69,70,71,74,76,78,79,81,82,83,85,89,90,],[11,11,11,-6,-8,-12,69,-16,-7,11,11,81,82,11,-9,-10,-14,11,11,-15,11,-11,-13,]),'L_PAR':([0,3,5,7,8,9,10,11,19,20,22,23,24,25,26,27,28,31,32,36,37,49,51,52,60,61,63,68,69,74,76,77,78,79,81,82,83,85,89,90,],[9,9,28,9,32,9,37,9,9,9,-6,9,9,9,9,9,9,28,9,28,9,-8,9,-12,-16,-7,9,9,9,9,-9,9,-10,-14,9,9,-15,9,-11,-13,]),'NUM_LIT':([0,3,7,9,11,19,20,22,23,24,25,26,27,28,32,37,49,51,52,60,61,63,68,69,74,76,77,78,79,81,82,83,85,89,90,],[14,14,14,14,14,14,14,-6,14,14,14,14,14,14,14,14,-8,14,-12,-16,-7,14,14,14,14,-9,14,-10,-14,14,14,-15,14,-11,-13,]),'BOOL_LIT':([0,3,7,9,11,19,20,22,23,24,25,26,27,28,32,37,49,51,52,60,61,63,68,69,74,76,77,78,79,81,82,83,85,89,90,],[15,15,15,15,15,15,15,-6,15,15,15,15,15,15,15,15,-8,15,-12,-16,-7,15,15,15,15,-9,15,-10,-14,15,15,-15,15,-11,-13,]),'STR_LIT':([0,3,7,9,11,19,20,22,23,24,25,26,27,28,32,37,49,51,52,60,61,63,68,69,74,76,77,78,79,81,82,83,85,89,90,],[16,16,16,16,16,16,16,-6,16,16,16,16,16,16,16,16,-8,16,-12,-16,-7,16,16,16,16,-9,16,-10,-14,16,16,-15,16,-11,-13,]),'PLUS':([0,3,4,5,7,9,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,30,31,32,33,36,37,39,40,41,42,43,44,45,46,48,49,51,52,53,54,59,60,61,62,63,67,68,69,74,76,77,78,79,81,82,83,84,85,86,89,90,91,92,],[19,19,23,-25,19,19,19,-17,-18,-20,-21,-22,-23,-24,19,19,-6,19,19,19,19,19,19,23,-25,19,23,-25,19,-30,-31,-26,-27,-28,-29,23,-36,23,-8,19,-12,23,-19,23,-16,-7,-37,19,23,19,19,19,-9,19,-10,-14,19,19,-15,23,19,-38,-11,-13,-39,-40,]),'MINUS':([0,3,4,5,7,9,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,30,31,32,33,36,37,39,40,41,42,43,44,45,46,48,49,51,52,53,54,59,60,61,62,63,67,68,69,74,76,77,78,79,81,82,83,84,85,86,89,90,91,92,],[20,20,24,-25,20,20,20,-17,-18,-20,-21,-22,-23,-24,20,20,-6,20,20,20,20,20,20,24,-25,20,24,-25,20,-30,-31,-26,-27,-28,-29,24,-36,24,-8,20,-12,24,-19,24,-16,-7,-37,20,24,20,20,20,-9,20,-10,-14,20,20,-15,24,20,-38,-11,-13,-39,-40,]),'$end':([1,2,3,21,22,49,52,60,61,76,78,79,83,89,90,],[0,-1,-4,-5,-6,-8,-12,-16,-7,-9,-10,-14,-15,-11,-13,]),'R_BRC':([2,3,21,22,38,49,52,60,61,76,78,79,80,83,87,88,89,90,],[-1,-4,-5,-6,60,-8,-12,-16,-7,-9,-10,-14,86,-15,91,92,-11,-13,]),'SEMI':([4,5,12,13,14,15,16,17,18,29,30,31,39,40,41,42,43,44,45,46,54,62,64,65,66,67,84,86,91,92,],[22,-25,-17,-18,-20,-21,-22,-23,-24,49,52,-25,-30,-31,-26,-27,-28,-29,61,-36,-19,-37,76,-2,-3,78,89,-38,-39,-40,]),'MULTIPLY':([4,5,12,13,14,15,16,17,18,30,31,33,36,39,40,41,42,43,44,45,46,48,53,54,59,62,67,84,86,91,92,],[25,-25,-17,-18,-20,-21,-22,-23,-24,25,-25,25,-25,-30,-31,25,25,-28,-29,25,-36,25,25,-19,25,-37,25,25,-38,-39,-40,]),'DIVIDE':([4,5,12,13,14,15,16,17,18,30,31,33,36,39,40,41,42,43,44,45,46,48,53,54,59,62,67,84,86,91,92,],[26,-25,-17,-18,-20,-21,-22,-23,-24,26,-25,26,-25,-30,-31,26,26,-28,-29,26,-36,26,26,-19,26,-37,26,26,-38,-39,-40,]),'ASSIGN':([5,29,64,65,66,],[27,51,77,-2,-3,]),'R_PAR':([9,12,13,14,15,16,17,18,28,31,33,35,36,39,40,41,42,43,44,46,47,48,53,54,59,62,72,73,75,86,91,92,],[34,-17,-18,-20,-21,-22,-23,-24,46,-25,54,56,57,-30,-31,-26,-27,-28,-29,-36,62,-32,68,-19,74,-37,-35,-34,-33,-38,-39,-40,]),'COMMA':([12,13,14,15,16,17,18,31,36,39,40,41,42,43,44,46,48,54,62,72,86,91,92,],[-17,-18,-20,-21,-22,-23,-24,-25,58,-30,-31,-26,-27,-28,-29,-36,63,-19,-37,58,-38,-39,-40,]),'ELSE':([22,49,52,60,61,76,78,79,83,89,90,],[-6,-8,-12,-16,-7,-9,-10,85,-15,-11,-13,]),'COLON':([29,],[50,]),'ARROW':([34,56,57,],[55,70,71,]),'NUMBER':([50,],[65,]),'ANY':([50,],[66,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,2,42,45,],[1,13,44,47,]),'statement':([0,2,42,45,],[2,2,2,2,]),'expression':([0,2,7,11,12,15,16,17,18,19,20,36,42,45,],[3,3,21,25,26,27,28,29,30,31,34,34,3,3,]),'binary_operation':([0,2,7,11,12,15,16,17,18,19,20,36,42,45,],[5,5,5,5,5,5,5,5,5,5,5,5,5,5,]),'unary_operation':([0,2,7,11,12,15,16,17,18,19,20,36,42,45,],[6,6,6,6,6,6,6,6,6,6,6,6,6,6,]),'function_call':([0,2,7,11,12,15,16,17,18,19,20,36,42,45,],[9,9,9,9,9,9,9,9,9,9,9,9,9,9,]),'lambda':([0,2,7,11,12,15,16,17,18,19,20,36,42,45,],[10,10,10,10,10,10,10,10,10,10,10,10,10,10,]),'arg_list':([7,20,36,],[23,33,41,]),}
+_lr_goto_items = {'program':([0,69,81,82,],[1,80,87,88,]),'block':([0,3,11,69,81,82,],[2,21,38,2,2,2,]),'statement':([0,3,11,68,69,74,81,82,85,],[3,3,3,79,3,83,3,3,90,]),'expression':([0,3,7,9,11,19,20,23,24,25,26,27,28,32,37,51,63,68,69,74,77,81,82,85,],[4,4,30,33,4,39,40,41,42,43,44,45,48,53,59,67,48,4,4,4,84,4,4,4,]),'binary_operation':([0,3,7,9,11,19,20,23,24,25,26,27,28,32,37,51,63,68,69,74,77,81,82,85,],[12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,]),'unary_operation':([0,3,7,9,11,19,20,23,24,25,26,27,28,32,37,51,63,68,69,74,77,81,82,85,],[13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,]),'function_call':([0,3,7,9,11,19,20,23,24,25,26,27,28,32,37,51,63,68,69,74,77,81,82,85,],[17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,]),'lambda':([0,3,7,9,11,19,20,23,24,25,26,27,28,32,37,51,63,68,69,74,77,81,82,85,],[18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,]),'param_list':([9,58,],[35,73,]),'arg_list':([28,63,],[47,75,]),'type':([50,],[64,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,27 +27,44 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> statement','program',1,'p_program','gradscript_parse.py',15),
-  ('program -> statement program','program',2,'p_program','gradscript_parse.py',16),
-  ('statement -> expression SEMI','statement',2,'p_statement','gradscript_parse.py',32),
-  ('statement -> IDEN ASSIGN expression SEMI','statement',4,'p_statement','gradscript_parse.py',33),
-  ('expression -> binary_operation','expression',1,'p_expression','gradscript_parse.py',43),
-  ('expression -> unary_operation','expression',1,'p_expression','gradscript_parse.py',44),
-  ('expression -> L_PAR expression R_PAR','expression',3,'p_expression','gradscript_parse.py',45),
-  ('expression -> NUMBER','expression',1,'p_expression','gradscript_parse.py',46),
-  ('expression -> IDEN','expression',1,'p_expression','gradscript_parse.py',47),
-  ('expression -> function_call','expression',1,'p_expression','gradscript_parse.py',48),
-  ('expression -> lambda','expression',1,'p_expression','gradscript_parse.py',49),
-  ('binary_operation -> expression PLUS expression','binary_operation',3,'p_binary_operation','gradscript_parse.py',63),
-  ('binary_operation -> expression MINUS expression','binary_operation',3,'p_binary_operation','gradscript_parse.py',64),
-  ('binary_operation -> expression MULTIPLY expression','binary_operation',3,'p_binary_operation','gradscript_parse.py',65),
-  ('binary_operation -> expression DIVIDE expression','binary_operation',3,'p_binary_operation','gradscript_parse.py',66),
-  ('unary_operation -> PLUS expression','unary_operation',2,'p_unary_operation','gradscript_parse.py',73),
-  ('unary_operation -> MINUS expression','unary_operation',2,'p_unary_operation','gradscript_parse.py',74),
-  ('arg_list -> expression','arg_list',1,'p_arg_list','gradscript_parse.py',81),
-  ('arg_list -> expression COMMA arg_list','arg_list',3,'p_arg_list','gradscript_parse.py',82),
-  ('function_call -> IDEN L_PAR R_PAR','function_call',3,'p_function_call','gradscript_parse.py',94),
-  ('function_call -> IDEN L_PAR arg_list R_PAR','function_call',4,'p_function_call','gradscript_parse.py',95),
-  ('lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC','lambda',6,'p_lambda','gradscript_parse.py',107),
-  ('lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC','lambda',7,'p_lambda','gradscript_parse.py',108),
+  ('program -> block','program',1,'p_program','gradscript_parse.py',15),
+  ('type -> NUMBER','type',1,'p_type','gradscript_parse.py',21),
+  ('type -> ANY','type',1,'p_type','gradscript_parse.py',22),
+  ('block -> statement','block',1,'p_block','gradscript_parse.py',31),
+  ('block -> statement block','block',2,'p_block','gradscript_parse.py',32),
+  ('statement -> expression SEMI','statement',2,'p_statement','gradscript_parse.py',44),
+  ('statement -> IDEN ASSIGN expression SEMI','statement',4,'p_statement','gradscript_parse.py',45),
+  ('statement -> LET IDEN SEMI','statement',3,'p_statement','gradscript_parse.py',46),
+  ('statement -> LET IDEN COLON type SEMI','statement',5,'p_statement','gradscript_parse.py',47),
+  ('statement -> LET IDEN ASSIGN expression SEMI','statement',5,'p_statement','gradscript_parse.py',48),
+  ('statement -> LET IDEN COLON type ASSIGN expression SEMI','statement',7,'p_statement','gradscript_parse.py',49),
+  ('statement -> RETURN expression SEMI','statement',3,'p_statement','gradscript_parse.py',50),
+  ('statement -> IF L_PAR expression R_PAR statement ELSE statement','statement',7,'p_statement','gradscript_parse.py',51),
+  ('statement -> IF L_PAR expression R_PAR statement','statement',5,'p_statement','gradscript_parse.py',52),
+  ('statement -> WHILE L_PAR expression R_PAR statement','statement',5,'p_statement','gradscript_parse.py',53),
+  ('statement -> L_BRC block R_BRC','statement',3,'p_statement','gradscript_parse.py',54),
+  ('expression -> binary_operation','expression',1,'p_expression','gradscript_parse.py',83),
+  ('expression -> unary_operation','expression',1,'p_expression','gradscript_parse.py',84),
+  ('expression -> L_PAR expression R_PAR','expression',3,'p_expression','gradscript_parse.py',85),
+  ('expression -> NUM_LIT','expression',1,'p_expression','gradscript_parse.py',86),
+  ('expression -> BOOL_LIT','expression',1,'p_expression','gradscript_parse.py',87),
+  ('expression -> STR_LIT','expression',1,'p_expression','gradscript_parse.py',88),
+  ('expression -> function_call','expression',1,'p_expression','gradscript_parse.py',89),
+  ('expression -> lambda','expression',1,'p_expression','gradscript_parse.py',90),
+  ('expression -> IDEN','expression',1,'p_expression','gradscript_parse.py',91),
+  ('binary_operation -> expression PLUS expression','binary_operation',3,'p_binary_operation','gradscript_parse.py',107),
+  ('binary_operation -> expression MINUS expression','binary_operation',3,'p_binary_operation','gradscript_parse.py',108),
+  ('binary_operation -> expression MULTIPLY expression','binary_operation',3,'p_binary_operation','gradscript_parse.py',109),
+  ('binary_operation -> expression DIVIDE expression','binary_operation',3,'p_binary_operation','gradscript_parse.py',110),
+  ('unary_operation -> PLUS expression','unary_operation',2,'p_unary_operation','gradscript_parse.py',117),
+  ('unary_operation -> MINUS expression','unary_operation',2,'p_unary_operation','gradscript_parse.py',118),
+  ('arg_list -> expression','arg_list',1,'p_arg_list','gradscript_parse.py',125),
+  ('arg_list -> expression COMMA arg_list','arg_list',3,'p_arg_list','gradscript_parse.py',126),
+  ('param_list -> IDEN COMMA param_list','param_list',3,'p_param_list','gradscript_parse.py',136),
+  ('param_list -> IDEN','param_list',1,'p_param_list','gradscript_parse.py',137),
+  ('function_call -> IDEN L_PAR R_PAR','function_call',3,'p_function_call','gradscript_parse.py',150),
+  ('function_call -> IDEN L_PAR arg_list R_PAR','function_call',4,'p_function_call','gradscript_parse.py',151),
+  ('lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC','lambda',6,'p_lambda','gradscript_parse.py',163),
+  ('lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC','lambda',7,'p_lambda','gradscript_parse.py',164),
+  ('lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC','lambda',7,'p_lambda','gradscript_parse.py',165),
 ]

@@ -1,0 +1,296 @@
+   yacc.py: 362:PLY: PARSE DEBUG START
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(L_PAR,'(',1,0)
+   yacc.py: 445:Action : Shift and goto state 7
+   yacc.py: 410:
+   yacc.py: 411:State  : 7
+   yacc.py: 434:Stack  : L_PAR . LexToken(R_PAR,')',1,1)
+   yacc.py: 445:Action : Shift and goto state 22
+   yacc.py: 410:
+   yacc.py: 411:State  : 22
+   yacc.py: 434:Stack  : L_PAR R_PAR . LexToken(ARROW,'=>',1,3)
+   yacc.py: 445:Action : Shift and goto state 37
+   yacc.py: 410:
+   yacc.py: 411:State  : 37
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW . LexToken(L_BRC,'{',1,6)
+   yacc.py: 445:Action : Shift and goto state 42
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW L_BRC . LexToken(SEMI,';',1,7)
+   yacc.py: 579:Error  : L_PAR R_PAR ARROW L_BRC . LexToken(SEMI,';',1,7)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW L_BRC . error
+   yacc.py: 579:Error  : L_PAR R_PAR ARROW L_BRC . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 37
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW . error
+   yacc.py: 579:Error  : L_PAR R_PAR ARROW . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 22
+   yacc.py: 434:Stack  : L_PAR R_PAR . error
+   yacc.py: 579:Error  : L_PAR R_PAR . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 7
+   yacc.py: 434:Stack  : L_PAR . error
+   yacc.py: 579:Error  : L_PAR . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . error
+   yacc.py: 579:Error  : . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(R_BRC,'}',1,8)
+   yacc.py: 579:Error  : . LexToken(R_BRC,'}',1,8)
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(SEMI,';',1,9)
+   yacc.py: 579:Error  : . LexToken(SEMI,';',1,9)
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . $end
+   yacc.py: 579:Error  : . $end
+   yacc.py: 362:PLY: PARSE DEBUG START
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(L_PAR,'(',1,0)
+   yacc.py: 445:Action : Shift and goto state 7
+   yacc.py: 410:
+   yacc.py: 411:State  : 7
+   yacc.py: 434:Stack  : L_PAR . LexToken(R_PAR,')',1,1)
+   yacc.py: 445:Action : Shift and goto state 22
+   yacc.py: 410:
+   yacc.py: 411:State  : 22
+   yacc.py: 434:Stack  : L_PAR R_PAR . LexToken(ARROW,'=>',1,3)
+   yacc.py: 445:Action : Shift and goto state 37
+   yacc.py: 410:
+   yacc.py: 411:State  : 37
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW . LexToken(L_BRC,'{',1,6)
+   yacc.py: 445:Action : Shift and goto state 42
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW L_BRC . LexToken(IDEN,'a',1,7)
+   yacc.py: 445:Action : Shift and goto state 4
+   yacc.py: 410:
+   yacc.py: 411:State  : 4
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW L_BRC IDEN . LexToken(SEMI,';',1,8)
+   yacc.py: 469:Action : Reduce rule [expression -> IDEN] with ['a'] and goto state 3
+   yacc.py: 506:Result : <Identifier @ 0x233a9c7a670> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 3
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW L_BRC expression . LexToken(SEMI,';',1,8)
+   yacc.py: 445:Action : Shift and goto state 14
+   yacc.py: 410:
+   yacc.py: 411:State  : 14
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW L_BRC expression SEMI . LexToken(R_BRC,'}',1,9)
+   yacc.py: 469:Action : Reduce rule [statement -> expression SEMI] with [<Identifier @ 0x233a9c7a670>,';'] and goto state 2
+   yacc.py: 506:Result : <Identifier @ 0x233a9c7a670> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 2
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW L_BRC statement . LexToken(R_BRC,'}',1,9)
+   yacc.py: 469:Action : Reduce rule [program -> statement] with [<Identifier @ 0x233a9c7a670>] and goto state 44
+   yacc.py: 506:Result : <Identifier @ 0x233a9c7a670> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW L_BRC program . LexToken(R_BRC,'}',1,9)
+   yacc.py: 445:Action : Shift and goto state 46
+   yacc.py: 410:
+   yacc.py: 411:State  : 46
+   yacc.py: 434:Stack  : L_PAR R_PAR ARROW L_BRC program R_BRC . LexToken(SEMI,';',1,10)
+   yacc.py: 469:Action : Reduce rule [lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC] with ['(',')','=>','{',<Identifier @ 0x233a9c7a670>,'}'] and goto state 10
+   yacc.py: 506:Result : <Lambda @ 0x233a9c7a700> (<ast_tokens.Lambda object at 0x00000233A ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 10
+   yacc.py: 434:Stack  : lambda . LexToken(SEMI,';',1,10)
+   yacc.py: 469:Action : Reduce rule [expression -> lambda] with [<Lambda @ 0x233a9c7a700>] and goto state 3
+   yacc.py: 506:Result : <Lambda @ 0x233a9c7a700> (<ast_tokens.Lambda object at 0x00000233A ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 3
+   yacc.py: 434:Stack  : expression . LexToken(SEMI,';',1,10)
+   yacc.py: 445:Action : Shift and goto state 14
+   yacc.py: 410:
+   yacc.py: 411:State  : 14
+   yacc.py: 434:Stack  : expression SEMI . $end
+   yacc.py: 469:Action : Reduce rule [statement -> expression SEMI] with [<Lambda @ 0x233a9c7a700>,';'] and goto state 2
+   yacc.py: 506:Result : <Lambda @ 0x233a9c7a700> (<ast_tokens.Lambda object at 0x00000233A ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 2
+   yacc.py: 434:Stack  : statement . $end
+   yacc.py: 469:Action : Reduce rule [program -> statement] with [<Lambda @ 0x233a9c7a700>] and goto state 1
+   yacc.py: 506:Result : <Lambda @ 0x233a9c7a700> (<ast_tokens.Lambda object at 0x00000233A ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 1
+   yacc.py: 434:Stack  : program . $end
+   yacc.py: 571:Done   : Returning <Lambda @ 0x233a9c7a700> (<ast_tokens.Lambda object at 0x00000233A ...)
+   yacc.py: 572:PLY: PARSE DEBUG END
+   yacc.py: 362:PLY: PARSE DEBUG START
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(L_PAR,'(',1,0)
+   yacc.py: 445:Action : Shift and goto state 7
+   yacc.py: 410:
+   yacc.py: 411:State  : 7
+   yacc.py: 434:Stack  : L_PAR . LexToken(IDEN,'x',1,1)
+   yacc.py: 445:Action : Shift and goto state 24
+   yacc.py: 410:
+   yacc.py: 411:State  : 24
+   yacc.py: 434:Stack  : L_PAR IDEN . LexToken(R_PAR,')',1,2)
+   yacc.py: 469:Action : Reduce rule [expression -> IDEN] with ['x'] and goto state 21
+   yacc.py: 506:Result : <Identifier @ 0x233a9c618b0> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 21
+   yacc.py: 434:Stack  : L_PAR expression . LexToken(R_PAR,')',1,2)
+   yacc.py: 445:Action : Shift and goto state 35
+   yacc.py: 410:
+   yacc.py: 411:State  : 35
+   yacc.py: 434:Stack  : L_PAR expression R_PAR . LexToken(ARROW,'=>',1,4)
+   yacc.py: 579:Error  : L_PAR expression R_PAR . LexToken(ARROW,'=>',1,4)
+   yacc.py: 410:
+   yacc.py: 411:State  : 35
+   yacc.py: 434:Stack  : L_PAR expression R_PAR . error
+   yacc.py: 579:Error  : L_PAR expression R_PAR . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 21
+   yacc.py: 434:Stack  : L_PAR expression . error
+   yacc.py: 579:Error  : L_PAR expression . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 7
+   yacc.py: 434:Stack  : L_PAR . error
+   yacc.py: 579:Error  : L_PAR . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . error
+   yacc.py: 579:Error  : . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(L_BRC,'{',1,7)
+   yacc.py: 579:Error  : . LexToken(L_BRC,'{',1,7)
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(IDEN,'a',1,8)
+   yacc.py: 445:Action : Shift and goto state 4
+   yacc.py: 410:
+   yacc.py: 411:State  : 4
+   yacc.py: 434:Stack  : IDEN . LexToken(SEMI,';',1,9)
+   yacc.py: 469:Action : Reduce rule [expression -> IDEN] with ['a'] and goto state 3
+   yacc.py: 506:Result : <Identifier @ 0x233a9c618b0> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 3
+   yacc.py: 434:Stack  : expression . LexToken(SEMI,';',1,9)
+   yacc.py: 445:Action : Shift and goto state 14
+   yacc.py: 410:
+   yacc.py: 411:State  : 14
+   yacc.py: 434:Stack  : expression SEMI . LexToken(R_BRC,'}',1,10)
+   yacc.py: 469:Action : Reduce rule [statement -> expression SEMI] with [<Identifier @ 0x233a9c618b0>,';'] and goto state 2
+   yacc.py: 506:Result : <Identifier @ 0x233a9c618b0> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 2
+   yacc.py: 434:Stack  : statement . LexToken(R_BRC,'}',1,10)
+   yacc.py: 469:Action : Reduce rule [program -> statement] with [<Identifier @ 0x233a9c618b0>] and goto state 1
+   yacc.py: 506:Result : <Identifier @ 0x233a9c618b0> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 1
+   yacc.py: 434:Stack  : program . LexToken(R_BRC,'}',1,10)
+   yacc.py: 579:Error  : program . LexToken(R_BRC,'}',1,10)
+   yacc.py: 410:
+   yacc.py: 411:State  : 1
+   yacc.py: 434:Stack  : program . error
+   yacc.py: 579:Error  : program . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . error
+   yacc.py: 579:Error  : . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(SEMI,';',1,11)
+   yacc.py: 579:Error  : . LexToken(SEMI,';',1,11)
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . $end
+   yacc.py: 579:Error  : . $end
+   yacc.py: 362:PLY: PARSE DEBUG START
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(L_PAR,'(',1,0)
+   yacc.py: 445:Action : Shift and goto state 7
+   yacc.py: 410:
+   yacc.py: 411:State  : 7
+   yacc.py: 434:Stack  : L_PAR . LexToken(IDEN,'x',1,1)
+   yacc.py: 445:Action : Shift and goto state 24
+   yacc.py: 410:
+   yacc.py: 411:State  : 24
+   yacc.py: 434:Stack  : L_PAR IDEN . LexToken(R_PAR,')',1,2)
+   yacc.py: 469:Action : Reduce rule [expression -> IDEN] with ['x'] and goto state 21
+   yacc.py: 506:Result : <Identifier @ 0x233a99f63d0> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 21
+   yacc.py: 434:Stack  : L_PAR expression . LexToken(R_PAR,')',1,2)
+   yacc.py: 445:Action : Shift and goto state 35
+   yacc.py: 410:
+   yacc.py: 411:State  : 35
+   yacc.py: 434:Stack  : L_PAR expression R_PAR . LexToken(ARROW,'=>',1,4)
+   yacc.py: 579:Error  : L_PAR expression R_PAR . LexToken(ARROW,'=>',1,4)
+   yacc.py: 410:
+   yacc.py: 411:State  : 35
+   yacc.py: 434:Stack  : L_PAR expression R_PAR . error
+   yacc.py: 579:Error  : L_PAR expression R_PAR . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 21
+   yacc.py: 434:Stack  : L_PAR expression . error
+   yacc.py: 579:Error  : L_PAR expression . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 7
+   yacc.py: 434:Stack  : L_PAR . error
+   yacc.py: 579:Error  : L_PAR . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . error
+   yacc.py: 579:Error  : . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(L_BRC,'{',1,7)
+   yacc.py: 579:Error  : . LexToken(L_BRC,'{',1,7)
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(IDEN,'a',1,8)
+   yacc.py: 445:Action : Shift and goto state 4
+   yacc.py: 410:
+   yacc.py: 411:State  : 4
+   yacc.py: 434:Stack  : IDEN . LexToken(SEMI,';',1,9)
+   yacc.py: 469:Action : Reduce rule [expression -> IDEN] with ['a'] and goto state 3
+   yacc.py: 506:Result : <Identifier @ 0x233a9c2b940> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 3
+   yacc.py: 434:Stack  : expression . LexToken(SEMI,';',1,9)
+   yacc.py: 445:Action : Shift and goto state 14
+   yacc.py: 410:
+   yacc.py: 411:State  : 14
+   yacc.py: 434:Stack  : expression SEMI . LexToken(R_BRC,'}',1,10)
+   yacc.py: 469:Action : Reduce rule [statement -> expression SEMI] with [<Identifier @ 0x233a9c2b940>,';'] and goto state 2
+   yacc.py: 506:Result : <Identifier @ 0x233a9c2b940> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 2
+   yacc.py: 434:Stack  : statement . LexToken(R_BRC,'}',1,10)
+   yacc.py: 469:Action : Reduce rule [program -> statement] with [<Identifier @ 0x233a9c2b940>] and goto state 1
+   yacc.py: 506:Result : <Identifier @ 0x233a9c2b940> (<ast_tokens.Identifier object at 0x00000 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 1
+   yacc.py: 434:Stack  : program . LexToken(R_BRC,'}',1,10)
+   yacc.py: 579:Error  : program . LexToken(R_BRC,'}',1,10)
+   yacc.py: 410:
+   yacc.py: 411:State  : 1
+   yacc.py: 434:Stack  : program . error
+   yacc.py: 579:Error  : program . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . error
+   yacc.py: 579:Error  : . error
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . LexToken(SEMI,';',1,11)
+   yacc.py: 579:Error  : . LexToken(SEMI,';',1,11)
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 434:Stack  : . $end
+   yacc.py: 579:Error  : . $end

@@ -1,6 +1,13 @@
 class AstNode: 
     children = []
 
+class Type(AstNode):
+    def __init__(self, string):
+        self.typestring = string
+    
+    def __str__(self):
+        return self.typestring
+
 class Expr(AstNode): 
     pass
 
@@ -39,6 +46,24 @@ class Number(Expr):
     
     def __str__(self):
         return str(self.value)
+    
+class Bool(Expr):
+    def __init__(self, value):
+        self.type = "bool"
+        self.value = value
+        self.children = [value] 
+    
+    def __str__(self):
+        return str(self.value)
+
+class String(Expr):
+    def __init__(self, value):
+        self.type = "string"
+        self.value = value
+        self.children = [value] 
+    
+    def __str__(self):
+        return self.value
 
 class Identifier(Expr):
     def __init__(self, value):
@@ -67,6 +92,13 @@ class Lambda(Expr):
 class Statement(AstNode):
     pass
 
+class ExpressionStatement(Statement):
+    def __init__(self, expression):
+        self.type = 'expression'
+        self.expression = expression
+        self.children = [expression]
+        
+
 class Assignment(Statement):
     def __init__(self, identifier, expression):
         self.type = "assignment"
@@ -78,6 +110,28 @@ class Assignment(Statement):
         
         return "{0} = {1}".format(self.identifier, self.expression)
 
+
+class Declaration(Statement):
+    def __init__(self, identifier):
+        self.type = 'declaration'
+        self.identifier = identifier
+        self.children = [identifier]
+    
+    def __str__(self):
+        return 'declared {0}'.format(self.identifier)
+
+
+class DeclAssign(Statement):
+    def __init__(self, identifier, expression):
+        self.type = "assignment"
+        self.identifier = identifier
+        self.expression = expression
+        self.children = [identifier, expression]
+
+    def __str__(self):        
+        return "{0} = {1}".format(self.identifier, self.expression)
+
+
 class Block(Statement):
     def __init__(self, statement):
         self.type = "block"
@@ -85,3 +139,34 @@ class Block(Statement):
 
     def prepend(self, statement):
         self.children = [statement] + self.children
+
+class Return(Statement):
+    def __init__(self, expr):
+        self.type = 'return'
+        self.expression = expr
+        self.children = [expr]
+
+
+
+class If(Statement):
+    def __init__(self, condition, statement) -> None:
+        self.type = 'if'
+        self.condition = condition
+        self.statement = statement
+        self.children = [condition, statement]
+
+class IfElse(Statement):
+    def __init__(self, condition, trueStatement, falseStatement):
+        self.type = 'ifelse'
+        self.condition = condition
+        self.trueStatement = trueStatement
+        self.falseStatement = falseStatement
+        self.children = [condition, trueStatement, falseStatement]
+    
+class While(Statement):
+    def __init__(self, condition, statement):
+        self.type = 'while'
+        self.condition = condition
+        self.statement = statement
+        self.children = [condition, statement]
+

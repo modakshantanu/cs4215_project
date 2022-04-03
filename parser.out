@@ -3,99 +3,150 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Grammar
 
 Rule 0     S' -> program
-Rule 1     program -> statement
-Rule 2     program -> statement program
-Rule 3     statement -> expression SEMI
-Rule 4     statement -> IDEN ASSIGN expression SEMI
-Rule 5     expression -> binary_operation
-Rule 6     expression -> unary_operation
-Rule 7     expression -> L_PAR expression R_PAR
-Rule 8     expression -> NUMBER
-Rule 9     expression -> IDEN
-Rule 10    expression -> function_call
-Rule 11    expression -> lambda
-Rule 12    binary_operation -> expression PLUS expression
-Rule 13    binary_operation -> expression MINUS expression
-Rule 14    binary_operation -> expression MULTIPLY expression
-Rule 15    binary_operation -> expression DIVIDE expression
-Rule 16    unary_operation -> PLUS expression
-Rule 17    unary_operation -> MINUS expression
-Rule 18    arg_list -> expression
-Rule 19    arg_list -> expression COMMA arg_list
-Rule 20    function_call -> IDEN L_PAR R_PAR
-Rule 21    function_call -> IDEN L_PAR arg_list R_PAR
-Rule 22    lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC
-Rule 23    lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+Rule 1     program -> block
+Rule 2     type -> NUMBER
+Rule 3     type -> ANY
+Rule 4     block -> statement
+Rule 5     block -> statement block
+Rule 6     statement -> expression SEMI
+Rule 7     statement -> IDEN ASSIGN expression SEMI
+Rule 8     statement -> LET IDEN SEMI
+Rule 9     statement -> LET IDEN COLON type SEMI
+Rule 10    statement -> LET IDEN ASSIGN expression SEMI
+Rule 11    statement -> LET IDEN COLON type ASSIGN expression SEMI
+Rule 12    statement -> RETURN expression SEMI
+Rule 13    statement -> IF L_PAR expression R_PAR statement ELSE statement
+Rule 14    statement -> IF L_PAR expression R_PAR statement
+Rule 15    statement -> WHILE L_PAR expression R_PAR statement
+Rule 16    statement -> L_BRC block R_BRC
+Rule 17    expression -> binary_operation
+Rule 18    expression -> unary_operation
+Rule 19    expression -> L_PAR expression R_PAR
+Rule 20    expression -> NUM_LIT
+Rule 21    expression -> BOOL_LIT
+Rule 22    expression -> STR_LIT
+Rule 23    expression -> function_call
+Rule 24    expression -> lambda
+Rule 25    expression -> IDEN
+Rule 26    binary_operation -> expression PLUS expression
+Rule 27    binary_operation -> expression MINUS expression
+Rule 28    binary_operation -> expression MULTIPLY expression
+Rule 29    binary_operation -> expression DIVIDE expression
+Rule 30    unary_operation -> PLUS expression
+Rule 31    unary_operation -> MINUS expression
+Rule 32    arg_list -> expression
+Rule 33    arg_list -> expression COMMA arg_list
+Rule 34    param_list -> IDEN COMMA param_list
+Rule 35    param_list -> IDEN
+Rule 36    function_call -> IDEN L_PAR R_PAR
+Rule 37    function_call -> IDEN L_PAR arg_list R_PAR
+Rule 38    lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC
+Rule 39    lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+Rule 40    lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
 Terminals, with rules where they appear
 
-ARROW                : 22 23
-ASSIGN               : 4
-COMMA                : 19
-DIVIDE               : 15
-IDEN                 : 4 9 20 21
-L_BRC                : 22 23
-L_PAR                : 7 20 21 22 23
-MINUS                : 13 17
-MULTIPLY             : 14
-NUMBER               : 8
-PLUS                 : 12 16
-R_BRC                : 22 23
-R_PAR                : 7 20 21 22 23
-SEMI                 : 3 4
+ANY                  : 3
+ARROW                : 38 39 40
+ASSIGN               : 7 10 11
+BOOL_LIT             : 21
+COLON                : 9 11
+COMMA                : 33 34
+DIVIDE               : 29
+ELSE                 : 13
+IDEN                 : 7 8 9 10 11 25 34 35 36 37 40
+IF                   : 13 14
+LET                  : 8 9 10 11
+L_BRC                : 16 38 39 40
+L_PAR                : 13 14 15 19 36 37 38 39 40
+MINUS                : 27 31
+MULTIPLY             : 28
+NUMBER               : 2
+NUM_LIT              : 20
+PLUS                 : 26 30
+RETURN               : 12
+R_BRC                : 16 38 39 40
+R_PAR                : 13 14 15 19 36 37 38 39 40
+SEMI                 : 6 7 8 9 10 11 12
+STR_LIT              : 22
+WHILE                : 15
 error                : 
 
 Nonterminals, with rules where they appear
 
-arg_list             : 19 21 23
-binary_operation     : 5
-expression           : 3 4 7 12 12 13 13 14 14 15 15 16 17 18 19
-function_call        : 10
-lambda               : 11
-program              : 2 22 23 0
-statement            : 1 2
-unary_operation      : 6
+arg_list             : 33 37
+binary_operation     : 17
+block                : 1 5 16
+expression           : 6 7 10 11 12 13 14 15 19 26 26 27 27 28 28 29 29 30 31 32 33
+function_call        : 23
+lambda               : 24
+param_list           : 34 39
+program              : 38 39 40 0
+statement            : 4 5 13 13 14 15
+type                 : 9 11
+unary_operation      : 18
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . program
-    (1) program -> . statement
-    (2) program -> . statement program
-    (3) statement -> . expression SEMI
-    (4) statement -> . IDEN ASSIGN expression SEMI
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (1) program -> . block
+    (4) block -> . statement
+    (5) block -> . statement block
+    (6) statement -> . expression SEMI
+    (7) statement -> . IDEN ASSIGN expression SEMI
+    (8) statement -> . LET IDEN SEMI
+    (9) statement -> . LET IDEN COLON type SEMI
+    (10) statement -> . LET IDEN ASSIGN expression SEMI
+    (11) statement -> . LET IDEN COLON type ASSIGN expression SEMI
+    (12) statement -> . RETURN expression SEMI
+    (13) statement -> . IF L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> . IF L_PAR expression R_PAR statement
+    (15) statement -> . WHILE L_PAR expression R_PAR statement
+    (16) statement -> . L_BRC block R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    IDEN            shift and go to state 4
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    IDEN            shift and go to state 5
+    LET             shift and go to state 6
+    RETURN          shift and go to state 7
+    IF              shift and go to state 8
+    WHILE           shift and go to state 10
+    L_BRC           shift and go to state 11
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
     program                        shift and go to state 1
-    statement                      shift and go to state 2
-    expression                     shift and go to state 3
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
+    block                          shift and go to state 2
+    statement                      shift and go to state 3
+    expression                     shift and go to state 4
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 1
 
@@ -105,927 +156,1993 @@ state 1
 
 state 2
 
-    (1) program -> statement .
-    (2) program -> statement . program
-    (1) program -> . statement
-    (2) program -> . statement program
-    (3) statement -> . expression SEMI
-    (4) statement -> . IDEN ASSIGN expression SEMI
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (1) program -> block .
 
-    $end            reduce using rule 1 (program -> statement .)
-    R_BRC           reduce using rule 1 (program -> statement .)
-    IDEN            shift and go to state 4
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    $end            reduce using rule 1 (program -> block .)
+    R_BRC           reduce using rule 1 (program -> block .)
 
-    statement                      shift and go to state 2
-    program                        shift and go to state 13
-    expression                     shift and go to state 3
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
 
 state 3
 
-    (3) statement -> expression . SEMI
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (4) block -> statement .
+    (5) block -> statement . block
+    (4) block -> . statement
+    (5) block -> . statement block
+    (6) statement -> . expression SEMI
+    (7) statement -> . IDEN ASSIGN expression SEMI
+    (8) statement -> . LET IDEN SEMI
+    (9) statement -> . LET IDEN COLON type SEMI
+    (10) statement -> . LET IDEN ASSIGN expression SEMI
+    (11) statement -> . LET IDEN COLON type ASSIGN expression SEMI
+    (12) statement -> . RETURN expression SEMI
+    (13) statement -> . IF L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> . IF L_PAR expression R_PAR statement
+    (15) statement -> . WHILE L_PAR expression R_PAR statement
+    (16) statement -> . L_BRC block R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    SEMI            shift and go to state 14
-    PLUS            shift and go to state 15
-    MINUS           shift and go to state 16
-    MULTIPLY        shift and go to state 17
-    DIVIDE          shift and go to state 18
+    $end            reduce using rule 4 (block -> statement .)
+    R_BRC           reduce using rule 4 (block -> statement .)
+    IDEN            shift and go to state 5
+    LET             shift and go to state 6
+    RETURN          shift and go to state 7
+    IF              shift and go to state 8
+    WHILE           shift and go to state 10
+    L_BRC           shift and go to state 11
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
+    statement                      shift and go to state 3
+    block                          shift and go to state 21
+    expression                     shift and go to state 4
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 4
 
-    (4) statement -> IDEN . ASSIGN expression SEMI
-    (9) expression -> IDEN .
-    (20) function_call -> IDEN . L_PAR R_PAR
-    (21) function_call -> IDEN . L_PAR arg_list R_PAR
+    (6) statement -> expression . SEMI
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    ASSIGN          shift and go to state 19
-    SEMI            reduce using rule 9 (expression -> IDEN .)
-    PLUS            reduce using rule 9 (expression -> IDEN .)
-    MINUS           reduce using rule 9 (expression -> IDEN .)
-    MULTIPLY        reduce using rule 9 (expression -> IDEN .)
-    DIVIDE          reduce using rule 9 (expression -> IDEN .)
-    L_PAR           shift and go to state 20
+    SEMI            shift and go to state 22
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
 state 5
 
-    (5) expression -> binary_operation .
+    (7) statement -> IDEN . ASSIGN expression SEMI
+    (25) expression -> IDEN .
+    (36) function_call -> IDEN . L_PAR R_PAR
+    (37) function_call -> IDEN . L_PAR arg_list R_PAR
 
-    SEMI            reduce using rule 5 (expression -> binary_operation .)
-    PLUS            reduce using rule 5 (expression -> binary_operation .)
-    MINUS           reduce using rule 5 (expression -> binary_operation .)
-    MULTIPLY        reduce using rule 5 (expression -> binary_operation .)
-    DIVIDE          reduce using rule 5 (expression -> binary_operation .)
-    R_PAR           reduce using rule 5 (expression -> binary_operation .)
-    COMMA           reduce using rule 5 (expression -> binary_operation .)
+    ASSIGN          shift and go to state 27
+    SEMI            reduce using rule 25 (expression -> IDEN .)
+    PLUS            reduce using rule 25 (expression -> IDEN .)
+    MINUS           reduce using rule 25 (expression -> IDEN .)
+    MULTIPLY        reduce using rule 25 (expression -> IDEN .)
+    DIVIDE          reduce using rule 25 (expression -> IDEN .)
+    L_PAR           shift and go to state 28
 
 
 state 6
 
-    (6) expression -> unary_operation .
+    (8) statement -> LET . IDEN SEMI
+    (9) statement -> LET . IDEN COLON type SEMI
+    (10) statement -> LET . IDEN ASSIGN expression SEMI
+    (11) statement -> LET . IDEN COLON type ASSIGN expression SEMI
 
-    SEMI            reduce using rule 6 (expression -> unary_operation .)
-    PLUS            reduce using rule 6 (expression -> unary_operation .)
-    MINUS           reduce using rule 6 (expression -> unary_operation .)
-    MULTIPLY        reduce using rule 6 (expression -> unary_operation .)
-    DIVIDE          reduce using rule 6 (expression -> unary_operation .)
-    R_PAR           reduce using rule 6 (expression -> unary_operation .)
-    COMMA           reduce using rule 6 (expression -> unary_operation .)
+    IDEN            shift and go to state 29
 
 
 state 7
 
-    (7) expression -> L_PAR . expression R_PAR
-    (22) lambda -> L_PAR . R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> L_PAR . arg_list R_PAR ARROW L_BRC program R_BRC
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (18) arg_list -> . expression
-    (19) arg_list -> . expression COMMA arg_list
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (12) statement -> RETURN . expression SEMI
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    R_PAR           shift and go to state 22
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
-    expression                     shift and go to state 21
-    arg_list                       shift and go to state 23
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
+    expression                     shift and go to state 30
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 8
 
-    (8) expression -> NUMBER .
+    (13) statement -> IF . L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> IF . L_PAR expression R_PAR statement
 
-    SEMI            reduce using rule 8 (expression -> NUMBER .)
-    PLUS            reduce using rule 8 (expression -> NUMBER .)
-    MINUS           reduce using rule 8 (expression -> NUMBER .)
-    MULTIPLY        reduce using rule 8 (expression -> NUMBER .)
-    DIVIDE          reduce using rule 8 (expression -> NUMBER .)
-    R_PAR           reduce using rule 8 (expression -> NUMBER .)
-    COMMA           reduce using rule 8 (expression -> NUMBER .)
+    L_PAR           shift and go to state 32
 
 
 state 9
 
-    (10) expression -> function_call .
+    (19) expression -> L_PAR . expression R_PAR
+    (38) lambda -> L_PAR . R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> L_PAR . param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> L_PAR . IDEN R_PAR ARROW L_BRC program R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (34) param_list -> . IDEN COMMA param_list
+    (35) param_list -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    SEMI            reduce using rule 10 (expression -> function_call .)
-    PLUS            reduce using rule 10 (expression -> function_call .)
-    MINUS           reduce using rule 10 (expression -> function_call .)
-    MULTIPLY        reduce using rule 10 (expression -> function_call .)
-    DIVIDE          reduce using rule 10 (expression -> function_call .)
-    R_PAR           reduce using rule 10 (expression -> function_call .)
-    COMMA           reduce using rule 10 (expression -> function_call .)
+    R_PAR           shift and go to state 34
+    IDEN            shift and go to state 36
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
+    expression                     shift and go to state 33
+    param_list                     shift and go to state 35
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 10
 
-    (11) expression -> lambda .
+    (15) statement -> WHILE . L_PAR expression R_PAR statement
 
-    SEMI            reduce using rule 11 (expression -> lambda .)
-    PLUS            reduce using rule 11 (expression -> lambda .)
-    MINUS           reduce using rule 11 (expression -> lambda .)
-    MULTIPLY        reduce using rule 11 (expression -> lambda .)
-    DIVIDE          reduce using rule 11 (expression -> lambda .)
-    R_PAR           reduce using rule 11 (expression -> lambda .)
-    COMMA           reduce using rule 11 (expression -> lambda .)
+    L_PAR           shift and go to state 37
 
 
 state 11
 
-    (16) unary_operation -> PLUS . expression
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (16) statement -> L_BRC . block R_BRC
+    (4) block -> . statement
+    (5) block -> . statement block
+    (6) statement -> . expression SEMI
+    (7) statement -> . IDEN ASSIGN expression SEMI
+    (8) statement -> . LET IDEN SEMI
+    (9) statement -> . LET IDEN COLON type SEMI
+    (10) statement -> . LET IDEN ASSIGN expression SEMI
+    (11) statement -> . LET IDEN COLON type ASSIGN expression SEMI
+    (12) statement -> . RETURN expression SEMI
+    (13) statement -> . IF L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> . IF L_PAR expression R_PAR statement
+    (15) statement -> . WHILE L_PAR expression R_PAR statement
+    (16) statement -> . L_BRC block R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    IDEN            shift and go to state 5
+    LET             shift and go to state 6
+    RETURN          shift and go to state 7
+    IF              shift and go to state 8
+    WHILE           shift and go to state 10
+    L_BRC           shift and go to state 11
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
-    expression                     shift and go to state 25
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
+    block                          shift and go to state 38
+    statement                      shift and go to state 3
+    expression                     shift and go to state 4
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 12
 
-    (17) unary_operation -> MINUS . expression
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (17) expression -> binary_operation .
 
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    SEMI            reduce using rule 17 (expression -> binary_operation .)
+    PLUS            reduce using rule 17 (expression -> binary_operation .)
+    MINUS           reduce using rule 17 (expression -> binary_operation .)
+    MULTIPLY        reduce using rule 17 (expression -> binary_operation .)
+    DIVIDE          reduce using rule 17 (expression -> binary_operation .)
+    R_PAR           reduce using rule 17 (expression -> binary_operation .)
+    COMMA           reduce using rule 17 (expression -> binary_operation .)
 
-    expression                     shift and go to state 26
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
 
 state 13
 
-    (2) program -> statement program .
+    (18) expression -> unary_operation .
 
-    $end            reduce using rule 2 (program -> statement program .)
-    R_BRC           reduce using rule 2 (program -> statement program .)
+    SEMI            reduce using rule 18 (expression -> unary_operation .)
+    PLUS            reduce using rule 18 (expression -> unary_operation .)
+    MINUS           reduce using rule 18 (expression -> unary_operation .)
+    MULTIPLY        reduce using rule 18 (expression -> unary_operation .)
+    DIVIDE          reduce using rule 18 (expression -> unary_operation .)
+    R_PAR           reduce using rule 18 (expression -> unary_operation .)
+    COMMA           reduce using rule 18 (expression -> unary_operation .)
 
 
 state 14
 
-    (3) statement -> expression SEMI .
+    (20) expression -> NUM_LIT .
 
-    IDEN            reduce using rule 3 (statement -> expression SEMI .)
-    L_PAR           reduce using rule 3 (statement -> expression SEMI .)
-    NUMBER          reduce using rule 3 (statement -> expression SEMI .)
-    PLUS            reduce using rule 3 (statement -> expression SEMI .)
-    MINUS           reduce using rule 3 (statement -> expression SEMI .)
-    $end            reduce using rule 3 (statement -> expression SEMI .)
-    R_BRC           reduce using rule 3 (statement -> expression SEMI .)
+    SEMI            reduce using rule 20 (expression -> NUM_LIT .)
+    PLUS            reduce using rule 20 (expression -> NUM_LIT .)
+    MINUS           reduce using rule 20 (expression -> NUM_LIT .)
+    MULTIPLY        reduce using rule 20 (expression -> NUM_LIT .)
+    DIVIDE          reduce using rule 20 (expression -> NUM_LIT .)
+    R_PAR           reduce using rule 20 (expression -> NUM_LIT .)
+    COMMA           reduce using rule 20 (expression -> NUM_LIT .)
 
 
 state 15
 
-    (12) binary_operation -> expression PLUS . expression
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (21) expression -> BOOL_LIT .
 
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    SEMI            reduce using rule 21 (expression -> BOOL_LIT .)
+    PLUS            reduce using rule 21 (expression -> BOOL_LIT .)
+    MINUS           reduce using rule 21 (expression -> BOOL_LIT .)
+    MULTIPLY        reduce using rule 21 (expression -> BOOL_LIT .)
+    DIVIDE          reduce using rule 21 (expression -> BOOL_LIT .)
+    R_PAR           reduce using rule 21 (expression -> BOOL_LIT .)
+    COMMA           reduce using rule 21 (expression -> BOOL_LIT .)
 
-    expression                     shift and go to state 27
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
 
 state 16
 
-    (13) binary_operation -> expression MINUS . expression
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (22) expression -> STR_LIT .
 
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    SEMI            reduce using rule 22 (expression -> STR_LIT .)
+    PLUS            reduce using rule 22 (expression -> STR_LIT .)
+    MINUS           reduce using rule 22 (expression -> STR_LIT .)
+    MULTIPLY        reduce using rule 22 (expression -> STR_LIT .)
+    DIVIDE          reduce using rule 22 (expression -> STR_LIT .)
+    R_PAR           reduce using rule 22 (expression -> STR_LIT .)
+    COMMA           reduce using rule 22 (expression -> STR_LIT .)
 
-    expression                     shift and go to state 28
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
 
 state 17
 
-    (14) binary_operation -> expression MULTIPLY . expression
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (23) expression -> function_call .
 
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    SEMI            reduce using rule 23 (expression -> function_call .)
+    PLUS            reduce using rule 23 (expression -> function_call .)
+    MINUS           reduce using rule 23 (expression -> function_call .)
+    MULTIPLY        reduce using rule 23 (expression -> function_call .)
+    DIVIDE          reduce using rule 23 (expression -> function_call .)
+    R_PAR           reduce using rule 23 (expression -> function_call .)
+    COMMA           reduce using rule 23 (expression -> function_call .)
 
-    expression                     shift and go to state 29
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
 
 state 18
 
-    (15) binary_operation -> expression DIVIDE . expression
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (24) expression -> lambda .
 
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    SEMI            reduce using rule 24 (expression -> lambda .)
+    PLUS            reduce using rule 24 (expression -> lambda .)
+    MINUS           reduce using rule 24 (expression -> lambda .)
+    MULTIPLY        reduce using rule 24 (expression -> lambda .)
+    DIVIDE          reduce using rule 24 (expression -> lambda .)
+    R_PAR           reduce using rule 24 (expression -> lambda .)
+    COMMA           reduce using rule 24 (expression -> lambda .)
 
-    expression                     shift and go to state 30
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
 
 state 19
 
-    (4) statement -> IDEN ASSIGN . expression SEMI
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (30) unary_operation -> PLUS . expression
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
-    expression                     shift and go to state 31
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
+    expression                     shift and go to state 39
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 20
 
-    (20) function_call -> IDEN L_PAR . R_PAR
-    (21) function_call -> IDEN L_PAR . arg_list R_PAR
-    (18) arg_list -> . expression
-    (19) arg_list -> . expression COMMA arg_list
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (31) unary_operation -> MINUS . expression
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    R_PAR           shift and go to state 32
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
-    arg_list                       shift and go to state 33
-    expression                     shift and go to state 34
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
+    expression                     shift and go to state 40
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 21
 
-    (7) expression -> L_PAR expression . R_PAR
-    (18) arg_list -> expression .
-    (19) arg_list -> expression . COMMA arg_list
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (5) block -> statement block .
 
-  ! shift/reduce conflict for R_PAR resolved as shift
-    R_PAR           shift and go to state 35
-    COMMA           shift and go to state 36
-    PLUS            shift and go to state 15
-    MINUS           shift and go to state 16
-    MULTIPLY        shift and go to state 17
-    DIVIDE          shift and go to state 18
-
-  ! R_PAR           [ reduce using rule 18 (arg_list -> expression .) ]
+    $end            reduce using rule 5 (block -> statement block .)
+    R_BRC           reduce using rule 5 (block -> statement block .)
 
 
 state 22
 
-    (22) lambda -> L_PAR R_PAR . ARROW L_BRC program R_BRC
+    (6) statement -> expression SEMI .
 
-    ARROW           shift and go to state 37
+    IDEN            reduce using rule 6 (statement -> expression SEMI .)
+    LET             reduce using rule 6 (statement -> expression SEMI .)
+    RETURN          reduce using rule 6 (statement -> expression SEMI .)
+    IF              reduce using rule 6 (statement -> expression SEMI .)
+    WHILE           reduce using rule 6 (statement -> expression SEMI .)
+    L_BRC           reduce using rule 6 (statement -> expression SEMI .)
+    L_PAR           reduce using rule 6 (statement -> expression SEMI .)
+    NUM_LIT         reduce using rule 6 (statement -> expression SEMI .)
+    BOOL_LIT        reduce using rule 6 (statement -> expression SEMI .)
+    STR_LIT         reduce using rule 6 (statement -> expression SEMI .)
+    PLUS            reduce using rule 6 (statement -> expression SEMI .)
+    MINUS           reduce using rule 6 (statement -> expression SEMI .)
+    $end            reduce using rule 6 (statement -> expression SEMI .)
+    R_BRC           reduce using rule 6 (statement -> expression SEMI .)
+    ELSE            reduce using rule 6 (statement -> expression SEMI .)
 
 
 state 23
 
-    (23) lambda -> L_PAR arg_list . R_PAR ARROW L_BRC program R_BRC
+    (26) binary_operation -> expression PLUS . expression
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    R_PAR           shift and go to state 38
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
+    expression                     shift and go to state 41
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 24
 
-    (9) expression -> IDEN .
-    (20) function_call -> IDEN . L_PAR R_PAR
-    (21) function_call -> IDEN . L_PAR arg_list R_PAR
+    (27) binary_operation -> expression MINUS . expression
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    R_PAR           reduce using rule 9 (expression -> IDEN .)
-    COMMA           reduce using rule 9 (expression -> IDEN .)
-    PLUS            reduce using rule 9 (expression -> IDEN .)
-    MINUS           reduce using rule 9 (expression -> IDEN .)
-    MULTIPLY        reduce using rule 9 (expression -> IDEN .)
-    DIVIDE          reduce using rule 9 (expression -> IDEN .)
-    SEMI            reduce using rule 9 (expression -> IDEN .)
-    L_PAR           shift and go to state 20
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
+    expression                     shift and go to state 42
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 25
 
-    (16) unary_operation -> PLUS expression .
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (28) binary_operation -> expression MULTIPLY . expression
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    SEMI            reduce using rule 16 (unary_operation -> PLUS expression .)
-    PLUS            reduce using rule 16 (unary_operation -> PLUS expression .)
-    MINUS           reduce using rule 16 (unary_operation -> PLUS expression .)
-    MULTIPLY        reduce using rule 16 (unary_operation -> PLUS expression .)
-    DIVIDE          reduce using rule 16 (unary_operation -> PLUS expression .)
-    R_PAR           reduce using rule 16 (unary_operation -> PLUS expression .)
-    COMMA           reduce using rule 16 (unary_operation -> PLUS expression .)
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
-  ! PLUS            [ shift and go to state 15 ]
-  ! MINUS           [ shift and go to state 16 ]
-  ! MULTIPLY        [ shift and go to state 17 ]
-  ! DIVIDE          [ shift and go to state 18 ]
-
+    expression                     shift and go to state 43
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 26
 
-    (17) unary_operation -> MINUS expression .
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (29) binary_operation -> expression DIVIDE . expression
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    SEMI            reduce using rule 17 (unary_operation -> MINUS expression .)
-    PLUS            reduce using rule 17 (unary_operation -> MINUS expression .)
-    MINUS           reduce using rule 17 (unary_operation -> MINUS expression .)
-    MULTIPLY        reduce using rule 17 (unary_operation -> MINUS expression .)
-    DIVIDE          reduce using rule 17 (unary_operation -> MINUS expression .)
-    R_PAR           reduce using rule 17 (unary_operation -> MINUS expression .)
-    COMMA           reduce using rule 17 (unary_operation -> MINUS expression .)
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
-  ! PLUS            [ shift and go to state 15 ]
-  ! MINUS           [ shift and go to state 16 ]
-  ! MULTIPLY        [ shift and go to state 17 ]
-  ! DIVIDE          [ shift and go to state 18 ]
-
+    expression                     shift and go to state 44
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 27
 
-    (12) binary_operation -> expression PLUS expression .
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (7) statement -> IDEN ASSIGN . expression SEMI
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    SEMI            reduce using rule 12 (binary_operation -> expression PLUS expression .)
-    PLUS            reduce using rule 12 (binary_operation -> expression PLUS expression .)
-    MINUS           reduce using rule 12 (binary_operation -> expression PLUS expression .)
-    R_PAR           reduce using rule 12 (binary_operation -> expression PLUS expression .)
-    COMMA           reduce using rule 12 (binary_operation -> expression PLUS expression .)
-    MULTIPLY        shift and go to state 17
-    DIVIDE          shift and go to state 18
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
-  ! MULTIPLY        [ reduce using rule 12 (binary_operation -> expression PLUS expression .) ]
-  ! DIVIDE          [ reduce using rule 12 (binary_operation -> expression PLUS expression .) ]
-  ! PLUS            [ shift and go to state 15 ]
-  ! MINUS           [ shift and go to state 16 ]
-
+    expression                     shift and go to state 45
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 28
 
-    (13) binary_operation -> expression MINUS expression .
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (36) function_call -> IDEN L_PAR . R_PAR
+    (37) function_call -> IDEN L_PAR . arg_list R_PAR
+    (32) arg_list -> . expression
+    (33) arg_list -> . expression COMMA arg_list
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    SEMI            reduce using rule 13 (binary_operation -> expression MINUS expression .)
-    PLUS            reduce using rule 13 (binary_operation -> expression MINUS expression .)
-    MINUS           reduce using rule 13 (binary_operation -> expression MINUS expression .)
-    R_PAR           reduce using rule 13 (binary_operation -> expression MINUS expression .)
-    COMMA           reduce using rule 13 (binary_operation -> expression MINUS expression .)
-    MULTIPLY        shift and go to state 17
-    DIVIDE          shift and go to state 18
+    R_PAR           shift and go to state 46
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
-  ! MULTIPLY        [ reduce using rule 13 (binary_operation -> expression MINUS expression .) ]
-  ! DIVIDE          [ reduce using rule 13 (binary_operation -> expression MINUS expression .) ]
-  ! PLUS            [ shift and go to state 15 ]
-  ! MINUS           [ shift and go to state 16 ]
-
+    arg_list                       shift and go to state 47
+    expression                     shift and go to state 48
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 29
 
-    (14) binary_operation -> expression MULTIPLY expression .
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (8) statement -> LET IDEN . SEMI
+    (9) statement -> LET IDEN . COLON type SEMI
+    (10) statement -> LET IDEN . ASSIGN expression SEMI
+    (11) statement -> LET IDEN . COLON type ASSIGN expression SEMI
 
-    SEMI            reduce using rule 14 (binary_operation -> expression MULTIPLY expression .)
-    PLUS            reduce using rule 14 (binary_operation -> expression MULTIPLY expression .)
-    MINUS           reduce using rule 14 (binary_operation -> expression MULTIPLY expression .)
-    MULTIPLY        reduce using rule 14 (binary_operation -> expression MULTIPLY expression .)
-    DIVIDE          reduce using rule 14 (binary_operation -> expression MULTIPLY expression .)
-    R_PAR           reduce using rule 14 (binary_operation -> expression MULTIPLY expression .)
-    COMMA           reduce using rule 14 (binary_operation -> expression MULTIPLY expression .)
-
-  ! PLUS            [ shift and go to state 15 ]
-  ! MINUS           [ shift and go to state 16 ]
-  ! MULTIPLY        [ shift and go to state 17 ]
-  ! DIVIDE          [ shift and go to state 18 ]
+    SEMI            shift and go to state 49
+    COLON           shift and go to state 50
+    ASSIGN          shift and go to state 51
 
 
 state 30
 
-    (15) binary_operation -> expression DIVIDE expression .
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (12) statement -> RETURN expression . SEMI
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    SEMI            reduce using rule 15 (binary_operation -> expression DIVIDE expression .)
-    PLUS            reduce using rule 15 (binary_operation -> expression DIVIDE expression .)
-    MINUS           reduce using rule 15 (binary_operation -> expression DIVIDE expression .)
-    MULTIPLY        reduce using rule 15 (binary_operation -> expression DIVIDE expression .)
-    DIVIDE          reduce using rule 15 (binary_operation -> expression DIVIDE expression .)
-    R_PAR           reduce using rule 15 (binary_operation -> expression DIVIDE expression .)
-    COMMA           reduce using rule 15 (binary_operation -> expression DIVIDE expression .)
-
-  ! PLUS            [ shift and go to state 15 ]
-  ! MINUS           [ shift and go to state 16 ]
-  ! MULTIPLY        [ shift and go to state 17 ]
-  ! DIVIDE          [ shift and go to state 18 ]
+    SEMI            shift and go to state 52
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
 state 31
 
-    (4) statement -> IDEN ASSIGN expression . SEMI
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (25) expression -> IDEN .
+    (36) function_call -> IDEN . L_PAR R_PAR
+    (37) function_call -> IDEN . L_PAR arg_list R_PAR
 
-    SEMI            shift and go to state 39
-    PLUS            shift and go to state 15
-    MINUS           shift and go to state 16
-    MULTIPLY        shift and go to state 17
-    DIVIDE          shift and go to state 18
+    SEMI            reduce using rule 25 (expression -> IDEN .)
+    PLUS            reduce using rule 25 (expression -> IDEN .)
+    MINUS           reduce using rule 25 (expression -> IDEN .)
+    MULTIPLY        reduce using rule 25 (expression -> IDEN .)
+    DIVIDE          reduce using rule 25 (expression -> IDEN .)
+    R_PAR           reduce using rule 25 (expression -> IDEN .)
+    COMMA           reduce using rule 25 (expression -> IDEN .)
+    L_PAR           shift and go to state 28
 
 
 state 32
 
-    (20) function_call -> IDEN L_PAR R_PAR .
+    (13) statement -> IF L_PAR . expression R_PAR statement ELSE statement
+    (14) statement -> IF L_PAR . expression R_PAR statement
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    SEMI            reduce using rule 20 (function_call -> IDEN L_PAR R_PAR .)
-    PLUS            reduce using rule 20 (function_call -> IDEN L_PAR R_PAR .)
-    MINUS           reduce using rule 20 (function_call -> IDEN L_PAR R_PAR .)
-    MULTIPLY        reduce using rule 20 (function_call -> IDEN L_PAR R_PAR .)
-    DIVIDE          reduce using rule 20 (function_call -> IDEN L_PAR R_PAR .)
-    R_PAR           reduce using rule 20 (function_call -> IDEN L_PAR R_PAR .)
-    COMMA           reduce using rule 20 (function_call -> IDEN L_PAR R_PAR .)
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
+    expression                     shift and go to state 53
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 33
 
-    (21) function_call -> IDEN L_PAR arg_list . R_PAR
+    (19) expression -> L_PAR expression . R_PAR
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    R_PAR           shift and go to state 40
+    R_PAR           shift and go to state 54
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
 state 34
 
-    (18) arg_list -> expression .
-    (19) arg_list -> expression . COMMA arg_list
-    (12) binary_operation -> expression . PLUS expression
-    (13) binary_operation -> expression . MINUS expression
-    (14) binary_operation -> expression . MULTIPLY expression
-    (15) binary_operation -> expression . DIVIDE expression
+    (38) lambda -> L_PAR R_PAR . ARROW L_BRC program R_BRC
 
-    R_PAR           reduce using rule 18 (arg_list -> expression .)
-    COMMA           shift and go to state 36
-    PLUS            shift and go to state 15
-    MINUS           shift and go to state 16
-    MULTIPLY        shift and go to state 17
-    DIVIDE          shift and go to state 18
+    ARROW           shift and go to state 55
 
 
 state 35
 
-    (7) expression -> L_PAR expression R_PAR .
+    (39) lambda -> L_PAR param_list . R_PAR ARROW L_BRC program R_BRC
 
-    SEMI            reduce using rule 7 (expression -> L_PAR expression R_PAR .)
-    PLUS            reduce using rule 7 (expression -> L_PAR expression R_PAR .)
-    MINUS           reduce using rule 7 (expression -> L_PAR expression R_PAR .)
-    MULTIPLY        reduce using rule 7 (expression -> L_PAR expression R_PAR .)
-    DIVIDE          reduce using rule 7 (expression -> L_PAR expression R_PAR .)
-    R_PAR           reduce using rule 7 (expression -> L_PAR expression R_PAR .)
-    COMMA           reduce using rule 7 (expression -> L_PAR expression R_PAR .)
+    R_PAR           shift and go to state 56
 
 
 state 36
 
-    (19) arg_list -> expression COMMA . arg_list
-    (18) arg_list -> . expression
-    (19) arg_list -> . expression COMMA arg_list
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> L_PAR IDEN . R_PAR ARROW L_BRC program R_BRC
+    (25) expression -> IDEN .
+    (34) param_list -> IDEN . COMMA param_list
+    (35) param_list -> IDEN .
+    (36) function_call -> IDEN . L_PAR R_PAR
+    (37) function_call -> IDEN . L_PAR arg_list R_PAR
 
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    IDEN            shift and go to state 24
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+  ! shift/reduce conflict for R_PAR resolved as shift
+  ! shift/reduce conflict for R_PAR resolved as shift
+    R_PAR           shift and go to state 57
+    PLUS            reduce using rule 25 (expression -> IDEN .)
+    MINUS           reduce using rule 25 (expression -> IDEN .)
+    MULTIPLY        reduce using rule 25 (expression -> IDEN .)
+    DIVIDE          reduce using rule 25 (expression -> IDEN .)
+    COMMA           shift and go to state 58
+    L_PAR           shift and go to state 28
 
-    expression                     shift and go to state 34
-    arg_list                       shift and go to state 41
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
+  ! R_PAR           [ reduce using rule 25 (expression -> IDEN .) ]
+  ! R_PAR           [ reduce using rule 35 (param_list -> IDEN .) ]
+
 
 state 37
 
-    (22) lambda -> L_PAR R_PAR ARROW . L_BRC program R_BRC
+    (15) statement -> WHILE L_PAR . expression R_PAR statement
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
 
-    L_BRC           shift and go to state 42
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
+    expression                     shift and go to state 59
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
 
 state 38
 
-    (23) lambda -> L_PAR arg_list R_PAR . ARROW L_BRC program R_BRC
+    (16) statement -> L_BRC block . R_BRC
 
-    ARROW           shift and go to state 43
+    R_BRC           shift and go to state 60
 
 
 state 39
 
-    (4) statement -> IDEN ASSIGN expression SEMI .
+    (30) unary_operation -> PLUS expression .
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    IDEN            reduce using rule 4 (statement -> IDEN ASSIGN expression SEMI .)
-    L_PAR           reduce using rule 4 (statement -> IDEN ASSIGN expression SEMI .)
-    NUMBER          reduce using rule 4 (statement -> IDEN ASSIGN expression SEMI .)
-    PLUS            reduce using rule 4 (statement -> IDEN ASSIGN expression SEMI .)
-    MINUS           reduce using rule 4 (statement -> IDEN ASSIGN expression SEMI .)
-    $end            reduce using rule 4 (statement -> IDEN ASSIGN expression SEMI .)
-    R_BRC           reduce using rule 4 (statement -> IDEN ASSIGN expression SEMI .)
+    SEMI            reduce using rule 30 (unary_operation -> PLUS expression .)
+    PLUS            reduce using rule 30 (unary_operation -> PLUS expression .)
+    MINUS           reduce using rule 30 (unary_operation -> PLUS expression .)
+    MULTIPLY        reduce using rule 30 (unary_operation -> PLUS expression .)
+    DIVIDE          reduce using rule 30 (unary_operation -> PLUS expression .)
+    R_PAR           reduce using rule 30 (unary_operation -> PLUS expression .)
+    COMMA           reduce using rule 30 (unary_operation -> PLUS expression .)
+
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+  ! MULTIPLY        [ shift and go to state 25 ]
+  ! DIVIDE          [ shift and go to state 26 ]
 
 
 state 40
 
-    (21) function_call -> IDEN L_PAR arg_list R_PAR .
+    (31) unary_operation -> MINUS expression .
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    SEMI            reduce using rule 21 (function_call -> IDEN L_PAR arg_list R_PAR .)
-    PLUS            reduce using rule 21 (function_call -> IDEN L_PAR arg_list R_PAR .)
-    MINUS           reduce using rule 21 (function_call -> IDEN L_PAR arg_list R_PAR .)
-    MULTIPLY        reduce using rule 21 (function_call -> IDEN L_PAR arg_list R_PAR .)
-    DIVIDE          reduce using rule 21 (function_call -> IDEN L_PAR arg_list R_PAR .)
-    R_PAR           reduce using rule 21 (function_call -> IDEN L_PAR arg_list R_PAR .)
-    COMMA           reduce using rule 21 (function_call -> IDEN L_PAR arg_list R_PAR .)
+    SEMI            reduce using rule 31 (unary_operation -> MINUS expression .)
+    PLUS            reduce using rule 31 (unary_operation -> MINUS expression .)
+    MINUS           reduce using rule 31 (unary_operation -> MINUS expression .)
+    MULTIPLY        reduce using rule 31 (unary_operation -> MINUS expression .)
+    DIVIDE          reduce using rule 31 (unary_operation -> MINUS expression .)
+    R_PAR           reduce using rule 31 (unary_operation -> MINUS expression .)
+    COMMA           reduce using rule 31 (unary_operation -> MINUS expression .)
+
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+  ! MULTIPLY        [ shift and go to state 25 ]
+  ! DIVIDE          [ shift and go to state 26 ]
 
 
 state 41
 
-    (19) arg_list -> expression COMMA arg_list .
+    (26) binary_operation -> expression PLUS expression .
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    R_PAR           reduce using rule 19 (arg_list -> expression COMMA arg_list .)
+    SEMI            reduce using rule 26 (binary_operation -> expression PLUS expression .)
+    PLUS            reduce using rule 26 (binary_operation -> expression PLUS expression .)
+    MINUS           reduce using rule 26 (binary_operation -> expression PLUS expression .)
+    R_PAR           reduce using rule 26 (binary_operation -> expression PLUS expression .)
+    COMMA           reduce using rule 26 (binary_operation -> expression PLUS expression .)
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+  ! MULTIPLY        [ reduce using rule 26 (binary_operation -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 26 (binary_operation -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
 
 
 state 42
 
-    (22) lambda -> L_PAR R_PAR ARROW L_BRC . program R_BRC
-    (1) program -> . statement
-    (2) program -> . statement program
-    (3) statement -> . expression SEMI
-    (4) statement -> . IDEN ASSIGN expression SEMI
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (27) binary_operation -> expression MINUS expression .
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    IDEN            shift and go to state 4
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    SEMI            reduce using rule 27 (binary_operation -> expression MINUS expression .)
+    PLUS            reduce using rule 27 (binary_operation -> expression MINUS expression .)
+    MINUS           reduce using rule 27 (binary_operation -> expression MINUS expression .)
+    R_PAR           reduce using rule 27 (binary_operation -> expression MINUS expression .)
+    COMMA           reduce using rule 27 (binary_operation -> expression MINUS expression .)
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
 
-    program                        shift and go to state 44
-    statement                      shift and go to state 2
-    expression                     shift and go to state 3
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
+  ! MULTIPLY        [ reduce using rule 27 (binary_operation -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 27 (binary_operation -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+
 
 state 43
 
-    (23) lambda -> L_PAR arg_list R_PAR ARROW . L_BRC program R_BRC
+    (28) binary_operation -> expression MULTIPLY expression .
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    L_BRC           shift and go to state 45
+    SEMI            reduce using rule 28 (binary_operation -> expression MULTIPLY expression .)
+    PLUS            reduce using rule 28 (binary_operation -> expression MULTIPLY expression .)
+    MINUS           reduce using rule 28 (binary_operation -> expression MULTIPLY expression .)
+    MULTIPLY        reduce using rule 28 (binary_operation -> expression MULTIPLY expression .)
+    DIVIDE          reduce using rule 28 (binary_operation -> expression MULTIPLY expression .)
+    R_PAR           reduce using rule 28 (binary_operation -> expression MULTIPLY expression .)
+    COMMA           reduce using rule 28 (binary_operation -> expression MULTIPLY expression .)
+
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+  ! MULTIPLY        [ shift and go to state 25 ]
+  ! DIVIDE          [ shift and go to state 26 ]
 
 
 state 44
 
-    (22) lambda -> L_PAR R_PAR ARROW L_BRC program . R_BRC
+    (29) binary_operation -> expression DIVIDE expression .
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    R_BRC           shift and go to state 46
+    SEMI            reduce using rule 29 (binary_operation -> expression DIVIDE expression .)
+    PLUS            reduce using rule 29 (binary_operation -> expression DIVIDE expression .)
+    MINUS           reduce using rule 29 (binary_operation -> expression DIVIDE expression .)
+    MULTIPLY        reduce using rule 29 (binary_operation -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 29 (binary_operation -> expression DIVIDE expression .)
+    R_PAR           reduce using rule 29 (binary_operation -> expression DIVIDE expression .)
+    COMMA           reduce using rule 29 (binary_operation -> expression DIVIDE expression .)
+
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+  ! MULTIPLY        [ shift and go to state 25 ]
+  ! DIVIDE          [ shift and go to state 26 ]
 
 
 state 45
 
-    (23) lambda -> L_PAR arg_list R_PAR ARROW L_BRC . program R_BRC
-    (1) program -> . statement
-    (2) program -> . statement program
-    (3) statement -> . expression SEMI
-    (4) statement -> . IDEN ASSIGN expression SEMI
-    (5) expression -> . binary_operation
-    (6) expression -> . unary_operation
-    (7) expression -> . L_PAR expression R_PAR
-    (8) expression -> . NUMBER
-    (9) expression -> . IDEN
-    (10) expression -> . function_call
-    (11) expression -> . lambda
-    (12) binary_operation -> . expression PLUS expression
-    (13) binary_operation -> . expression MINUS expression
-    (14) binary_operation -> . expression MULTIPLY expression
-    (15) binary_operation -> . expression DIVIDE expression
-    (16) unary_operation -> . PLUS expression
-    (17) unary_operation -> . MINUS expression
-    (20) function_call -> . IDEN L_PAR R_PAR
-    (21) function_call -> . IDEN L_PAR arg_list R_PAR
-    (22) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
-    (23) lambda -> . L_PAR arg_list R_PAR ARROW L_BRC program R_BRC
+    (7) statement -> IDEN ASSIGN expression . SEMI
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    IDEN            shift and go to state 4
-    L_PAR           shift and go to state 7
-    NUMBER          shift and go to state 8
-    PLUS            shift and go to state 11
-    MINUS           shift and go to state 12
+    SEMI            shift and go to state 61
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
 
-    program                        shift and go to state 47
-    statement                      shift and go to state 2
-    expression                     shift and go to state 3
-    binary_operation               shift and go to state 5
-    unary_operation                shift and go to state 6
-    function_call                  shift and go to state 9
-    lambda                         shift and go to state 10
 
 state 46
 
-    (22) lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .
+    (36) function_call -> IDEN L_PAR R_PAR .
 
-    SEMI            reduce using rule 22 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
-    PLUS            reduce using rule 22 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
-    MINUS           reduce using rule 22 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
-    MULTIPLY        reduce using rule 22 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
-    DIVIDE          reduce using rule 22 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
-    R_PAR           reduce using rule 22 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
-    COMMA           reduce using rule 22 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
+    SEMI            reduce using rule 36 (function_call -> IDEN L_PAR R_PAR .)
+    PLUS            reduce using rule 36 (function_call -> IDEN L_PAR R_PAR .)
+    MINUS           reduce using rule 36 (function_call -> IDEN L_PAR R_PAR .)
+    MULTIPLY        reduce using rule 36 (function_call -> IDEN L_PAR R_PAR .)
+    DIVIDE          reduce using rule 36 (function_call -> IDEN L_PAR R_PAR .)
+    R_PAR           reduce using rule 36 (function_call -> IDEN L_PAR R_PAR .)
+    COMMA           reduce using rule 36 (function_call -> IDEN L_PAR R_PAR .)
 
 
 state 47
 
-    (23) lambda -> L_PAR arg_list R_PAR ARROW L_BRC program . R_BRC
+    (37) function_call -> IDEN L_PAR arg_list . R_PAR
 
-    R_BRC           shift and go to state 48
+    R_PAR           shift and go to state 62
 
 
 state 48
 
-    (23) lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC .
+    (32) arg_list -> expression .
+    (33) arg_list -> expression . COMMA arg_list
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
 
-    SEMI            reduce using rule 23 (lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC .)
-    PLUS            reduce using rule 23 (lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC .)
-    MINUS           reduce using rule 23 (lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC .)
-    MULTIPLY        reduce using rule 23 (lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC .)
-    DIVIDE          reduce using rule 23 (lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC .)
-    R_PAR           reduce using rule 23 (lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC .)
-    COMMA           reduce using rule 23 (lambda -> L_PAR arg_list R_PAR ARROW L_BRC program R_BRC .)
+    R_PAR           reduce using rule 32 (arg_list -> expression .)
+    COMMA           shift and go to state 63
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+
+state 49
+
+    (8) statement -> LET IDEN SEMI .
+
+    IDEN            reduce using rule 8 (statement -> LET IDEN SEMI .)
+    LET             reduce using rule 8 (statement -> LET IDEN SEMI .)
+    RETURN          reduce using rule 8 (statement -> LET IDEN SEMI .)
+    IF              reduce using rule 8 (statement -> LET IDEN SEMI .)
+    WHILE           reduce using rule 8 (statement -> LET IDEN SEMI .)
+    L_BRC           reduce using rule 8 (statement -> LET IDEN SEMI .)
+    L_PAR           reduce using rule 8 (statement -> LET IDEN SEMI .)
+    NUM_LIT         reduce using rule 8 (statement -> LET IDEN SEMI .)
+    BOOL_LIT        reduce using rule 8 (statement -> LET IDEN SEMI .)
+    STR_LIT         reduce using rule 8 (statement -> LET IDEN SEMI .)
+    PLUS            reduce using rule 8 (statement -> LET IDEN SEMI .)
+    MINUS           reduce using rule 8 (statement -> LET IDEN SEMI .)
+    $end            reduce using rule 8 (statement -> LET IDEN SEMI .)
+    R_BRC           reduce using rule 8 (statement -> LET IDEN SEMI .)
+    ELSE            reduce using rule 8 (statement -> LET IDEN SEMI .)
+
+
+state 50
+
+    (9) statement -> LET IDEN COLON . type SEMI
+    (11) statement -> LET IDEN COLON . type ASSIGN expression SEMI
+    (2) type -> . NUMBER
+    (3) type -> . ANY
+
+    NUMBER          shift and go to state 65
+    ANY             shift and go to state 66
+
+    type                           shift and go to state 64
+
+state 51
+
+    (10) statement -> LET IDEN ASSIGN . expression SEMI
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
+
+    expression                     shift and go to state 67
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
+
+state 52
+
+    (12) statement -> RETURN expression SEMI .
+
+    IDEN            reduce using rule 12 (statement -> RETURN expression SEMI .)
+    LET             reduce using rule 12 (statement -> RETURN expression SEMI .)
+    RETURN          reduce using rule 12 (statement -> RETURN expression SEMI .)
+    IF              reduce using rule 12 (statement -> RETURN expression SEMI .)
+    WHILE           reduce using rule 12 (statement -> RETURN expression SEMI .)
+    L_BRC           reduce using rule 12 (statement -> RETURN expression SEMI .)
+    L_PAR           reduce using rule 12 (statement -> RETURN expression SEMI .)
+    NUM_LIT         reduce using rule 12 (statement -> RETURN expression SEMI .)
+    BOOL_LIT        reduce using rule 12 (statement -> RETURN expression SEMI .)
+    STR_LIT         reduce using rule 12 (statement -> RETURN expression SEMI .)
+    PLUS            reduce using rule 12 (statement -> RETURN expression SEMI .)
+    MINUS           reduce using rule 12 (statement -> RETURN expression SEMI .)
+    $end            reduce using rule 12 (statement -> RETURN expression SEMI .)
+    R_BRC           reduce using rule 12 (statement -> RETURN expression SEMI .)
+    ELSE            reduce using rule 12 (statement -> RETURN expression SEMI .)
+
+
+state 53
+
+    (13) statement -> IF L_PAR expression . R_PAR statement ELSE statement
+    (14) statement -> IF L_PAR expression . R_PAR statement
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
+
+    R_PAR           shift and go to state 68
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+
+state 54
+
+    (19) expression -> L_PAR expression R_PAR .
+
+    SEMI            reduce using rule 19 (expression -> L_PAR expression R_PAR .)
+    PLUS            reduce using rule 19 (expression -> L_PAR expression R_PAR .)
+    MINUS           reduce using rule 19 (expression -> L_PAR expression R_PAR .)
+    MULTIPLY        reduce using rule 19 (expression -> L_PAR expression R_PAR .)
+    DIVIDE          reduce using rule 19 (expression -> L_PAR expression R_PAR .)
+    R_PAR           reduce using rule 19 (expression -> L_PAR expression R_PAR .)
+    COMMA           reduce using rule 19 (expression -> L_PAR expression R_PAR .)
+
+
+state 55
+
+    (38) lambda -> L_PAR R_PAR ARROW . L_BRC program R_BRC
+
+    L_BRC           shift and go to state 69
+
+
+state 56
+
+    (39) lambda -> L_PAR param_list R_PAR . ARROW L_BRC program R_BRC
+
+    ARROW           shift and go to state 70
+
+
+state 57
+
+    (40) lambda -> L_PAR IDEN R_PAR . ARROW L_BRC program R_BRC
+
+    ARROW           shift and go to state 71
+
+
+state 58
+
+    (34) param_list -> IDEN COMMA . param_list
+    (34) param_list -> . IDEN COMMA param_list
+    (35) param_list -> . IDEN
+
+    IDEN            shift and go to state 72
+
+    param_list                     shift and go to state 73
+
+state 59
+
+    (15) statement -> WHILE L_PAR expression . R_PAR statement
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
+
+    R_PAR           shift and go to state 74
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+
+state 60
+
+    (16) statement -> L_BRC block R_BRC .
+
+    IDEN            reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    LET             reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    RETURN          reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    IF              reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    WHILE           reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    L_BRC           reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    L_PAR           reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    NUM_LIT         reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    BOOL_LIT        reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    STR_LIT         reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    PLUS            reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    MINUS           reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    $end            reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    R_BRC           reduce using rule 16 (statement -> L_BRC block R_BRC .)
+    ELSE            reduce using rule 16 (statement -> L_BRC block R_BRC .)
+
+
+state 61
+
+    (7) statement -> IDEN ASSIGN expression SEMI .
+
+    IDEN            reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    LET             reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    RETURN          reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    IF              reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    WHILE           reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    L_BRC           reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    L_PAR           reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    NUM_LIT         reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    BOOL_LIT        reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    STR_LIT         reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    PLUS            reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    MINUS           reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    $end            reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    R_BRC           reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+    ELSE            reduce using rule 7 (statement -> IDEN ASSIGN expression SEMI .)
+
+
+state 62
+
+    (37) function_call -> IDEN L_PAR arg_list R_PAR .
+
+    SEMI            reduce using rule 37 (function_call -> IDEN L_PAR arg_list R_PAR .)
+    PLUS            reduce using rule 37 (function_call -> IDEN L_PAR arg_list R_PAR .)
+    MINUS           reduce using rule 37 (function_call -> IDEN L_PAR arg_list R_PAR .)
+    MULTIPLY        reduce using rule 37 (function_call -> IDEN L_PAR arg_list R_PAR .)
+    DIVIDE          reduce using rule 37 (function_call -> IDEN L_PAR arg_list R_PAR .)
+    R_PAR           reduce using rule 37 (function_call -> IDEN L_PAR arg_list R_PAR .)
+    COMMA           reduce using rule 37 (function_call -> IDEN L_PAR arg_list R_PAR .)
+
+
+state 63
+
+    (33) arg_list -> expression COMMA . arg_list
+    (32) arg_list -> . expression
+    (33) arg_list -> . expression COMMA arg_list
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
+
+    expression                     shift and go to state 48
+    arg_list                       shift and go to state 75
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
+
+state 64
+
+    (9) statement -> LET IDEN COLON type . SEMI
+    (11) statement -> LET IDEN COLON type . ASSIGN expression SEMI
+
+    SEMI            shift and go to state 76
+    ASSIGN          shift and go to state 77
+
+
+state 65
+
+    (2) type -> NUMBER .
+
+    SEMI            reduce using rule 2 (type -> NUMBER .)
+    ASSIGN          reduce using rule 2 (type -> NUMBER .)
+
+
+state 66
+
+    (3) type -> ANY .
+
+    SEMI            reduce using rule 3 (type -> ANY .)
+    ASSIGN          reduce using rule 3 (type -> ANY .)
+
+
+state 67
+
+    (10) statement -> LET IDEN ASSIGN expression . SEMI
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
+
+    SEMI            shift and go to state 78
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+
+state 68
+
+    (13) statement -> IF L_PAR expression R_PAR . statement ELSE statement
+    (14) statement -> IF L_PAR expression R_PAR . statement
+    (6) statement -> . expression SEMI
+    (7) statement -> . IDEN ASSIGN expression SEMI
+    (8) statement -> . LET IDEN SEMI
+    (9) statement -> . LET IDEN COLON type SEMI
+    (10) statement -> . LET IDEN ASSIGN expression SEMI
+    (11) statement -> . LET IDEN COLON type ASSIGN expression SEMI
+    (12) statement -> . RETURN expression SEMI
+    (13) statement -> . IF L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> . IF L_PAR expression R_PAR statement
+    (15) statement -> . WHILE L_PAR expression R_PAR statement
+    (16) statement -> . L_BRC block R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+
+    IDEN            shift and go to state 5
+    LET             shift and go to state 6
+    RETURN          shift and go to state 7
+    IF              shift and go to state 8
+    WHILE           shift and go to state 10
+    L_BRC           shift and go to state 11
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
+
+    expression                     shift and go to state 4
+    statement                      shift and go to state 79
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
+
+state 69
+
+    (38) lambda -> L_PAR R_PAR ARROW L_BRC . program R_BRC
+    (1) program -> . block
+    (4) block -> . statement
+    (5) block -> . statement block
+    (6) statement -> . expression SEMI
+    (7) statement -> . IDEN ASSIGN expression SEMI
+    (8) statement -> . LET IDEN SEMI
+    (9) statement -> . LET IDEN COLON type SEMI
+    (10) statement -> . LET IDEN ASSIGN expression SEMI
+    (11) statement -> . LET IDEN COLON type ASSIGN expression SEMI
+    (12) statement -> . RETURN expression SEMI
+    (13) statement -> . IF L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> . IF L_PAR expression R_PAR statement
+    (15) statement -> . WHILE L_PAR expression R_PAR statement
+    (16) statement -> . L_BRC block R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+
+    IDEN            shift and go to state 5
+    LET             shift and go to state 6
+    RETURN          shift and go to state 7
+    IF              shift and go to state 8
+    WHILE           shift and go to state 10
+    L_BRC           shift and go to state 11
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
+
+    program                        shift and go to state 80
+    block                          shift and go to state 2
+    statement                      shift and go to state 3
+    expression                     shift and go to state 4
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
+
+state 70
+
+    (39) lambda -> L_PAR param_list R_PAR ARROW . L_BRC program R_BRC
+
+    L_BRC           shift and go to state 81
+
+
+state 71
+
+    (40) lambda -> L_PAR IDEN R_PAR ARROW . L_BRC program R_BRC
+
+    L_BRC           shift and go to state 82
+
+
+state 72
+
+    (34) param_list -> IDEN . COMMA param_list
+    (35) param_list -> IDEN .
+
+    COMMA           shift and go to state 58
+    R_PAR           reduce using rule 35 (param_list -> IDEN .)
+
+
+state 73
+
+    (34) param_list -> IDEN COMMA param_list .
+
+    R_PAR           reduce using rule 34 (param_list -> IDEN COMMA param_list .)
+
+
+state 74
+
+    (15) statement -> WHILE L_PAR expression R_PAR . statement
+    (6) statement -> . expression SEMI
+    (7) statement -> . IDEN ASSIGN expression SEMI
+    (8) statement -> . LET IDEN SEMI
+    (9) statement -> . LET IDEN COLON type SEMI
+    (10) statement -> . LET IDEN ASSIGN expression SEMI
+    (11) statement -> . LET IDEN COLON type ASSIGN expression SEMI
+    (12) statement -> . RETURN expression SEMI
+    (13) statement -> . IF L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> . IF L_PAR expression R_PAR statement
+    (15) statement -> . WHILE L_PAR expression R_PAR statement
+    (16) statement -> . L_BRC block R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+
+    IDEN            shift and go to state 5
+    LET             shift and go to state 6
+    RETURN          shift and go to state 7
+    IF              shift and go to state 8
+    WHILE           shift and go to state 10
+    L_BRC           shift and go to state 11
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
+
+    expression                     shift and go to state 4
+    statement                      shift and go to state 83
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
+
+state 75
+
+    (33) arg_list -> expression COMMA arg_list .
+
+    R_PAR           reduce using rule 33 (arg_list -> expression COMMA arg_list .)
+
+
+state 76
+
+    (9) statement -> LET IDEN COLON type SEMI .
+
+    IDEN            reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    LET             reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    RETURN          reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    IF              reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    WHILE           reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    L_BRC           reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    L_PAR           reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    NUM_LIT         reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    BOOL_LIT        reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    STR_LIT         reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    PLUS            reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    MINUS           reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    $end            reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    R_BRC           reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+    ELSE            reduce using rule 9 (statement -> LET IDEN COLON type SEMI .)
+
+
+state 77
+
+    (11) statement -> LET IDEN COLON type ASSIGN . expression SEMI
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    IDEN            shift and go to state 31
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
+
+    expression                     shift and go to state 84
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
+
+state 78
+
+    (10) statement -> LET IDEN ASSIGN expression SEMI .
+
+    IDEN            reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    LET             reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    RETURN          reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    IF              reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    WHILE           reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    L_BRC           reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    L_PAR           reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    NUM_LIT         reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    BOOL_LIT        reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    STR_LIT         reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    PLUS            reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    MINUS           reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    $end            reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    R_BRC           reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+    ELSE            reduce using rule 10 (statement -> LET IDEN ASSIGN expression SEMI .)
+
+
+state 79
+
+    (13) statement -> IF L_PAR expression R_PAR statement . ELSE statement
+    (14) statement -> IF L_PAR expression R_PAR statement .
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    ELSE            shift and go to state 85
+    IDEN            reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    LET             reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    RETURN          reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    IF              reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    WHILE           reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    L_BRC           reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    L_PAR           reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    NUM_LIT         reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    BOOL_LIT        reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    STR_LIT         reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    PLUS            reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    MINUS           reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    $end            reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+    R_BRC           reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .)
+
+  ! ELSE            [ reduce using rule 14 (statement -> IF L_PAR expression R_PAR statement .) ]
+
+
+state 80
+
+    (38) lambda -> L_PAR R_PAR ARROW L_BRC program . R_BRC
+
+    R_BRC           shift and go to state 86
+
+
+state 81
+
+    (39) lambda -> L_PAR param_list R_PAR ARROW L_BRC . program R_BRC
+    (1) program -> . block
+    (4) block -> . statement
+    (5) block -> . statement block
+    (6) statement -> . expression SEMI
+    (7) statement -> . IDEN ASSIGN expression SEMI
+    (8) statement -> . LET IDEN SEMI
+    (9) statement -> . LET IDEN COLON type SEMI
+    (10) statement -> . LET IDEN ASSIGN expression SEMI
+    (11) statement -> . LET IDEN COLON type ASSIGN expression SEMI
+    (12) statement -> . RETURN expression SEMI
+    (13) statement -> . IF L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> . IF L_PAR expression R_PAR statement
+    (15) statement -> . WHILE L_PAR expression R_PAR statement
+    (16) statement -> . L_BRC block R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+
+    IDEN            shift and go to state 5
+    LET             shift and go to state 6
+    RETURN          shift and go to state 7
+    IF              shift and go to state 8
+    WHILE           shift and go to state 10
+    L_BRC           shift and go to state 11
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
+
+    program                        shift and go to state 87
+    block                          shift and go to state 2
+    statement                      shift and go to state 3
+    expression                     shift and go to state 4
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
+
+state 82
+
+    (40) lambda -> L_PAR IDEN R_PAR ARROW L_BRC . program R_BRC
+    (1) program -> . block
+    (4) block -> . statement
+    (5) block -> . statement block
+    (6) statement -> . expression SEMI
+    (7) statement -> . IDEN ASSIGN expression SEMI
+    (8) statement -> . LET IDEN SEMI
+    (9) statement -> . LET IDEN COLON type SEMI
+    (10) statement -> . LET IDEN ASSIGN expression SEMI
+    (11) statement -> . LET IDEN COLON type ASSIGN expression SEMI
+    (12) statement -> . RETURN expression SEMI
+    (13) statement -> . IF L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> . IF L_PAR expression R_PAR statement
+    (15) statement -> . WHILE L_PAR expression R_PAR statement
+    (16) statement -> . L_BRC block R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+
+    IDEN            shift and go to state 5
+    LET             shift and go to state 6
+    RETURN          shift and go to state 7
+    IF              shift and go to state 8
+    WHILE           shift and go to state 10
+    L_BRC           shift and go to state 11
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
+
+    program                        shift and go to state 88
+    block                          shift and go to state 2
+    statement                      shift and go to state 3
+    expression                     shift and go to state 4
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
+
+state 83
+
+    (15) statement -> WHILE L_PAR expression R_PAR statement .
+
+    IDEN            reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    LET             reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    RETURN          reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    IF              reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    WHILE           reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    L_BRC           reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    L_PAR           reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    NUM_LIT         reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    BOOL_LIT        reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    STR_LIT         reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    PLUS            reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    MINUS           reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    $end            reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    R_BRC           reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+    ELSE            reduce using rule 15 (statement -> WHILE L_PAR expression R_PAR statement .)
+
+
+state 84
+
+    (11) statement -> LET IDEN COLON type ASSIGN expression . SEMI
+    (26) binary_operation -> expression . PLUS expression
+    (27) binary_operation -> expression . MINUS expression
+    (28) binary_operation -> expression . MULTIPLY expression
+    (29) binary_operation -> expression . DIVIDE expression
+
+    SEMI            shift and go to state 89
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    MULTIPLY        shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+
+state 85
+
+    (13) statement -> IF L_PAR expression R_PAR statement ELSE . statement
+    (6) statement -> . expression SEMI
+    (7) statement -> . IDEN ASSIGN expression SEMI
+    (8) statement -> . LET IDEN SEMI
+    (9) statement -> . LET IDEN COLON type SEMI
+    (10) statement -> . LET IDEN ASSIGN expression SEMI
+    (11) statement -> . LET IDEN COLON type ASSIGN expression SEMI
+    (12) statement -> . RETURN expression SEMI
+    (13) statement -> . IF L_PAR expression R_PAR statement ELSE statement
+    (14) statement -> . IF L_PAR expression R_PAR statement
+    (15) statement -> . WHILE L_PAR expression R_PAR statement
+    (16) statement -> . L_BRC block R_BRC
+    (17) expression -> . binary_operation
+    (18) expression -> . unary_operation
+    (19) expression -> . L_PAR expression R_PAR
+    (20) expression -> . NUM_LIT
+    (21) expression -> . BOOL_LIT
+    (22) expression -> . STR_LIT
+    (23) expression -> . function_call
+    (24) expression -> . lambda
+    (25) expression -> . IDEN
+    (26) binary_operation -> . expression PLUS expression
+    (27) binary_operation -> . expression MINUS expression
+    (28) binary_operation -> . expression MULTIPLY expression
+    (29) binary_operation -> . expression DIVIDE expression
+    (30) unary_operation -> . PLUS expression
+    (31) unary_operation -> . MINUS expression
+    (36) function_call -> . IDEN L_PAR R_PAR
+    (37) function_call -> . IDEN L_PAR arg_list R_PAR
+    (38) lambda -> . L_PAR R_PAR ARROW L_BRC program R_BRC
+    (39) lambda -> . L_PAR param_list R_PAR ARROW L_BRC program R_BRC
+    (40) lambda -> . L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+
+    IDEN            shift and go to state 5
+    LET             shift and go to state 6
+    RETURN          shift and go to state 7
+    IF              shift and go to state 8
+    WHILE           shift and go to state 10
+    L_BRC           shift and go to state 11
+    L_PAR           shift and go to state 9
+    NUM_LIT         shift and go to state 14
+    BOOL_LIT        shift and go to state 15
+    STR_LIT         shift and go to state 16
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
+
+    expression                     shift and go to state 4
+    statement                      shift and go to state 90
+    binary_operation               shift and go to state 12
+    unary_operation                shift and go to state 13
+    function_call                  shift and go to state 17
+    lambda                         shift and go to state 18
+
+state 86
+
+    (38) lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .
+
+    SEMI            reduce using rule 38 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
+    PLUS            reduce using rule 38 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
+    MINUS           reduce using rule 38 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
+    MULTIPLY        reduce using rule 38 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
+    DIVIDE          reduce using rule 38 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
+    R_PAR           reduce using rule 38 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
+    COMMA           reduce using rule 38 (lambda -> L_PAR R_PAR ARROW L_BRC program R_BRC .)
+
+
+state 87
+
+    (39) lambda -> L_PAR param_list R_PAR ARROW L_BRC program . R_BRC
+
+    R_BRC           shift and go to state 91
+
+
+state 88
+
+    (40) lambda -> L_PAR IDEN R_PAR ARROW L_BRC program . R_BRC
+
+    R_BRC           shift and go to state 92
+
+
+state 89
+
+    (11) statement -> LET IDEN COLON type ASSIGN expression SEMI .
+
+    IDEN            reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    LET             reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    RETURN          reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    IF              reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    WHILE           reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    L_BRC           reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    L_PAR           reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    NUM_LIT         reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    BOOL_LIT        reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    STR_LIT         reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    PLUS            reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    MINUS           reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    $end            reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    R_BRC           reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+    ELSE            reduce using rule 11 (statement -> LET IDEN COLON type ASSIGN expression SEMI .)
+
+
+state 90
+
+    (13) statement -> IF L_PAR expression R_PAR statement ELSE statement .
+
+    IDEN            reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    LET             reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    RETURN          reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    IF              reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    WHILE           reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    L_BRC           reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    L_PAR           reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    NUM_LIT         reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    BOOL_LIT        reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    STR_LIT         reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    PLUS            reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    MINUS           reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    $end            reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    R_BRC           reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+    ELSE            reduce using rule 13 (statement -> IF L_PAR expression R_PAR statement ELSE statement .)
+
+
+state 91
+
+    (39) lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC .
+
+    SEMI            reduce using rule 39 (lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC .)
+    PLUS            reduce using rule 39 (lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC .)
+    MINUS           reduce using rule 39 (lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC .)
+    MULTIPLY        reduce using rule 39 (lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC .)
+    DIVIDE          reduce using rule 39 (lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC .)
+    R_PAR           reduce using rule 39 (lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC .)
+    COMMA           reduce using rule 39 (lambda -> L_PAR param_list R_PAR ARROW L_BRC program R_BRC .)
+
+
+state 92
+
+    (40) lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC .
+
+    SEMI            reduce using rule 40 (lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC .)
+    PLUS            reduce using rule 40 (lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC .)
+    MINUS           reduce using rule 40 (lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC .)
+    MULTIPLY        reduce using rule 40 (lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC .)
+    DIVIDE          reduce using rule 40 (lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC .)
+    R_PAR           reduce using rule 40 (lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC .)
+    COMMA           reduce using rule 40 (lambda -> L_PAR IDEN R_PAR ARROW L_BRC program R_BRC .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for R_PAR in state 21 resolved as shift
+WARNING: shift/reduce conflict for R_PAR in state 36 resolved as shift
+WARNING: shift/reduce conflict for R_PAR in state 36 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 79 resolved as shift
