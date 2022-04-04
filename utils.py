@@ -11,7 +11,14 @@ def print_ast(ast, depth = 0):
     
     # Print terminal nodes
     if not isinstance(ast, Ast.AstNode):
-        print(ast)
+        if isinstance(ast, list):
+            for i in range(0, len(ast)):
+                if i > 0:
+                    for j in range(depth):
+                        print('  ', end='')
+                print(ast[i])
+        else:
+            print(ast)
         return
 
 

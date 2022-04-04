@@ -22,10 +22,29 @@ def p_type(p):
          | BOOL
          | STRING 
          | ANY
-         | type ARROW type 
+         | type ARROW type
+         | L_PAR typelist R_PAR
     '''
 
-    p[0] = Ast.Type(p[1])
+    if len(p) == 2: # Primitive type
+        p[0] = Ast.PrimitiveType(p[1])
+    elif len(p) == 4 and isinstance(p[1], Ast.Type): # Function
+        p[0] = Ast.FunctionType(p[1], p[3])
+    elif len(p) == 4:
+        p[0] = p[2]
+
+def p_typelist(p):
+    '''
+    typelist : type COMMA typelist 
+             | type
+    '''
+    print("HERE")
+    if len(p) == 2:
+        p[0] = Ast.TupleType(p[1])
+    else:
+        p[3].prepend(p[1])
+        p[0] = p[3]
+    
 
 
 # Block : An array of statements
@@ -70,7 +89,6 @@ def p_statement(p):
     elif p[1] == 'let' and len(p) == 6 and isinstance(p[4], Ast.Expr): # Untyped declassign
         p[0] = Ast.DeclAssign(p[2], p[4])
     elif p[1] == 'let': # Typed declassign
-        print(p[4])
         p[0] = Ast.DeclAssign(p[2], p[6], p[4]) 
     elif len(p) == 4 and p[1] == 'return': # Return statement
         p[0] = Ast.Return(p[2])
@@ -157,13 +175,22 @@ def p_arg_list(p):
 def p_param_list(p):
     '''
     param_list : IDEN COMMA param_list
+               | IDEN COLON type COMMA param_list
                | IDEN
+               | IDEN COLON type
     '''
 
     if len(p) == 2:
-        p[0] = [p[1]]
+        p[0] = [Ast.Param(p[1])]
+    elif len(p) == 4 and p[2] == ':':
+        p[0] = [Ast.Param(p[1], p[3])]
+    elif len(p) == 4 and p[2] == ',':
+        p[3] = [Ast.Param(p[1])] + p[3]
+        p[0] = p[3]
     else:
-        p[0] = [p[1]] + p[3]
+        p[5] = [Ast.Param(p[1], p[3])] + p[5]
+        p[0] = p[5]
+
     
 
 

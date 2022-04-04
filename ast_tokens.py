@@ -7,6 +7,7 @@ class Type(AstNode):
 class PrimitiveType(Type):
     def __init__(self, type):
         self.type = type
+        self.children = [type]
 
     def __str__(self):
         return self.type
@@ -16,6 +17,29 @@ class FunctionType(Type):
         self.args = args
         self.ret = ret
         self.children = [args, ret]
+    
+    def __str__(self) -> str:
+        return "{0} => {1}".format(self.args, self.ret)
+
+class TupleType(Type):
+    def __init__(self, first):
+        self.children = [first]
+    
+    def prepend(self, e):
+        self.children = [e] + self.children
+    
+    def __str__(self) -> str:
+        return str(self.children)
+    
+class Param(AstNode):
+    def __init__(self, iden, type = PrimitiveType('any')):
+        self.iden = iden
+        self.type = type
+        self.children = [iden, type]
+
+    def __str__(self) -> str:
+        return "{0} : {1}".format(self.iden, self.type)
+
 
 class Expr(AstNode): 
     pass
@@ -121,7 +145,7 @@ class Assignment(Statement):
 
 
 class Declaration(Statement):
-    def __init__(self, identifier, type = Type('any')):
+    def __init__(self, identifier, type = PrimitiveType('any')):
         self.type = 'declaration'
         self.identifier = identifier
         self.type = type
@@ -133,7 +157,7 @@ class Declaration(Statement):
 
 
 class DeclAssign(Statement):
-    def __init__(self, identifier, expression, type = Type('any')):
+    def __init__(self, identifier, expression, type = PrimitiveType('any')):
         self.type = "assignment"
         self.identifier = identifier
         self.expression = expression
