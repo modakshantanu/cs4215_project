@@ -26,7 +26,10 @@ tokens = [
     'BOOL_LIT',
     'STR_LIT',
     'SINGLE_COMMENT',
-    'MULTI_COMMENT'
+    'MULTI_COMMENT',
+    'MODULO',
+    'LT', 'GT' , 'EQ' , 'LEQ' , 'GEQ' , 'NEQ' , 
+    'OR' , 'AND' , 'NOT',
 ]
 
 
@@ -34,6 +37,13 @@ tokens = [
 
 
 t_ARROW = r'=>' # For lambdas
+t_EQ = '=='
+t_LEQ = '<='
+t_GEQ = '>='
+t_NEQ = '!='
+t_OR = '\|\|'
+t_AND = '&&'
+t_NOT = '!'
 
 t_PLUS = r'\+'
 t_MINUS = r'\-'
@@ -41,12 +51,16 @@ t_MULTIPLY = r'\*'
 t_DIVIDE = r'\/'
 t_L_PAR = r'\('
 t_R_PAR = r'\)'
+t_MODULO = '%'
 t_L_BRC = '{'
 t_R_BRC = '}'
 t_SEMI = ';'
 t_COMMA = ','
 t_COLON = ':'
 t_ASSIGN = r'\='
+
+t_LT = '<'
+t_GT = '>'
 
 
 reserved = {
@@ -61,8 +75,6 @@ reserved = {
     'string' : 'STRING',
     'break' : 'BREAK',
     'continue' : 'CONTINUE'
-    
-    
 }
 
 
@@ -81,10 +93,10 @@ def t_IDEN(t):
     return t
 
 def t_NUM_LIT(t):
-    # r'\^(0|[1-9][0-9]*)$'
-    r'\d+'
+    r'([0-9]*[.])?[0-9]+'
+    # r'\d+'
 
-    t.value = int(t.value)
+    t.value = float(t.value)
     return t
 
 def t_STR_LIT(t):

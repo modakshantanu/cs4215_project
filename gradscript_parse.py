@@ -22,6 +22,7 @@ def p_type(p):
          | BOOL
          | STRING 
          | ANY
+         | type ARROW type 
     '''
 
     p[0] = Ast.Type(p[1])
@@ -120,6 +121,15 @@ def p_binary_operation(p):
                      | expression MINUS expression
                      | expression MULTIPLY expression
                      | expression DIVIDE expression
+                     | expression MODULO expression
+                     | expression EQ expression
+                     | expression NEQ expression
+                     | expression LT expression
+                     | expression GT expression
+                     | expression LEQ expression
+                     | expression GEQ expression
+                     | expression OR expression
+                     | expression AND expression
     '''
 
     p[0] = Ast.BinOp(p[1], p[2], p[3])
@@ -128,6 +138,7 @@ def p_unary_operation(p):
     '''
      unary_operation : PLUS expression %prec UNARY
               | MINUS expression %prec UNARY
+              | NOT expression %prec UNARY
     '''
 
     p[0] = Ast.UnOp(p[1], p[2])

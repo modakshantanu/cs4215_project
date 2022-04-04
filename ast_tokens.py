@@ -2,12 +2,20 @@ class AstNode:
     children = []
 
 class Type(AstNode):
+    pass
+
+class PrimitiveType(Type):
     def __init__(self, type):
-        self.value = type
-        self.children = [type]
-    
+        self.type = type
+
     def __str__(self):
-        return self.value
+        return self.type
+
+class FunctionType(Type):
+    def __init__(self, args, ret):
+        self.args = args
+        self.ret = ret
+        self.children = [args, ret]
 
 class Expr(AstNode): 
     pass
