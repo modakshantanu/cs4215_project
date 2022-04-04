@@ -18,7 +18,9 @@ def p_program(p):
             
 def p_type(p):
     '''
-    type : NUMBER 
+    type : NUMBER
+         | BOOL
+         | STRING 
          | ANY
     '''
 
@@ -52,6 +54,8 @@ def p_statement(p):
               | IF L_PAR expression R_PAR statement
               | WHILE L_PAR expression R_PAR statement
               | L_BRC block R_BRC
+              | BREAK SEMI
+              | CONTINUE SEMI
     '''
     
     if isinstance(p[1], Ast.Expr):
@@ -61,21 +65,26 @@ def p_statement(p):
     elif p[1] == 'let' and len(p) == 4: # Untyped declaration
         p[0] = Ast.Declaration(p[2])
     elif p[1] == 'let' and len(p) == 6 and isinstance(p[4], Ast.Type): # Typed declaration
-        p[0] = Ast.Declaration(p[2]) # Ignore the type for now
+        p[0] = Ast.Declaration(p[2], p[4])
     elif p[1] == 'let' and len(p) == 6 and isinstance(p[4], Ast.Expr): # Untyped declassign
         p[0] = Ast.DeclAssign(p[2], p[4])
     elif p[1] == 'let': # Typed declassign
-        p[0] = Ast.DeclAssign(p[2], p[6]) 
-    elif len(p) == 4: # Return statement
+        print(p[4])
+        p[0] = Ast.DeclAssign(p[2], p[6], p[4]) 
+    elif len(p) == 4 and p[1] == 'return': # Return statement
         p[0] = Ast.Return(p[2])
     elif p[1] == 'if' and len(p) == 8: # if-else
-        pass
+        p[0] = Ast.IfElse(p[3], p[5], p[7])
     elif p[1] == 'if': # if
-        pass
+        p[0] = Ast.If(p[3], p[5])
     elif p[1] == 'while': # while
-        pass
+        p[0] = Ast.While(p[3], p[5])
     elif len(p) == 4: # block statement
         p[0] = p[2]
+    elif p[1] == 'break':
+        p[0] = Ast.Break()
+    elif p[1] == 'continue':
+        p[0] = Ast.Continue()
 
 
 def p_expression(p):
@@ -91,7 +100,8 @@ def p_expression(p):
                | IDEN
 
     '''
-    if type(p[1]) is Number:
+
+    if type(p[1]) is int or type(p[1]) is float:
         p[0] = Ast.Number(p[1])
     elif type(p[1]) is bool:
         p[0] = Ast.Bool(p[1])
@@ -149,8 +159,8 @@ def p_param_list(p):
 
 def p_function_call(p):
     '''
-    function_call : IDEN L_PAR R_PAR
-                  | IDEN L_PAR arg_list R_PAR
+    function_call : expression L_PAR R_PAR
+                  | expression L_PAR arg_list R_PAR
     '''
 
     if len(p) == 4: # No args
@@ -162,9 +172,9 @@ def p_function_call(p):
 
 def p_lambda(p):
     '''
-    lambda : L_PAR R_PAR ARROW L_BRC program R_BRC
-           | L_PAR param_list R_PAR ARROW L_BRC program R_BRC
-           | L_PAR IDEN R_PAR ARROW L_BRC program R_BRC
+    lambda : L_PAR R_PAR ARROW L_BRC block R_BRC
+           | L_PAR param_list R_PAR ARROW L_BRC block R_BRC
+           | L_PAR IDEN R_PAR ARROW L_BRC block R_BRC
     '''
 
     if len(p) == 7:

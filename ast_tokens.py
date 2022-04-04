@@ -2,11 +2,12 @@ class AstNode:
     children = []
 
 class Type(AstNode):
-    def __init__(self, string):
-        self.typestring = string
+    def __init__(self, type):
+        self.value = type
+        self.children = [type]
     
     def __str__(self):
-        return self.typestring
+        return self.value
 
 class Expr(AstNode): 
     pass
@@ -75,11 +76,11 @@ class Identifier(Expr):
         return self.value
 
 class FunctionCall(Expr):
-    def __init__(self, iden, args):
+    def __init__(self, expr, args):
         self.type = "function call"
-        self.identifer = iden
+        self.expression = expr
         self.argList = args
-        self.children = [iden] + args
+        self.children = [expr] + args
 
 class Lambda(Expr):
     def __init__(self, args, block):
@@ -112,24 +113,27 @@ class Assignment(Statement):
 
 
 class Declaration(Statement):
-    def __init__(self, identifier):
+    def __init__(self, identifier, type = Type('any')):
         self.type = 'declaration'
         self.identifier = identifier
-        self.children = [identifier]
+        self.type = type
+        self.children = [identifier, type]
+
     
     def __str__(self):
-        return 'declared {0}'.format(self.identifier)
+        return 'declared {0} : {1}'.format(self.identifier, self.type)
 
 
 class DeclAssign(Statement):
-    def __init__(self, identifier, expression):
+    def __init__(self, identifier, expression, type = Type('any')):
         self.type = "assignment"
         self.identifier = identifier
         self.expression = expression
-        self.children = [identifier, expression]
+        self.type = type
+        self.children = [identifier, expression, type]
 
     def __str__(self):        
-        return "{0} = {1}".format(self.identifier, self.expression)
+        return "{0} : {2} = {1}".format(self.identifier, self.expression, self.type)
 
 
 class Block(Statement):
@@ -170,3 +174,11 @@ class While(Statement):
         self.statement = statement
         self.children = [condition, statement]
 
+class Break(Statement):
+    def __init__(self):
+        self.type = 'break'
+    
+class Continue(Statement):
+    def __init__(self):
+        self.type = 'continue'
+    

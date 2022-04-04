@@ -24,7 +24,9 @@ tokens = [
     'R_BRC',
     'COLON',
     'BOOL_LIT',
-    'STR_LIT'
+    'STR_LIT',
+    'SINGLE_COMMENT',
+    'MULTI_COMMENT'
 ]
 
 
@@ -55,6 +57,11 @@ reserved = {
     'let' : "LET",
     'number' : 'NUMBER',
     'any' : 'ANY',
+    'bool' : 'BOOL',
+    'string' : 'STRING',
+    'break' : 'BREAK',
+    'continue' : 'CONTINUE'
+    
     
 }
 
@@ -97,6 +104,14 @@ t_ignore = ' \t'
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
+
+def t_SINGLE_COMMENT(t):
+    r'\/\/.*([\n]|$)'
+    pass
+
+def t_MULTI_COMMENT(t):
+    r'\/\*(.|\n)*\*\/'
+    pass
 
 lexer = lex.lex()
 

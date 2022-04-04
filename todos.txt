@@ -1,0 +1,4 @@
+All operators
+Function calls on expressions e.g. f()();
+type annotated function signature
+proper type system
