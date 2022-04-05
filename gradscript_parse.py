@@ -181,7 +181,9 @@ def p_param_list(p):
     '''
 
     if len(p) == 2:
+        
         p[0] = [Ast.Param(p[1])]
+        
     elif len(p) == 4 and p[2] == ':':
         p[0] = [Ast.Param(p[1], p[3])]
     elif len(p) == 4 and p[2] == ',':
@@ -219,7 +221,7 @@ def p_lambda(p):
         p[0] = Ast.Lambda([], p[5])
     else:
         if not isinstance(p[2], list):
-            p[2] = [p[2]]
+            p[2] = [Ast.Param(p[2])]
         p[0] = Ast.Lambda(p[2], p[6])
 
 
