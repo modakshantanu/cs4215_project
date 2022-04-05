@@ -66,3 +66,40 @@ def statement(s):
         pass
     elif isinstance(s, Ast.Continue):
         pass
+
+
+def expressionStatement(s):
+    pass
+
+def assignment(s):
+    pass
+
+def declaration(s):
+    pass
+
+def declassign(s):
+    pass
+
+def returnStatement(s):
+    pass
+
+def ifelse(s):
+    pass
+
+def ifStatement(s):
+    pass
+
+def whileStatement(s):
+    pass
+
+def returnStatement(s):
+    pass
+
+def breakStatement(s):
+    pass
+
+def continueStatement(s):
+    pass
+
+def BlockStatement(s):
+    pass
