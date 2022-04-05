@@ -8,6 +8,9 @@ import ast_tokens as Ast
 class Environment():
     def __init__(self):
         self.stack: List[dict] = [{}]
+        
+        # Hardcoded primitive function
+        self.insert('print', 'primitive_function')
     
     def insert(self, iden, value):    
         self.stack[-1][iden] = value

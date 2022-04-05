@@ -1,4 +1,5 @@
 from multiprocessing import Condition
+from typing import Any
 import ast_tokens as Ast
 from environment import Environment
 from utils import InterpRuntimeError
@@ -6,21 +7,21 @@ from utils import InterpRuntimeError
 # The top level environment class
 env : Environment = Environment()
 
-# Evaulate an expression
-def evaluate(expr):
+# # Evaulate an expression
+# def evaluate(expr):
     
-    if type(expr) == Ast.Number:
-        return expr.value
+#     if type(expr) == Ast.Number:
+#         return expr.value
     
-    if type(expr) == Ast.UnOp:
-        operand = evaluate(expr.right)
-        return apply_unary(expr.op, operand)
+#     if type(expr) == Ast.UnOp:
+#         operand = evaluate(expr.right)
+#         return apply_unary(expr.op, operand)
     
-    if type(expr) == Ast.BinOp:
-        left = evaluate(expr.left)
-        right = evaluate(expr.right)
-        return apply_binary(expr.op, left, right)
-    pass
+#     if type(expr) == Ast.BinOp:
+#         left = evaluate(expr.left)
+#         right = evaluate(expr.right)
+#         return apply_binary(expr.op, left, right)
+#     pass
 
 def apply_unary(operator, operand):
     if operator == '+':
@@ -41,6 +42,30 @@ def apply_binary(operator, left, right):
     if operator == '/':
         return left / right
     
+
+# Dummy function to test the code
+def evaluate(expr: Ast.Expr):
+    if isinstance(expr, Ast.Number):
+        return expr.value
+    elif isinstance(expr, Ast.Bool):
+        return expr.value
+    elif isinstance(expr, Ast.String):
+        return expr.value
+    elif isinstance(expr, Ast.Identifier):
+        if not env.contains(expr.value):
+            raise InterpRuntimeError('undeclared variable')
+        return env.get(expr.value)
+    elif isinstance(expr, Ast.FunctionCall):
+
+        # Hardcoded print statement with args
+
+        evaluated_args = list(map(evaluate, expr.argList))
+        print(*evaluated_args)
+
+    
+    return 1
+
+
 # Used to correctly handover control to the appropriate function
 # In case of Return, Break, Continue
 # Returns are propogated up to the expression level
@@ -75,7 +100,8 @@ def statement(s: Ast.Statement) -> Result:
         return breakStatement(s)
     elif isinstance(s, Ast.Continue):
         return continueStatement(s)
-
+    
+    return Result('none')
 
 
 def expressionStatement(s: Ast.ExpressionStatement) -> Result:
@@ -108,7 +134,7 @@ def declassign(s: Ast.DeclAssign) -> Result:
     return Result('none')
 
 def ifelse(s: Ast.IfElse) -> Result:
-    condition = eval(s.condition)
+    condition = evaluate(s.condition)
     if not isinstance(condition, bool):
         raise InterpRuntimeError('Condition for If statement is not a bool')
     
@@ -117,10 +143,8 @@ def ifelse(s: Ast.IfElse) -> Result:
     else: 
         return statement(s.falseStatement)
     
-    
-
 def ifStatement(s) -> Result:
-    condition = eval(s.condition)
+    condition = evaluate(s.condition)
     if not isinstance(condition, bool):
         raise InterpRuntimeError('Condition for If statement is not a bool')
     
@@ -131,7 +155,7 @@ def ifStatement(s) -> Result:
 
 def whileStatement(s: Ast.While) -> Result:
     while True:
-        condition = eval(s.condition)
+        condition = evaluate(s.condition)
         if not isinstance(condition, bool):
             raise InterpRuntimeError('Condition for While statement is not a bool')
         

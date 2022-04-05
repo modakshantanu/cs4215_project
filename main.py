@@ -1,5 +1,5 @@
 import sys
-from interpreter import evaluate
+from interpreter import evaluate, statement
 import ply
 import logging
 logging.basicConfig(
@@ -31,7 +31,8 @@ if len(sys.argv) > 1:
     data = f.read()
 
     ast = parser.parse(data)
-    print_ast(ast)
+    # print_ast(ast)
+    statement(ast)
     # print(evaluate(ast))
 else:
     while True:

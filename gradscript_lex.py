@@ -86,7 +86,6 @@ def t_IDEN(t):
     if t.value == 'true' or t.value == 'false': # Handle boolean literals separately from keywords / identifiers
         t.type = 'BOOL_LIT'
         t.value = t.value == 'true'
-        print(t)
         return t
     
     t.type = reserved.get(t.value, 'IDEN')
