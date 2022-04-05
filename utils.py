@@ -26,3 +26,8 @@ def print_ast(ast, depth = 0):
     for c in ast.children:
         print_ast(c, depth + 1)
 
+
+class InterpRuntimeError(Exception):
+    def __init__(self, message) -> None:
+        super().__init__(message)
+
