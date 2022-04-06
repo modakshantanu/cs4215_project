@@ -1,12 +1,12 @@
 let g = (increment) => {
     if (increment) {
-        return (a) => {
+        return ((a) => {
             return a + 1;
-        };
+        });
     } else {
-        return (a) => {
+        return ((a) => {
             return a - 1;
-        }
+        });
     }
 };
 

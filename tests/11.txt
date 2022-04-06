@@ -1,9 +1,9 @@
-let a : any = 5;
+let a : number  = 5;
 let b : any = "5";
 
 let c : string = "5";
 let d;
 
 // d = a + b;
-// d = a + c;
+d = a + c;
 

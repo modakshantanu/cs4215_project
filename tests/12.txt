@@ -1,5 +1,5 @@
 let f = (x) => {return x + 1;};
 let g : (number) => number = f;
 
-// g(false)
+//g(false);
 // f(false)

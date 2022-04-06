@@ -5,8 +5,11 @@ from gradscript_lex import tokens
 import ast_tokens as Ast
 
 precedence = (
+    ('left', 'AND' , 'OR' , 'NOT'),
+    ('left', 'EQ' , 'NEQ'),
+    ('left', 'LEQ' , 'GEQ' , 'LT' , 'GT'),
     ('left', 'PLUS', 'MINUS'),
-    ('left', 'MULTIPLY', 'DIVIDE'),
+    ('left', 'MULTIPLY', 'DIVIDE', 'MODULO'),
     ('right', 'UNARY'),
 )
 
@@ -39,7 +42,6 @@ def p_typelist(p):
     typelist : type COMMA typelist 
              | type
     '''
-    print("HERE")
     if len(p) == 2:
         p[0] = Ast.TupleType(p[1])
     else:

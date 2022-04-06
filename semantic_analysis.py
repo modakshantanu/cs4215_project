@@ -6,6 +6,7 @@
 from ast import Return
 from typing import Any
 from environment import Environment
+from utils import GradualTypeError
 
 # Used to store types of each variable as opposed to values
 typeEnv : Environment = Environment()
@@ -114,7 +115,7 @@ def checkBlock(e: Ast.Block, expected: Ast.Type):
 def checkWhile(e: Ast.While, expected: Ast.Type):
     conditionType = typeCheck(e.condition)
     if not areConsistent(conditionType, Ast.PrimitiveType('bool')):
-        raise TypeError('While statement condition must be a boolean')
+        raise GradualGradualTypeError('While statement condition must be a boolean')
     
     typeCheck(e.statement, expected)
 
@@ -124,7 +125,7 @@ def checkWhile(e: Ast.While, expected: Ast.Type):
 def checkIf(e: Ast.If, expected: Ast.Type):
     conditionType = typeCheck(e.condition)
     if not areConsistent(conditionType, Ast.PrimitiveType('bool')):
-        raise TypeError('If statement condition must be a boolean')
+        raise GradualTypeError('If statement condition must be a boolean')
     
     typeCheck(e.statement, expected)
 
@@ -134,7 +135,7 @@ def checkIf(e: Ast.If, expected: Ast.Type):
 def checkIfElse(e: Ast.IfElse, expected: Ast.Type):
     conditionType = typeCheck(e.condition)
     if not areConsistent(conditionType, Ast.PrimitiveType('bool')):
-        raise TypeError('If statement condition must be a boolean')
+        raise GradualTypeError('If statement condition must be a boolean')
     
     typeCheck(e.trueStatement, expected)
     typeCheck(e.falseStatement, expected)
@@ -146,24 +147,26 @@ def checkIfElse(e: Ast.IfElse, expected: Ast.Type):
 def checkReturn(e: Ast.Return, expected: Ast.Type):
     retType = typeCheck(e.expression)
     if not areConsistent(retType, expected):
-        raise TypeError("Return type doesn't match function signature")
+        raise GradualTypeError("Return type doesn't match function signature")
     return Ast.PrimitiveType('void')
 
 
 def checkDeclAssign(e: Ast.DeclAssign):
     if typeEnv.top_contains(e.identifier):
-        raise TypeError('Multiple Declaration')
+        raise GradualTypeError('Multiple Declaration')
     
-    if not areConsistent(e.type, typeCheck(e.expression)):
-        raise TypeError('Mismatched types in assignment')
-
+    # To allow recursion
     typeEnv.insert(e.identifier, e.type)
+
+    if not areConsistent(e.type, typeCheck(e.expression)):
+        raise GradualTypeError('Mismatched types in assignment')
+
     return Ast.PrimitiveType('void')
 
 
 def checkDeclaration(e: Ast.Declaration):
     if typeEnv.top_contains(e.identifier):
-        raise TypeError('Multiple Declaration')
+        raise GradualTypeError('Multiple Declaration')
     
     typeEnv.insert(e.identifier, e.type)
 
@@ -173,10 +176,10 @@ def checkDeclaration(e: Ast.Declaration):
 
 def checkAssignment(e: Ast.Assignment):
     if not typeEnv.contains(e.identifier):
-        raise TypeError("Undeclared variable")
+        raise GradualTypeError("Undeclared variable")
     
     if not areConsistent(typeEnv.get(e.identifier), typeCheck(e.expression)):
-        raise TypeError("LHS and RHS of assignment mismatched")
+        raise GradualTypeError("LHS and RHS of assignment mismatched")
     
     return Ast.PrimitiveType('void')
 
@@ -184,24 +187,24 @@ def checkAssignment(e: Ast.Assignment):
 def checkFCall(e: Ast.FunctionCall):
     funcType = typeCheck(e.expression)
 
-    # print(funcType)
+    print(funcType)
 
     if isinstance(funcType, Ast.PrimitiveType) and funcType.type == 'any':
         return Ast.PrimitiveType('any')
 
     if not isinstance(funcType, Ast.FunctionType):
-        raise TypeError("Trying to call something that is not a function!")
+        raise GradualTypeError("Trying to call something that is not a function!")
     
 
     nParams = len(e.argList)
     if nParams != len(funcType.args.children):
-        raise TypeError("Mismatched number of args!")
+        raise GradualTypeError("Mismatched number of args!")
     
     # print(typeCheck(e.argList[0]))
     # print(funcType.args.children[0])
     for i in range(nParams):
         if not areConsistent(typeCheck(e.argList[i]), funcType.args.children[i]):
-            raise TypeError("Mismatched types for argument {0}".format(i))
+            raise GradualTypeError("Mismatched types for argument {0}".format(i))
 
 
 
@@ -228,4 +231,4 @@ def checkIdentifier(e: Ast.Identifier):
     if typeEnv.contains(e.value):
         return typeEnv.get(e.value)
     else:
-        raise TypeError("Undeclared Identifier")
+        raise GradualTypeError("Undeclared Identifier")

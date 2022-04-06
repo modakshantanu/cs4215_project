@@ -6,6 +6,7 @@ from utils import InterpRuntimeError
 
 # The top level environment class
 env : Environment = Environment()
+env.insert('print', 'primitive_function')
 
 # # Evaulate an expression
 # def evaluate(expr):
@@ -141,7 +142,7 @@ def evalBinop(expr: Ast.BinOp):
     lhs = evaluate(expr.left)
     rhs = evaluate(expr.right)
 
-    # print(lhs, rhs)
+    # print(lhs, rhs, expr.op)
     
     if expr.op == '+':
         return lhs + rhs
@@ -152,8 +153,7 @@ def evalBinop(expr: Ast.BinOp):
     elif expr.op == '/':
         return lhs / rhs
     elif expr.op == '%':
-        print(lhs, rhs)
-        return int(lhs) % rhs
+        return lhs % rhs
     elif expr.op == '>':
         return lhs > rhs
     elif expr.op == '>=':
@@ -184,10 +184,10 @@ def evalUnop(expr: Ast.UnOp):
         return not lhs
 
 def evalFuncCall(expr: Ast.FunctionCall):
+    # print(expr.expression)
     function = evaluate(expr.expression)
+    # print(function)
 
-    if not isinstance(function, Ast.Lambda):
-        raise InterpRuntimeError('Trying to call a non-function')
     
     evaluted_args = list(map(evaluate,expr.argList))
     
@@ -196,10 +196,12 @@ def evalFuncCall(expr: Ast.FunctionCall):
         print(*evaluted_args)
         return None
         
+    if not isinstance(function, Ast.Lambda):
+        raise InterpRuntimeError('Trying to call a non-function')
 
     env.push()
     for i in range(len(function.argList)):
-        env.insert(function.argList.iden, evaluted_args[i])
+        env.insert(function.argList[i].iden, evaluted_args[i])
     
     result = statement(function.block)
     env.pop()
@@ -262,10 +264,12 @@ def expressionStatement(s: Ast.ExpressionStatement) -> Result:
 
 
 def assignment(s: Ast.Assignment) -> Result:
+
     if not env.contains(s.identifier):
         raise InterpRuntimeError('undeclared variable')
     v = evaluate(s.expression)
-    env.insert(s.identifier, v)
+    # print(v)
+    env.update(s.identifier, v)
     return Result('none')
 
 def declaration(s: Ast.Declaration) -> Result:
@@ -295,13 +299,13 @@ def ifelse(s: Ast.IfElse) -> Result:
     else: 
         return statement(s.falseStatement)
     
-def ifStatement(s) -> Result:
+def ifStatement(s: Ast.If) -> Result:
     condition = evaluate(s.condition)
     if not isinstance(condition, bool):
         raise InterpRuntimeError('Condition for If statement is not a bool')
     
     if condition:
-        return statement(s.trueStatement)
+        return statement(s.statement)
     
     return Result('none')
 
