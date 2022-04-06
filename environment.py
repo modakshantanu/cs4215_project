@@ -13,6 +13,7 @@ class Environment():
         self.insert('print', 'primitive_function')
     
     def insert(self, iden, value):    
+        # print("Insert {0} : {1}".format(iden, value))
         self.stack[-1][iden] = value
 
     def top_contains(self, iden):

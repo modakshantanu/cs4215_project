@@ -4,6 +4,7 @@
 '''
 
 from ast import Return
+from typing import Any
 from environment import Environment
 
 # Used to store types of each variable as opposed to values
@@ -67,7 +68,7 @@ def typeCheck(e: Ast.Expr, expectedReturn : Ast.Type = Ast.PrimitiveType('void')
     elif isinstance(e, Ast.FunctionCall):
         return checkFCall(e)
     elif isinstance(e, Ast.ExpressionStatement):
-        return typeCheck(e.expression)
+        return typeCheck(e.expression, Ast.PrimitiveType('any'))
     elif isinstance(e, Ast.Assignment):
         return checkAssignment(e)
     elif isinstance(e, Ast.Declaration):
@@ -90,6 +91,12 @@ def typeCheck(e: Ast.Expr, expectedReturn : Ast.Type = Ast.PrimitiveType('void')
     return Ast.PrimitiveType('void')
 
 
+
+def checkUnOp(e: Ast.UnOp):
+    return Ast.PrimitiveType('any')
+
+def checkBinOp(e: Ast.BinOp):
+    return Ast.PrimitiveType('any')
 
 
 def checkBlock(e: Ast.Block, expected: Ast.Type):
@@ -174,7 +181,10 @@ def checkAssignment(e: Ast.Assignment):
 
 def checkFCall(e: Ast.FunctionCall):
     funcType = typeCheck(e.expression)
-    
+
+    if isinstance(funcType, Ast.PrimitiveType) and funcType.type == 'any':
+        return Ast.PrimitiveType('any')
+
     if not isinstance(funcType, Ast.FunctionType):
         raise TypeError("Trying to call something that is not a function!")
     
