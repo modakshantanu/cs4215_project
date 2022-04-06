@@ -166,7 +166,6 @@ class Declaration(Statement):
 
 class DeclAssign(Statement):
     def __init__(self, identifier, expression, type = PrimitiveType('any')):
-        self.type = "assignment"
         self.identifier = identifier
         self.expression = expression
         self.type = type

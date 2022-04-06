@@ -1,1 +1,2 @@
-let x : (number) => string;
+let x = 1;
+x = x + 1;

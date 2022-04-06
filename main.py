@@ -14,7 +14,7 @@ logging.basicConfig(
 import gradscript_lex
 import gradscript_parse
 from utils import print_ast
-
+from semantic_analysis import typeCheck
 
 
 lex = gradscript_lex.lexer
@@ -32,6 +32,8 @@ if len(sys.argv) > 1:
 
     ast = parser.parse(data)
     print_ast(ast)
+    typeCheck(ast)
+
     # statement(ast)
     # print(evaluate(ast))
 else:
