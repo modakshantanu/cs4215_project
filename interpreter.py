@@ -29,6 +29,17 @@ def apply_unary(operator, operand):
     if operator == '-':
         return -operand
 
+    '''
+    if operator == '++':
+        return operand + 1
+    if operator == '--':
+        return operand - 1
+    if operator == '!':
+        return not operand
+
+    if operator == '~':
+        return ~operand
+    '''
     # Default behaviour, shouldn't happen
     return operand
 
@@ -42,6 +53,59 @@ def apply_binary(operator, left, right):
     if operator == '/':
         return left / right
     
+    '''
+    if operator == '%':
+        return left % right
+    
+    # Comparison Operators
+    if operator == '==':
+        return left == right
+    if operator == '===':
+        return left == right and type(left) == type(right)
+    if operator == '!=':
+        return left != right 
+    if operator == '!==':
+        return left != right and type(left) == type(right)
+    if operator == '>':
+        return left > right
+    if operator == '>=':
+        return left >= right
+    if operator == '<':
+        return left < right
+    if operator == '<=':
+        return left <= right
+    
+    # Logical Operators
+    if operator == '&&':
+        return left and right
+    if operator == '||':
+        return left or right
+    
+    # Bitwise Operators
+    if operator == '&':
+        return left & right
+    if operator == '|':
+        return left | right
+    if operator == '^':
+        return left ^ right
+    if operator == '>>':
+        return left >> right
+    if operator == '<<':
+        return left << right
+    if operator == '>>>':
+        return (left % 0x100000000) >> right
+    
+    # Assignment Operators
+    if operator == '':
+        return 0
+    '''
+
+def nested_binop(expr):
+    if isinstance(expr, Ast.Number):
+        return expr.value
+    if isinstance(expr, Ast.Identifier):
+        return env.get(expr.value)
+    return apply_binary(expr.op, nested_binop(expr.left), nested_binop(expr.right))
 
 # Dummy function to test the code
 def evaluate(expr: Ast.Expr):
@@ -61,7 +125,15 @@ def evaluate(expr: Ast.Expr):
 
         evaluated_args = list(map(evaluate, expr.argList))
         print(*evaluated_args)
-
+    elif isinstance(expr, Ast.UnOp):
+        env.print()
+        right = expr.right
+        if isinstance(expr.right, Ast.Identifier):
+            right = env.get(right.value)
+        return int(apply_unary(expr.op, right))
+    elif isinstance(expr, Ast.BinOp):
+        env.print()
+        return int(apply_binary(expr.op, nested_binop(expr.left), nested_binop(expr.right)))
     
     return 1
 

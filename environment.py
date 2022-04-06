@@ -37,4 +37,7 @@ class Environment():
     
     def pop(self):
         self.stack.pop()
+    
+    def print(self):
+        print(self.stack)
 
