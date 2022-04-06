@@ -1,4 +1,4 @@
-let x = (a , b) => {
+let x : (number, any) => string = (a , b) => {
     return a * b;
 };
 

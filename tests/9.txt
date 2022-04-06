@@ -1,0 +1,17 @@
+let g = (increment) => {
+    if (increment) {
+        return (a) => {
+            return a + 1;
+        };
+    } else {
+        return (a) => {
+            return a - 1;
+        }
+    }
+};
+
+let x = g(true);
+let y = g(false);
+
+print(x(10));
+print(y(10));

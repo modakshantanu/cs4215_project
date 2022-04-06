@@ -1,0 +1,8 @@
+let f : (void) => any = () => {
+    return false;
+};
+
+
+let a : number = f();
+let b = a || false;
+

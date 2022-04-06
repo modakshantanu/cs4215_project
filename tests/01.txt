@@ -1,0 +1,9 @@
+let x = 3;
+let y = 4;
+let z = 5;
+
+print(x + y);
+print(x - y);
+print(x + y * z);
+print((x - y) / z);
+

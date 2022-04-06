@@ -116,26 +116,106 @@ def evaluate(expr: Ast.Expr):
     elif isinstance(expr, Ast.String):
         return expr.value
     elif isinstance(expr, Ast.Identifier):
-        if not env.contains(expr.value):
-            raise InterpRuntimeError('undeclared variable')
-        return env.get(expr.value)
+        return evalIdentifier(expr)
     elif isinstance(expr, Ast.FunctionCall):
-
-        # Hardcoded print statement with args
-
-        evaluated_args = list(map(evaluate, expr.argList))
-        print(*evaluated_args)
-    elif isinstance(expr, Ast.UnOp):
-        env.print()
-        right = expr.right
-        if isinstance(expr.right, Ast.Identifier):
-            right = env.get(right.value)
-        return int(apply_unary(expr.op, right))
+        return evalFuncCall(expr)
+    elif isinstance(expr, Ast.Lambda):
+        return evalLambda(expr)
+    elif isinstance(expr, Ast.FunctionCall):
+        return evalFuncCall(expr)
     elif isinstance(expr, Ast.BinOp):
-        env.print()
-        return int(apply_binary(expr.op, nested_binop(expr.left), nested_binop(expr.right)))
+        return evalBinop(expr)
+    elif isinstance(expr, Ast.UnOp):
+        return evalUnop(expr)
+        
+
+
+def evalIdentifier(expr: Ast.Identifier):
+    if not env.contains(expr.value):
+        raise InterpRuntimeError('undeclared variable')
+    return env.get(expr.value)
+
+
+def evalBinop(expr: Ast.BinOp):
+
+    lhs = evaluate(expr.left)
+    rhs = evaluate(expr.right)
+
+    # print(lhs, rhs)
     
-    return 1
+    if expr.op == '+':
+        return lhs + rhs
+    elif expr.op == '-':
+        return lhs - rhs
+    elif expr.op == '*':
+        return lhs * rhs
+    elif expr.op == '/':
+        return lhs / rhs
+    elif expr.op == '%':
+        print(lhs, rhs)
+        return int(lhs) % rhs
+    elif expr.op == '>':
+        return lhs > rhs
+    elif expr.op == '>=':
+        return lhs >= rhs
+    elif expr.op == '<':
+        return lhs < rhs
+    elif expr.op == '<=':
+        return lhs <= rhs
+    elif expr.op == '==':
+        return lhs == rhs
+    elif expr.op == '!=':
+        return lhs != rhs
+    elif expr.op == '||':
+        return lhs or rhs
+    elif expr.op == '&&':
+        return lhs and rhs
+
+    return 0
+
+
+def evalUnop(expr: Ast.UnOp):
+    lhs = evaluate(expr.right)
+    if expr.op == '+':
+        return lhs
+    elif expr.op == '-':
+        return -lhs
+    elif expr.op == '!':
+        return not lhs
+
+def evalFuncCall(expr: Ast.FunctionCall):
+    function = evaluate(expr.expression)
+
+    if not isinstance(function, Ast.Lambda):
+        raise InterpRuntimeError('Trying to call a non-function')
+    
+    evaluted_args = list(map(evaluate,expr.argList))
+    
+    # print(function)
+    if function == 'primitive_function':
+        print(*evaluted_args)
+        return None
+        
+
+    env.push()
+    for i in range(len(function.argList)):
+        env.insert(function.argList.iden, evaluted_args[i])
+    
+    result = statement(function.block)
+    env.pop()
+
+    if result.type == 'return':
+        return result.value
+    else: 
+        return None
+
+
+
+
+def evalLambda(expr: Ast.Lambda):
+    return expr
+
+
 
 
 # Used to correctly handover control to the appropriate function

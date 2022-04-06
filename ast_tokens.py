@@ -10,7 +10,7 @@ class PrimitiveType(Type):
         self.children = [type]
 
     def __str__(self):
-        return self.type
+        return "Type: "+ self.type
 
 class FunctionType(Type):
     def __init__(self, args, ret):

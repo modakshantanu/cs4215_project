@@ -1,0 +1,7 @@
+let x = 1;
+print(x);
+{
+    let x = "FOO";
+    print(x);
+}
+print(x);

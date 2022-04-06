@@ -1,0 +1,19 @@
+let f : (a: bool) => bool;
+let g;
+
+let h = (x: bool) => {
+    return !x;
+};
+
+g = h;
+// Not type checked
+g(false);
+g(6);
+g();
+
+f = h;
+// Type checked
+f(false);
+f(6);
+f();
+

@@ -1,0 +1,6 @@
+let p = "hello ";
+let q = "world";
+
+print(p + q);
+print(p == q);
+print(p == p);

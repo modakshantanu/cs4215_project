@@ -1,0 +1,15 @@
+let i = 0;
+
+while (true) {
+    
+    if (i > 10) {
+        break;
+    }
+
+    if (i % 2 == 0) {
+        continue;
+    }
+    
+    print(i);
+    i = i + 1;
+}

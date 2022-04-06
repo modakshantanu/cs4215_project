@@ -33,8 +33,7 @@ if len(sys.argv) > 1:
     ast = parser.parse(data)
     print_ast(ast)
     typeCheck(ast)
-
-    # statement(ast)
+    statement(ast)
     # print(evaluate(ast))
 else:
     while True:

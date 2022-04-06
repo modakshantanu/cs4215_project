@@ -24,6 +24,8 @@ typeEnv : Environment = Environment()
 
 import ast_tokens as Ast
 
+typeEnv.insert('print', Ast.FunctionType(Ast.TupleType(Ast.PrimitiveType('any')), Ast.PrimitiveType('any')))
+
 def areConsistent(t1: Ast.Type, t2: Ast.Type) -> bool:
 
     if isinstance(t1, Ast.PrimitiveType) and t1.type == 'any':
@@ -182,19 +184,26 @@ def checkAssignment(e: Ast.Assignment):
 def checkFCall(e: Ast.FunctionCall):
     funcType = typeCheck(e.expression)
 
+    # print(funcType)
+
     if isinstance(funcType, Ast.PrimitiveType) and funcType.type == 'any':
         return Ast.PrimitiveType('any')
 
     if not isinstance(funcType, Ast.FunctionType):
         raise TypeError("Trying to call something that is not a function!")
     
+
     nParams = len(e.argList)
-    if nParams != len(funcType.args):
+    if nParams != len(funcType.args.children):
         raise TypeError("Mismatched number of args!")
     
+    # print(typeCheck(e.argList[0]))
+    # print(funcType.args.children[0])
     for i in range(nParams):
-        if not areConsistent(typeCheck(e.argList[i]), funcType.args[i]):
+        if not areConsistent(typeCheck(e.argList[i]), funcType.args.children[i]):
             raise TypeError("Mismatched types for argument {0}".format(i))
+
+
 
     return funcType.ret
     
