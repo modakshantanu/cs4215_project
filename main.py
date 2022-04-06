@@ -31,8 +31,8 @@ if len(sys.argv) > 1:
     data = f.read()
 
     ast = parser.parse(data)
-    # print_ast(ast)
-    statement(ast)
+    print_ast(ast)
+    # statement(ast)
     # print(evaluate(ast))
 else:
     while True:

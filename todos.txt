@@ -1,2 +1,5 @@
-type annotated function signature
-proper type system
+Bonus Features:
+    Automatic type inference
+    Tuples with . operator
+    Objects
+

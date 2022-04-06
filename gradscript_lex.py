@@ -74,7 +74,8 @@ reserved = {
     'bool' : 'BOOL',
     'string' : 'STRING',
     'break' : 'BREAK',
-    'continue' : 'CONTINUE'
+    'continue' : 'CONTINUE',
+    'void' : 'VOID'
 }
 
 

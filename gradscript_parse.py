@@ -22,6 +22,7 @@ def p_type(p):
          | BOOL
          | STRING 
          | ANY
+         | VOID
          | type ARROW type
          | L_PAR typelist R_PAR
     '''
@@ -181,9 +182,7 @@ def p_param_list(p):
     '''
 
     if len(p) == 2:
-        
         p[0] = [Ast.Param(p[1])]
-        
     elif len(p) == 4 and p[2] == ':':
         p[0] = [Ast.Param(p[1], p[3])]
     elif len(p) == 4 and p[2] == ',':
@@ -213,16 +212,32 @@ def p_function_call(p):
 def p_lambda(p):
     '''
     lambda : L_PAR R_PAR ARROW L_BRC block R_BRC
-           | L_PAR param_list R_PAR ARROW L_BRC block R_BRC
+           | L_PAR R_PAR COLON type ARROW L_BRC block R_BRC
            | L_PAR IDEN R_PAR ARROW L_BRC block R_BRC
+           | L_PAR IDEN R_PAR COLON type ARROW L_BRC block R_BRC
+           | L_PAR param_list R_PAR ARROW L_BRC block R_BRC
+           | L_PAR param_list R_PAR COLON type ARROW L_BRC block R_BRC
     '''
 
-    if len(p) == 7:
-        p[0] = Ast.Lambda([], p[5])
+    if p[2] == ')': # No params
+        if p[3] == ':':
+            p[0] = Ast.Lambda([], p[7], p[4])
+        else:
+            p[0] = Ast.Lambda([], p[5])
+    elif isinstance(p[2], Ast.Identifier):
+        if p[4] == ':':
+            p[0] = Ast.Lambda([Ast.Param(p[2])], p[8], p[5])
+        else:
+            print(Ast.Param(p[2]))
+            p[0] = Ast.Lambda([Ast.Param(p[2])], p[8])
     else:
         if not isinstance(p[2], list):
             p[2] = [Ast.Param(p[2])]
-        p[0] = Ast.Lambda(p[2], p[6])
+        if p[4] == ':':
+            p[0] = Ast.Lambda(p[2], p[8], p[5])
+        else:
+            p[0] = Ast.Lambda(p[2], p[6])
+
 
 
 def p_error(p):

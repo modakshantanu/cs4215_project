@@ -1,6 +1,1 @@
-let a = 3;
-if (false) {
-    print(a);
-} else {
-    print("NO");
-}
+let x : (number) => string;

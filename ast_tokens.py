@@ -109,11 +109,25 @@ class FunctionCall(Expr):
         self.children = [expr] + args
 
 class Lambda(Expr):
-    def __init__(self, args, block):
+    def __init__(self, args, block, retType = PrimitiveType('any')):
         self.type = "lambda"
         self.argList = args
         self.block = block
-        self.children = [args, block]
+        self.retType = retType
+        self.children = [args, retType, block]
+
+    def getLambdaType(self):
+        if len(self.argList) == 0:
+            return FunctionType(PrimitiveType('void'), self.retType)
+
+        paramTypesList = []
+        for i  in self.argList:
+            paramTypesList.append(i.type)
+        params = TupleType(None)
+        params.children = paramTypesList
+        return FunctionType(params, self.retType)
+
+        
 
 # Base class for all statements
 class Statement(AstNode):

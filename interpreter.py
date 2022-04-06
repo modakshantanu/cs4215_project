@@ -184,10 +184,15 @@ def continueStatement(s) -> Result:
     return Result('continue')
 
 def BlockStatement(s: Ast.Block) -> Result:
+    # Push new env for each block
+    env.push()
     for c in s.children:
         result = statement(c)
         if result.type == 'none':
             continue
         else: # Propogate the result up to the parent
-            return result 
+            env.pop()
+            return result
+
+    env.pop() 
     return Result('none')
