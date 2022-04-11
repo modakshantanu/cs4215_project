@@ -2,7 +2,10 @@ let f : void => any = () => {
     return false;
 };
 
+//f(); 
+print(f());
 
 let a : number = f();
-//let b = a || false;
+// TODO Complete binary operator type check
+let b = a || false;
 

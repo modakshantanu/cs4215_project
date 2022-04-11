@@ -111,7 +111,12 @@ class FunctionCall(Expr):
 class Lambda(Expr):
     def __init__(self, args, block, retType = PrimitiveType('any')):
         self.type = "lambda"
+        # if isinstance(args, list) and len(args) == 0:
+        #     args = PrimitiveType('void')
+
+        
         self.argList = args
+
         self.block = block
         self.retType = retType
         self.children = [args, retType, block]
@@ -121,7 +126,7 @@ class Lambda(Expr):
             return FunctionType(PrimitiveType('void'), self.retType)
 
         paramTypesList = []
-        for i  in self.argList:
+        for i in self.argList:
             paramTypesList.append(i.type)
         params = TupleType(None)
         params.children = paramTypesList

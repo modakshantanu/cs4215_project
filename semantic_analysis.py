@@ -115,7 +115,7 @@ def checkBlock(e: Ast.Block, expected: Ast.Type):
 def checkWhile(e: Ast.While, expected: Ast.Type):
     conditionType = typeCheck(e.condition)
     if not areConsistent(conditionType, Ast.PrimitiveType('bool')):
-        raise GradualGradualTypeError('While statement condition must be a boolean')
+        raise GradualTypeError('While statement condition must be a boolean')
     
     typeCheck(e.statement, expected)
 
@@ -187,8 +187,6 @@ def checkAssignment(e: Ast.Assignment):
 def checkFCall(e: Ast.FunctionCall):
     funcType = typeCheck(e.expression)
 
-    print(funcType)
-
     if isinstance(funcType, Ast.PrimitiveType) and funcType.type == 'any':
         return Ast.PrimitiveType('any')
 
@@ -197,6 +195,13 @@ def checkFCall(e: Ast.FunctionCall):
     
 
     nParams = len(e.argList)
+    
+    if isinstance(funcType.args, Ast.PrimitiveType):
+        if funcType.args.type == 'void' and nParams == 0:
+            return funcType.ret
+        else:
+            GradualTypeError("Mismatched number of args!") 
+    
     if nParams != len(funcType.args.children):
         raise GradualTypeError("Mismatched number of args!")
     

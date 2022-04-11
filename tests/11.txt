@@ -5,5 +5,6 @@ let c : string = "5";
 let d;
 
 // d = a + b;
+// TODO: Should throw GradualTypeError on this line below
 d = a + c;
 
