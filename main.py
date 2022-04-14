@@ -23,6 +23,8 @@ parser = gradscript_parse.parser
 filename = None
 data = None
 log = logging.getLogger()
+# used to hide traceback errors and show only the raised errors
+sys.tracebacklimit = 0 
 
 
 if len(sys.argv) > 1:

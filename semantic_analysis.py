@@ -4,6 +4,7 @@
 '''
 
 from ast import Return
+from turtle import left, right
 from typing import Any
 from environment import Environment
 from utils import GradualTypeError
@@ -34,7 +35,7 @@ def areConsistent(t1: Ast.Type, t2: Ast.Type) -> bool:
 
     if isinstance(t2, Ast.PrimitiveType) and t2.type == 'any':
         return True
-
+    
     if isinstance(t1, Ast.PrimitiveType) and isinstance(t2, Ast.PrimitiveType):
         return t1.type == t2.type
     
@@ -96,9 +97,60 @@ def typeCheck(e: Ast.Expr, expectedReturn : Ast.Type = Ast.PrimitiveType('void')
 
 
 def checkUnOp(e: Ast.UnOp):
+    rightOpType = typeCheck(e.right)
+    if e.op == '+':
+        if not areConsistent(rightOpType, Ast.PrimitiveType('number')):
+            raise GradualTypeError(f'Type error in unary operation: {e.op}{e.right}')
+    elif e.op == '-':
+        if not areConsistent(rightOpType, Ast.PrimitiveType('number')):
+            raise GradualTypeError(f'Type error in unary operation: {e.op}{e.right}')
+    elif e.op == '!':
+        if not areConsistent(rightOpType, Ast.PrimitiveType('bool')):
+            raise GradualTypeError(f'Type error in unary operation: {e.op}{e.right}')
+
     return Ast.PrimitiveType('any')
 
 def checkBinOp(e: Ast.BinOp):
+    leftOpType = typeCheck(e.left)
+    rightOpType = typeCheck(e.right)
+    if e.op == '+':
+        if areConsistent(leftOpType, Ast.PrimitiveType('number')) is False or areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '-':
+        if areConsistent(leftOpType, Ast.PrimitiveType('number')) is False or areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '*':
+        if areConsistent(leftOpType, Ast.PrimitiveType('number')) is False or areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '/':
+        if areConsistent(leftOpType, Ast.PrimitiveType('number')) is False or areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '%':
+        if areConsistent(leftOpType, Ast.PrimitiveType('number')) is False or areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '>':
+        if areConsistent(leftOpType, Ast.PrimitiveType('number')) is False or areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '>=':
+        if areConsistent(leftOpType, Ast.PrimitiveType('number')) is False or areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '<':
+        if areConsistent(leftOpType, Ast.PrimitiveType('number')) is False or areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '<=':
+        if areConsistent(leftOpType, Ast.PrimitiveType('number')) is False or areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '==':
+        pass
+    elif e.op == '!=':
+        pass
+    elif e.op == '||':
+        if areConsistent(leftOpType, Ast.PrimitiveType('bool')) is False or areConsistent(rightOpType, Ast.PrimitiveType('bool')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+    elif e.op == '&&':
+        if areConsistent(leftOpType, Ast.PrimitiveType('bool')) is False or areConsistent(rightOpType, Ast.PrimitiveType('bool')) is False:
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
+
     return Ast.PrimitiveType('any')
 
 
@@ -205,8 +257,6 @@ def checkFCall(e: Ast.FunctionCall):
     if nParams != len(funcType.args.children):
         raise GradualTypeError("Mismatched number of args!")
     
-    # print(typeCheck(e.argList[0]))
-    # print(funcType.args.children[0])
     for i in range(nParams):
         if not areConsistent(typeCheck(e.argList[i]), funcType.args.children[i]):
             raise GradualTypeError("Mismatched types for argument {0}".format(i))

@@ -90,8 +90,9 @@ def p_statement(p):
     elif p[1] == 'let' and len(p) == 6 and isinstance(p[4], Ast.Type): # Typed declaration
         p[0] = Ast.Declaration(p[2], p[4])
     elif p[1] == 'let' and len(p) == 6 and isinstance(p[4], Ast.Expr): # Untyped declassign
-        p[0] = Ast.DeclAssign(p[2], p[4])
+        p[0] = Ast.DeclAssign(p[2], p[4], Ast.PrimitiveType(p[4].type))
     elif p[1] == 'let': # Typed declassign
+        print(p[4])
         p[0] = Ast.DeclAssign(p[2], p[6], p[4]) 
     elif len(p) == 4 and p[1] == 'return': # Return statement
         p[0] = Ast.Return(p[2])
