@@ -132,7 +132,20 @@ class Lambda(Expr):
         params.children = paramTypesList
         return FunctionType(params, self.retType)
 
-        
+class IndexedExpr(Expr):
+    def __init__(self, expression, index):
+        self.type = 'indexExpr'
+        self.expression = expression
+        self.index = index
+        self.children = [expression, index]
+
+
+class TupleExpr(Expr):
+    def __init__(self, elements):
+        self.type = 'tupleExpr'
+        self.num = len(elements)
+        self.children = [elements]
+
 
 # Base class for all statements
 class Statement(AstNode):

@@ -30,6 +30,7 @@ tokens = [
     'MODULO',
     'LT', 'GT' , 'EQ' , 'LEQ' , 'GEQ' , 'NEQ' , 
     'OR' , 'AND' , 'NOT',
+    'L_BKT','R_BKT'
 ]
 
 
@@ -58,6 +59,8 @@ t_SEMI = ';'
 t_COMMA = ','
 t_COLON = ':'
 t_ASSIGN = r'\='
+t_L_BKT = r'\['
+t_R_BKT = r'\]'
 
 t_LT = '<'
 t_GT = '>'
@@ -83,7 +86,7 @@ tokens = tokens + list(reserved.values())
 
 def t_IDEN(t):
     r'[_a-zA-Z][_a-zA-Z0-9]*'
-
+    
     if t.value == 'true' or t.value == 'false': # Handle boolean literals separately from keywords / identifiers
         t.type = 'BOOL_LIT'
         t.value = t.value == 'true'

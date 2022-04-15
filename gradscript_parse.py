@@ -121,19 +121,27 @@ def p_expression(p):
                | function_call
                | lambda
                | IDEN
+               | L_BKT arg_list R_BKT
+               | expression L_BKT expression R_BKT
+
+
 
     '''
 
-    if type(p[1]) is int or type(p[1]) is float:
+    if (type(p[1]) is int or type(p[1]) is float) and len(p) == 2:
         p[0] = Ast.Number(p[1])
-    elif type(p[1]) is bool:
+    elif type(p[1]) is bool and len(p) == 2:
         p[0] = Ast.Bool(p[1])
     elif p[1] == '(':
         p[0] = p[2]
-    elif isinstance(p[1], str):
+    elif isinstance(p[1], str) and p[1] != '[':
         p[0] = Ast.Identifier(p[1])
     elif isinstance(p[1], Ast.String):
         p[0] = p[1]
+    elif p[1] == '[':
+        p[0] = Ast.TupleExpr(p[2])
+    elif len(p) > 2 and p[2] == '[':
+        p[0] = Ast.IndexedExpr(p[1], p[3])
     else:
         p[0] = p[1]
 
