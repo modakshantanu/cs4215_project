@@ -98,61 +98,80 @@ def typeCheck(e: Ast.Expr, expectedReturn : Ast.Type = Ast.PrimitiveType('void')
 
 def checkUnOp(e: Ast.UnOp):
     rightOpType = typeCheck(e.right)
+    returnType = Ast.PrimitiveType('any')
     if e.op == '+':
+        returnType = Ast.PrimitiveType('number')
         if areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
             raise GradualTypeError(f'Type error in unary operation: {e.op}{e.right}')
     elif e.op == '-':
+        returnType = Ast.PrimitiveType('number')
         if areConsistent(rightOpType, Ast.PrimitiveType('number')) is False:
             raise GradualTypeError(f'Type error in unary operation: {e.op}{e.right}')
     elif e.op == '!':
+        returnType = Ast.PrimitiveType('bool')
         if areConsistent(rightOpType, Ast.PrimitiveType('bool')) is False:
             raise GradualTypeError(f'Type error in unary operation: {e.op}{e.right}')
 
-    return Ast.PrimitiveType('any')
+    return returnType
 
 def checkBinOp(e: Ast.BinOp):
     leftOpType = typeCheck(e.left)
     rightOpType = typeCheck(e.right)
+    returnType = Ast.PrimitiveType('any')
     if e.op == '+':
+        returnType = leftOpType
         if not (areConsistent(leftOpType, rightOpType) and (areConsistent(leftOpType, Ast.PrimitiveType('number')) or areConsistent(leftOpType, Ast.PrimitiveType('string')))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '-':
+        returnType = Ast.PrimitiveType('number')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('number'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '*':
+        returnType = Ast.PrimitiveType('number')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('number'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '/':
+        returnType = Ast.PrimitiveType('number')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('number'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '%':
+        returnType = Ast.PrimitiveType('number')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('number'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '>':
+        returnType = Ast.PrimitiveType('bool')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('number'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '>=':
+        returnType = Ast.PrimitiveType('bool')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('number'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '<':
+        returnType = Ast.PrimitiveType('bool')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('number'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '<=':
+        returnType = Ast.PrimitiveType('bool')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('number'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '==':
-        pass
+        returnType = Ast.PrimitiveType('bool')
+        if not areConsistent(leftOpType, rightOpType):
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '!=':
-        pass
+        returnType = Ast.PrimitiveType('bool')
+        if not areConsistent(leftOpType, rightOpType):
+            raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '||':
+        returnType = Ast.PrimitiveType('bool')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('bool'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
     elif e.op == '&&':
+        returnType = Ast.PrimitiveType('bool')
         if not (areConsistent(leftOpType, rightOpType) and areConsistent(leftOpType, Ast.PrimitiveType('bool'))):
             raise GradualTypeError(f'Type error in binary operation: {e.left} {e.op} {e.right}')
-
-    return leftOpType
-
+    
+    return returnType
 
 def checkBlock(e: Ast.Block, expected: Ast.Type):
 
