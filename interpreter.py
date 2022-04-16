@@ -1,3 +1,4 @@
+from math import floor
 from multiprocessing import Condition
 from typing import Any
 import ast_tokens as Ast
@@ -128,8 +129,30 @@ def evaluate(expr: Ast.Expr):
         return evalBinop(expr)
     elif isinstance(expr, Ast.UnOp):
         return evalUnop(expr)
+    elif isinstance(expr, Ast.TupleExpr):
+        return evalTuple(expr)
+    elif isinstance(expr, Ast.IndexedExpr):
+        return evalIndexed(expr)
         
 
+def evalIndexed(expr: Ast.IndexedExpr):
+    lhs = evaluate(expr.expression)
+    index = evaluate(expr.index)
+
+    if type(index) != float and type(index) != int:
+        raise InterpRuntimeError('Index {0} is not a number'.format(index))
+    
+    index = floor(index)
+    
+    if type(lhs) != list:
+        raise InterpRuntimeError('Object {0} is not indexable'.format(lhs))
+    elif index < 0 or index >= len(lhs):
+        raise InterpRuntimeError('Index {0} is out of bounds for object {1}'.format(index, lhs))
+
+    return lhs[index]
+
+def evalTuple(expr: Ast.TupleExpr):
+    return list(map(evaluate, expr.children))
 
 def evalIdentifier(expr: Ast.Identifier):
     if not env.contains(expr.value):
@@ -144,6 +167,10 @@ def evalBinop(expr: Ast.BinOp):
 
     # print(lhs, rhs, expr.op)
     
+    
+    if type(lhs) != type(rhs):
+        raise InterpRuntimeError('Error: Binary operation {0} on {1} and {2}'.format(expr.op, lhs, rhs))
+
     if expr.op == '+':
         return lhs + rhs
     elif expr.op == '-':
@@ -167,9 +194,9 @@ def evalBinop(expr: Ast.BinOp):
     elif expr.op == '!=':
         return lhs != rhs
     elif expr.op == '||':
-        return lhs or rhs
+        return (lhs or rhs)
     elif expr.op == '&&':
-        return lhs and rhs
+        return (lhs and rhs)
 
     return 0
 
@@ -181,6 +208,8 @@ def evalUnop(expr: Ast.UnOp):
     elif expr.op == '-':
         return -lhs
     elif expr.op == '!':
+        if type(lhs) == float or type(lhs) == int:
+            raise InterpRuntimeError('Error: Unary operator NOT on a number {0}'.format(lhs))
         return not lhs
 
 def evalFuncCall(expr: Ast.FunctionCall):
@@ -188,7 +217,6 @@ def evalFuncCall(expr: Ast.FunctionCall):
     function = evaluate(expr.expression)
     # print(function)
 
-    
     evaluted_args = list(map(evaluate,expr.argList))
     
     # print(function)

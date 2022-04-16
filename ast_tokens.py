@@ -144,7 +144,7 @@ class TupleExpr(Expr):
     def __init__(self, elements):
         self.type = 'tupleExpr'
         self.num = len(elements)
-        self.children = [elements]
+        self.children = elements
 
 
 # Base class for all statements

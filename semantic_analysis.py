@@ -7,7 +7,7 @@ from ast import Return
 from turtle import left, right
 from typing import Any
 from environment import Environment
-from utils import GradualTypeError
+from utils import GradualTypeError, print_ast
 
 # Used to store types of each variable as opposed to values
 typeEnv : Environment = Environment()
@@ -53,6 +53,23 @@ def areConsistent(t1: Ast.Type, t2: Ast.Type) -> bool:
 
     return False
 
+def typeContainsAny(t: Ast.Type):
+    if isinstance(t, Ast.PrimitiveType) and t.type == 'any':
+        return True
+    
+    if isinstance(t, Ast.TupleType):
+        for i in t.children:
+            if typeContainsAny(i):
+                return True
+        return False
+
+    if isinstance(t, Ast.FunctionType):
+        return typeContainsAny(t.args) or typeContainsAny(t.children)
+
+    return True
+
+
+
 
 def typeCheck(e: Ast.Expr, expectedReturn : Ast.Type = Ast.PrimitiveType('void')) -> Ast.Type:
     if isinstance(e, Ast.BinOp):
@@ -71,6 +88,10 @@ def typeCheck(e: Ast.Expr, expectedReturn : Ast.Type = Ast.PrimitiveType('void')
         return checkLambda(e)
     elif isinstance(e, Ast.FunctionCall):
         return checkFCall(e)
+    elif isinstance(e, Ast.TupleExpr):
+        return checkTupleType(e)
+    elif isinstance(e, Ast.IndexedExpr):
+        return checkIndexed(e)
     elif isinstance(e, Ast.ExpressionStatement):
         return typeCheck(e.expression, Ast.PrimitiveType('any'))
     elif isinstance(e, Ast.Assignment):
@@ -92,9 +113,25 @@ def typeCheck(e: Ast.Expr, expectedReturn : Ast.Type = Ast.PrimitiveType('void')
     elif isinstance(e, Ast.Break) or isinstance(e, Ast.Continue):
         return Ast.PrimitiveType('void')
 
+
     return Ast.PrimitiveType('void')
 
+def checkIndexed(e: Ast.IndexedExpr):
+    indexType = typeCheck(e.index)
+    if not areConsistent(indexType, Ast.PrimitiveType('number')):
+        raise GradualTypeError("Index in tuple access {0} is not a number".format(e.index))
+    
+    exprType = typeCheck(e.expression)
+    if (isinstance(exprType, Ast.PrimitiveType) and exprType.type == 'any') or isinstance(exprType, Ast.TupleType):
+        return Ast.PrimitiveType('any')
+    
+    raise GradualTypeError("Object {0} is not indexable".format(e.expression))
 
+
+def checkTupleType(e: Ast.TupleExpr):
+    res = Ast.TupleType(0)
+    res.children = list(map(typeCheck, e.children))
+    return res
 
 def checkUnOp(e: Ast.UnOp):
     rightOpType = typeCheck(e.right)
@@ -226,10 +263,15 @@ def checkDeclAssign(e: Ast.DeclAssign):
     if typeEnv.top_contains(e.identifier):
         raise GradualTypeError('Multiple Declaration')
     
-    # To allow recursion
-    typeEnv.insert(e.identifier, e.type)
+    exprType = typeCheck(e.expression)
+    if typeContainsAny(exprType):
+        typeEnv.insert(e.identifier, Ast.PrimitiveType('any'))
+    else: # Type inference only if RHS type is fully determined
+        typeEnv.insert(e.identifier, exprType)
 
-    if not areConsistent(e.type, typeCheck(e.expression)):
+
+
+    if not areConsistent(e.type, exprType):
         raise GradualTypeError('Mismatched types in assignment')
 
     return Ast.PrimitiveType('void')
