@@ -6,6 +6,5 @@ let f : void => any = () => {
 print(f());
 
 let a : number = f();
-// TODO Complete binary operator type check
 let b = a || false;
 

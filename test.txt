@@ -1,2 +1,11 @@
-let x = [5, 4, [3,2]];
-print(x[2][1]);
+let factorial;
+factorial = (i) => {
+    if (i == 1) {
+        return i;
+    } else {
+        return i * (factorial(i - 1));
+    }
+};
+
+print(factorial(10));
+

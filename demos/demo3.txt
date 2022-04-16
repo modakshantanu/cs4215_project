@@ -1,0 +1,10 @@
+let f = () => {
+    return false;
+};
+
+print(f());
+
+let a : number = f(); // number <- any
+print(a);
+let b = a || false; // Number || Bool 
+

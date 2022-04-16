@@ -90,7 +90,7 @@ def p_statement(p):
     elif p[1] == 'let' and len(p) == 6 and isinstance(p[4], Ast.Type): # Typed declaration
         p[0] = Ast.Declaration(p[2], p[4])
     elif p[1] == 'let' and len(p) == 6 and isinstance(p[4], Ast.Expr): # Untyped declassign
-        p[0] = Ast.DeclAssign(p[2], p[4])
+        p[0] = Ast.DeclAssign(p[2], p[4], None)
     elif p[1] == 'let': # Typed declassign
         p[0] = Ast.DeclAssign(p[2], p[6], p[4]) 
     elif len(p) == 4 and p[1] == 'return': # Return statement
@@ -122,9 +122,6 @@ def p_expression(p):
                | IDEN
                | L_BKT arg_list R_BKT
                | expression L_BKT expression R_BKT
-
-
-
     '''
 
     if (type(p[1]) is int or type(p[1]) is float) and len(p) == 2:

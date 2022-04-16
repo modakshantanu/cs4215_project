@@ -1,0 +1,8 @@
+//let x : number;
+//let y : string;
+
+
+let x : any = 3;
+let y = "Hello";
+
+print(x + y);

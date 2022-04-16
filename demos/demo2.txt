@@ -1,0 +1,14 @@
+let x = ["John", 150];
+print(x);
+
+x = ["abc" , 200];
+print(x);
+
+//x = [150, "john"];
+//print(x);
+
+let a : any = x;
+let b : (any, number) = x;
+let c : (string, number) = x;
+let d : (number, number) = x;
+

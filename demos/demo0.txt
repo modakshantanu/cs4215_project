@@ -1,0 +1,34 @@
+let a = 3;
+let b = 4;
+
+print(a + b);
+
+// Recursion
+
+let factorial = (i) => {
+    if (i == 1) {
+        return i;
+    } else {
+        return i * (factorial(i - 1));
+    }
+};
+
+print(factorial(6));
+
+let g = (increment) => {
+    if (increment) {
+        return ((a) => {
+            return a + 1;
+        });
+    } else {
+        return ((a) => {
+            return a - 1;
+        });
+    }
+};
+
+let x = g(true);
+let y = g(false);
+
+print(x(10));
+print(y(10));

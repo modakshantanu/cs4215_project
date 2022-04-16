@@ -33,7 +33,7 @@ if len(sys.argv) > 1:
     data = f.read()
 
     ast = parser.parse(data)
-    print_ast(ast)
+    # print_ast(ast)
     typeCheck(ast)
     statement(ast)
     # print(evaluate(ast))

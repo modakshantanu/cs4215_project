@@ -3,7 +3,7 @@
  - Check if return, break and continue are within the appropriate blocks
 '''
 
-from ast import Return
+from ast import Return, expr
 from turtle import left, right
 from typing import Any
 from environment import Environment
@@ -57,6 +57,9 @@ def typeContainsAny(t: Ast.Type):
     if isinstance(t, Ast.PrimitiveType) and t.type == 'any':
         return True
     
+    if isinstance(t, Ast.PrimitiveType):
+        return False
+
     if isinstance(t, Ast.TupleType):
         for i in t.children:
             if typeContainsAny(i):
@@ -263,13 +266,23 @@ def checkDeclAssign(e: Ast.DeclAssign):
     if typeEnv.top_contains(e.identifier):
         raise GradualTypeError('Multiple Declaration')
     
+    typeEnv.insert(e.identifier, Ast.PrimitiveType('any'))
+
     exprType = typeCheck(e.expression)
-    if typeContainsAny(exprType):
-        typeEnv.insert(e.identifier, Ast.PrimitiveType('any'))
-    else: # Type inference only if RHS type is fully determined
-        typeEnv.insert(e.identifier, exprType)
+    # print(e.type)
+    # print(exprType)
+    
+    if e.type == None: # User did not specify a type
+        if typeContainsAny(exprType):
+            # print("Here")
+            typeEnv.insert(e.identifier, Ast.PrimitiveType('any'))
+        else: # Type inference only if RHS type is fully determined
+            typeEnv.insert(e.identifier, exprType)
+    else:
+        typeEnv.insert(e.identifier, e.type)
 
-
+    if e.type == None:
+        e.type = Ast.PrimitiveType('any')
 
     if not areConsistent(e.type, exprType):
         raise GradualTypeError('Mismatched types in assignment')
@@ -330,11 +343,11 @@ def checkFCall(e: Ast.FunctionCall):
 def checkLambda(e: Ast.Lambda):
     # Get expected type 
     signatureType = e.getLambdaType()
-    
     # Setup environment
     typeEnv.push()
     for p in e.argList:
         typeEnv.insert(p.iden, p.type)
+    
     # Check lambda body
     typeCheck(e.block, signatureType.ret)
     # Undo setup
