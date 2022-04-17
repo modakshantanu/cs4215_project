@@ -1,3 +1,4 @@
+// String operations
 let p = "hello ";
 let q = "world";
 

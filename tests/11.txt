@@ -4,7 +4,7 @@ let b : any = "5";
 let c : string = "5";
 let d;
 
-// d = a + b;
-// TODO: Should throw GradualTypeError on this line below
+d = a + b;
+// Below line throws gradualTypeError
 d = a + c;
 

@@ -1,3 +1,5 @@
+// identifier with annotation vs function with annotation
+
 let f : (bool) => bool;
 let g;
 

@@ -1,3 +1,5 @@
+// Gradual typing rules
+
 let a : any;
 let b : number;
 

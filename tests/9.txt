@@ -1,3 +1,5 @@
+// Function returning another function
+
 let g = (increment) => {
     if (increment) {
         return ((a) => {

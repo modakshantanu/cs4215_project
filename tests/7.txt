@@ -1,3 +1,5 @@
+// Lambdas: declaration and usage
+
 let square = (x) => {
     return x * x;
 };

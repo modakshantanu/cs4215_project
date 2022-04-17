@@ -1,3 +1,5 @@
+// Scoping rules: the inner x is a separate variable from the outer x
+
 let x = 1;
 print(x);
 {

@@ -1,10 +1,13 @@
+
+
 let f : void => any = () => {
     return false;
 };
 
-//f(); 
 print(f());
 
+
+// Presence of number annotation prevents successful execution
 let a : number = f();
 let b = a || false;
 

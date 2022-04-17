@@ -1,3 +1,4 @@
+// Simple printing and binary operations
 let x = 3;
 let y = 4;
 let z = 5;

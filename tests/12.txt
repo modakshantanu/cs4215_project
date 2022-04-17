@@ -1,3 +1,5 @@
+// Type annotations for lambdas
+
 let f = (x) => {return x + 1;};
 let g : (number) => number = f;
 
