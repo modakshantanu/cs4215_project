@@ -1,6 +1,0 @@
-Bonus Features:
-    Automatic type inference
-    Tuples with . operator
-    Objects
-    Fix precedence for function calls
-

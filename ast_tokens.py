@@ -146,6 +146,9 @@ class TupleExpr(Expr):
         self.num = len(elements)
         self.children = elements
 
+    def __str__(self) -> str:
+        return str(list(map( str, self.children)))
+
 
 # Base class for all statements
 class Statement(AstNode):

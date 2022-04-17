@@ -2,9 +2,10 @@ let f = () => {
     return false;
 };
 
-print(f());
+let a = f(); // number <- any
 
-let a : number = f(); // number <- any
+let b = a || true; // Number || Bool 
+
 print(a);
-let b = a || false; // Number || Bool 
+print(b);
 

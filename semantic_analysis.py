@@ -285,7 +285,7 @@ def checkDeclAssign(e: Ast.DeclAssign):
         e.type = Ast.PrimitiveType('any')
 
     if not areConsistent(e.type, exprType):
-        raise GradualTypeError('Mismatched types in assignment')
+        raise GradualTypeError(f'Mismatched types in assignment {e.identifier} = {e.expression}')
 
     return Ast.PrimitiveType('void')
 
@@ -305,7 +305,7 @@ def checkAssignment(e: Ast.Assignment):
         raise GradualTypeError("Undeclared variable")
     
     if not areConsistent(typeEnv.get(e.identifier), typeCheck(e.expression)):
-        raise GradualTypeError("LHS and RHS of assignment mismatched")
+        raise GradualTypeError(f"LHS and RHS types of assignment {e.identifier} = {e.expression} mismatched")
     
     return Ast.PrimitiveType('void')
 

@@ -1,10 +1,10 @@
-let x = ["John", 150];
+let x = ["John", 150]; // (string, number)
 print(x);
 
 x = ["abc" , 200];
 print(x);
 
-//x = [150, "john"];
+//x = [150, "john"]; // (number , string) --> ERROR
 //print(x);
 
 let a : any = x;
